@@ -10,6 +10,33 @@ async function loadData() {
   }
 }
 
+// ==================== Supabase (for cloud sync) ====================
+import { createClient } from 'https://esm.sh/@supabase/supabase-js@2';
+
+// --- PASTE THE SAME VALUES YOU USED IN account.js ---
+const SUPABASE_URL = 'https://kgghfsnawrddnvssxham.supabase.co';
+const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImtnZ2hmc25hd3JkZG52c3N4aGFtIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTgzODkwMjgsImV4cCI6MjA3Mzk2NTAyOH0.RtTZhVPeoxhamYxczVf-crkG8_jIBBpIJlfz9rvjCIg';
+
+const supabase = createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+
+async function currentUser() {
+  try {
+    const { data: { user } } = await supabase.auth.getUser();
+    return user || null;
+  } catch { return null; }
+}
+async function fetchCloudCodes(userId) {
+  const { data, error } = await supabase.from('inventory').select('code').eq('user_id', userId);
+  if (error) { console.warn('cloud fetch error', error); return []; }
+  return Array.from(new Set((data || []).map(r => String(r.code))));
+}
+async function upsertCloudCode(userId, code) {
+  try { await supabase.from('inventory').upsert({ user_id: userId, code: String(code) }); } catch(e){ console.warn('cloud upsert error', e); }
+}
+async function deleteCloudCode(userId, code) {
+  try { await supabase.from('inventory').delete().eq('user_id', userId).eq('code', String(code)); } catch(e){ console.warn('cloud delete error', e); }
+}
+
 // ==================== Local Storage (owned) ====================
 const LS_OWNED = 'polish-stash-owned';
 
@@ -24,6 +51,9 @@ const LS_OWNED = 'polish-stash-owned';
 })();
 
 const ownedSet = new Set(JSON.parse(localStorage.getItem(LS_OWNED) || '[]'));
+function saveOwnedLocal() {
+  localStorage.setItem(LS_OWNED, JSON.stringify([...ownedSet]));
+}
 
 // ==================== DOM ====================
 const grid             = document.getElementById('grid');
@@ -37,23 +67,14 @@ const tpl              = document.getElementById('card-tpl');
 // ==================== UI State ====================
 const state = {
   q: '',
-  collection: (filterCollection && filterCollection.value) || 'all', // 'all' | 'diva' | ...
+  collection: (filterCollection && filterCollection.value) || 'diva', // default to Diva
   show: 'all', // 'all' | 'owned'
 };
 
 let catalog = []; // filled in main()
+let user = null;  // supabase user if logged in
 
 // ==================== Helpers ====================
-// Pretty labels for collections shown on the cards
-const COLLECTION_LABELS = {
-  diva: 'Diva Colors',
-  dnd: 'DND Colors',
-  dc: 'DC Colors',
-  tools: 'Nail Tools',
-  essentials: 'Essentials'
-};
-const collectionLabel = (key) => COLLECTION_LABELS[key] || (key ? key.toUpperCase() : '');
-
 const normalize = (s) => (s || '').toString().toLowerCase();
 
 function matches(item) {
@@ -65,6 +86,15 @@ function matches(item) {
   return okQ && okCol && okShow;
 }
 
+const COLLECTION_LABELS = {
+  diva: 'Diva Colors',
+  dnd: 'DND Colors',
+  dc: 'DC Colors',
+  tools: 'Nail Tools',
+  essentials: 'Essentials'
+};
+const collectionLabel = (key) => COLLECTION_LABELS[key] || (key ? key.toUpperCase() : '');
+
 function fmtStats(items) {
   const total    = items.length;
   const owned    = items.filter(i => ownedSet.has(i.code)).length;
@@ -72,7 +102,7 @@ function fmtStats(items) {
   return `Showing ${total} shades · Owned: ${owned} · Not owned: ${notOwned}`;
 }
 
-// Direct product link (already provided in JSON; fallback builder included)
+// Direct product link (from JSON; fallback builder)
 function productLink(item) {
   return (item.product_url && item.product_url.trim()) || buildProductUrl(item);
 }
@@ -140,7 +170,7 @@ function render(items) {
     const buy    = node.querySelector('.buy');
     const owned  = node.querySelector('.owned');
 
-    // Default visual (hex or neutral) — this remains behind any image we set
+    // Default visual (hex or neutral)
     if (item.hex) {
       swatch.style.background = `linear-gradient(135deg, ${item.hex}, #f3f4f6)`;
     } else {
@@ -161,18 +191,23 @@ function render(items) {
 
     // Meta
     nameEl.textContent = item.name || '';
- codeEl.textContent = `#${item.code || ''} · ${collectionLabel(item.collection)}`;
+    codeEl.textContent = `#${item.code || ''} · ${collectionLabel(item.collection)}`;
 
     // Buy link (direct)
     buy.href = productLink(item);
 
-    // Owned toggle
+    // Owned toggle (+ cloud sync if logged in)
     const isOwned = ownedSet.has(item.code);
     owned.checked = isOwned;
-    owned.addEventListener('change', () => {
-      if (owned.checked) ownedSet.add(item.code);
-      else ownedSet.delete(item.code);
-      localStorage.setItem(LS_OWNED, JSON.stringify([...ownedSet]));
+    owned.addEventListener('change', async () => {
+      if (owned.checked) {
+        ownedSet.add(item.code);
+        if (user) await upsertCloudCode(user.id, item.code);
+      } else {
+        ownedSet.delete(item.code);
+        if (user) await deleteCloudCode(user.id, item.code);
+      }
+      saveOwnedLocal();
       stats && (stats.textContent = fmtStats(items.filter(matches)));
     });
 
@@ -231,10 +266,13 @@ function wireEvents() {
   }
 }
 
-// ==================== Boot ====================
+// ==================== Boot (with cloud sync) ====================
 (async function main(){
   setBusinessName();
   catalog = await loadData();
-  wireEvents();
-  render(catalog.filter(matches));
-})();
+  user = await currentUser();
+
+  // If logged in, merge cloud + local and render
+  if (user) {
+    try {
+      const cloud = await fetchCloudCodes(user.id);     // from DB
