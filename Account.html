@@ -1,0 +1,95 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Polish Stash — Account</title>
+  <link rel="stylesheet" href="styles.css" />
+  <style>
+    /* Small page-specific polish */
+    .page { max-width: 880px; margin: 24px auto; padding: 0 12px; }
+    .cardish { border:1px solid var(--line); border-radius:12px; padding:16px; }
+    .grid2 { display:grid; gap:12px; grid-template-columns: 1fr; }
+    @media (min-width: 720px){ .grid2 { grid-template-columns: 1fr 1fr; } }
+    .row { display:flex; gap:8px; align-items:center; flex-wrap:wrap; }
+    input[type="email"], input[type="password"], input[type="text"] {
+      border:1px solid var(--line); border-radius:10px; padding:8px 10px; width:100%;
+    }
+    button { border:1px solid var(--line); border-radius:10px; background:#fff; padding:8px 12px; cursor:pointer; }
+    .muted { color:var(--ink-2); font-size:.9rem; }
+    .right { display:flex; justify-content:flex-end; }
+    .ok { color:#1a7f37; }
+    .err { color:#b42318; }
+  </style>
+</head>
+<body>
+  <header class="site-header">
+    <div class="topbar">
+      <img src="./assets/polish-stash-logo.png" alt="Polish Stash logo" class="topbar__logo" />
+      <h2 class="topbar__name">Account</h2>
+      <a class="btn" href="./index.html">Back to Catalog</a>
+    </div>
+  </header>
+
+  <main class="page">
+    <!-- Auth card -->
+    <section id="auth-card" class="cardish">
+      <h3>Sign up / Log in</h3>
+      <p class="muted">Use email + password. If you’re new, we’ll create your account.</p>
+      <div class="grid2">
+        <div>
+          <label>Email</label>
+          <input id="email" type="email" placeholder="you@domain.com" />
+        </div>
+        <div>
+          <label>Password</label>
+          <input id="password" type="password" placeholder="at least 6 characters" />
+        </div>
+      </div>
+      <div class="row" style="margin-top:10px">
+        <button id="signup">Sign up</button>
+        <button id="signin">Log in</button>
+        <span id="auth-msg" class="muted"></span>
+      </div>
+    </section>
+
+    <!-- Dashboard (shown after login) -->
+    <section id="dash" class="cardish" style="display:none; margin-top:14px">
+      <div class="row" style="justify-content:space-between">
+        <h3>Welcome, <span id="who"></span></h3>
+        <button id="logout">Log out</button>
+      </div>
+
+      <hr style="border:none;border-top:1px solid var(--line);margin:14px 0" />
+
+      <h4>Business name</h4>
+      <p class="muted">This shows under the logo on your catalog.</p>
+      <div class="grid2">
+        <div>
+          <label>Business Name</label>
+          <input id="bizname" type="text" placeholder="e.g., Killer Nails" />
+        </div>
+        <div class="right">
+          <button id="save-biz">Save to Cloud</button>
+          <button id="apply-biz">Apply to This Device</button>
+        </div>
+      </div>
+      <div id="biz-msg" class="muted" style="margin-top:6px"></div>
+
+      <hr style="border:none;border-top:1px solid var(--line);margin:14px 0" />
+
+      <h4>Inventory sync</h4>
+      <p class="muted">“On Hand” items are the ones you checked in the catalog. Save/Load to keep them across devices.</p>
+      <div class="row">
+        <button id="save-cloud">Save Current On-Hand → Cloud</button>
+        <button id="load-cloud">Load On-Hand from Cloud → This Device</button>
+        <button id="reset-cloud">Reset Cloud On-Hand</button>
+      </div>
+      <div id="inv-msg" class="muted" style="margin-top:6px"></div>
+    </section>
+  </main>
+
+  <!-- Supabase + App -->
+  <script type="module" src="./account.js"></script>
+</body>
+</html>
