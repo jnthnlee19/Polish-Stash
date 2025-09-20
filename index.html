@@ -9,31 +9,24 @@
   </head>
   <body>
 <header class="site-header">
-  <!-- 1) Logo -->
-  <img src="./assets/polish-stash-logo.png" alt="Polish Stash logo" class="logo"/>
-
-  <!-- 2) Business name -->
-  <h2 id="custom-site-name" class="site-name">Your Business Name</h2>
-
-  <!-- 3) Product dropdown -->
-  <div class="row row-controls">
+  <!-- Top row: everything inline -->
+  <div class="top-row">
+    <img src="./assets/polish-stash-logo.png" alt="Polish Stash logo" class="logo"/>
+    <h2 id="custom-site-name" class="site-name">Your Business Name</h2>
     <select id="filter-collection">
       <option value="all">All collections</option>
       <option value="diva" selected>DND Diva</option>
     </select>
-  </div>
-
-  <!-- 4) Show filters -->
-  <div class="row row-filters">
     <button id="show-all" class="secondary">Show All</button>
     <button id="show-owned" class="secondary">Show On Hand</button>
   </div>
 
-  <!-- 5) Search bar -->
-  <div class="row row-search">
+  <!-- Search row -->
+  <div class="search-row">
     <input id="search" type="search" placeholder="Search by #, name, shade…" />
   </div>
 </header>
+
 
 
 
