@@ -108,12 +108,15 @@ html,body{
 
 /* Image-friendly swatch (uses image if provided; else gradient) */
 .card .swatch{
-  height:100px; /* increase to 140px if you want taller images */
-  background:linear-gradient(135deg,#f3f4f6,#e5e7eb);
-  background-size:cover;          /* make image fill the swatch */
-  background-position:center;     /* center the image */
-  background-repeat:no-repeat;    /* no tiling */
+  height:100px;                              /* make 120–140px if you want taller */
+  background:linear-gradient(135deg,#f3f4f6,#e5e7eb); /* fallback when no image */
+  background-size: contain;                  /* show whole image */
+  background-position: center;
+  background-repeat: no-repeat;
+  padding: 6px;                              /* small frame around the image */
+  background-clip: content-box;              /* keep padding clear */
 }
+
 
 .card .meta{ padding:10px 12px 0; }
 .card .name{ font-size:1rem; margin:0 0 2px; }
