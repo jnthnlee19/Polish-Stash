@@ -36,6 +36,12 @@ async function upsertCloudCode(userId, code) {
 async function deleteCloudCode(userId, code) {
   try { await supabase.from('inventory').delete().eq('user_id', userId).eq('code', String(code)); } catch(e){ console.warn('cloud delete error', e); }
 }
+async function upsertManyCodes(userId, codesIterable) {
+  const rows = [...codesIterable].map(code => ({ user_id: userId, code: String(code) }));
+  if (!rows.length) return;
+  const { error } = await supabase.from('inventory').upsert(rows, { onConflict: 'user_id,code' });
+  if (error) throw error;
+}
 
 // ==================== Local Storage (owned) ====================
 const LS_OWNED = 'polish-stash-owned';
@@ -62,6 +68,7 @@ const search           = document.getElementById('search');
 const filterCollection = document.getElementById('filter-collection');
 const showAllBtn       = document.getElementById('show-all');
 const showOwnedBtn     = document.getElementById('show-owned');
+const saveOwnedBtn     = document.getElementById('save-owned');   // NEW
 const tpl              = document.getElementById('card-tpl');
 
 // ==================== UI State ====================
@@ -196,7 +203,7 @@ function render(items) {
     // Buy link (direct)
     buy.href = productLink(item);
 
-    // Owned toggle (+ cloud sync if logged in)
+    // Owned toggle (+ per-item cloud sync if logged in)
     const isOwned = ownedSet.has(item.code);
     owned.checked = isOwned;
     owned.addEventListener('change', async () => {
@@ -264,9 +271,33 @@ function wireEvents() {
       render(catalog.filter(matches));
     });
   }
+
+  // NEW: Save button — push full On-Hand set to cloud now
+  if (saveOwnedBtn) {
+    saveOwnedBtn.addEventListener('click', async () => {
+      const u = await currentUser();
+      if (!u) {
+        alert('Please log in on the Account page first.');
+        return;
+      }
+      const original = saveOwnedBtn.textContent;
+      saveOwnedBtn.disabled = true;
+      saveOwnedBtn.textContent = 'Saving…';
+      try {
+        await upsertManyCodes(u.id, ownedSet);
+        saveOwnedBtn.textContent = 'Saved';
+      } catch (e) {
+        console.warn('save error', e);
+        saveOwnedBtn.textContent = 'Save';
+        alert('Save failed. Try again.');
+      } finally {
+        setTimeout(() => { saveOwnedBtn.textContent = original; saveOwnedBtn.disabled = false; }, 800);
+      }
+    });
+  }
 }
 
-// ==================== Boot (with cloud sync) ====================
+// ==================== Boot (with cloud merge on load) ====================
 (async function main(){
   setBusinessName();
   catalog = await loadData();
@@ -277,7 +308,6 @@ function wireEvents() {
     try {
       const cloud = await fetchCloudCodes(user.id);     // from DB
       const local = new Set(JSON.parse(localStorage.getItem(LS_OWNED) || '[]'));
-      // union so nothing is lost
       const union = new Set([...cloud, ...local]);
       ownedSet.clear();
       union.forEach(c => ownedSet.add(c));
