@@ -24,22 +24,31 @@ const logoutBtn = el('logout');
 const bizname = el('bizname');
 const bizMsg = el('biz-msg');
 
+// New: Enter buttons/link
+const enterBtn = el('enter');
+const enterTop = el('enter-top');
+
 // Same key used by catalog app
 const LS_OWNED = 'polish-stash-owned';
 
 // ---- Helpers
 const ok = (m) => `<span class="ok">${m}</span>`;
 const err = (m) => `<span class="err">${m}</span>`;
-const sleep = (ms) => new Promise(r => setTimeout(r, ms));
-
 function zpad3(code) {
   const s = String(code || '').trim();
   return /^\d+$/.test(s) ? s.padStart(3, '0') : s;
 }
-
-// Debounce helper for auto-save
 function debounce(fn, ms = 500) {
   let t; return (...args) => { clearTimeout(t); t = setTimeout(() => fn(...args), ms); };
+}
+function buildCatalogUrl() {
+  const name = (bizname && bizname.value.trim()) || (localStorage.getItem('business_name') || '').trim();
+  return name ? `./index.html?bn=${encodeURIComponent(name)}` : './index.html';
+}
+function wireEnterLinks() {
+  const url = buildCatalogUrl();
+  if (enterTop) enterTop.href = url;
+  if (enterBtn) enterBtn.onclick = () => { location.href = url; };
 }
 
 // ---- DB helpers
@@ -101,6 +110,7 @@ logoutBtn.addEventListener('click', async () => {
   dash.style.display = 'none';
   authCard.style.display = '';
   authMsg.innerHTML = ok('Logged out');
+  wireEnterLinks(); // keep Enter pointing somewhere sensible
 });
 
 // ---- After login: SHOW dashboard + AUTO SYNC everything
@@ -114,13 +124,12 @@ async function onAuthed() {
 
   await ensureProfile(user.id);
 
-  // 1) BUSINESS NAME — apply from cloud if present; else push local up
+  // BUSINESS NAME — prefer cloud; else push local up
   try {
     const profile = await loadProfile(user.id);
     const cloudName = (profile && profile.business_name) || '';
     const localName = localStorage.getItem('business_name') || '';
     if (cloudName) {
-      // prefer cloud
       localStorage.setItem('business_name', cloudName);
       bizname.value = cloudName;
       bizMsg.innerHTML = ok('Loaded business name from cloud.');
@@ -136,25 +145,29 @@ async function onAuthed() {
     bizMsg.innerHTML = err('Could not sync business name.');
   }
 
-  // 2) INVENTORY — merge cloud + local (union), write both places
+  // INVENTORY — merge cloud + local and write both
   try {
+    const { data: { user } } = await supabase.auth.getUser();
     const cloud = new Set(await fetchCloudCodes(user.id));
     const local = new Set(JSON.parse(localStorage.getItem(LS_OWNED) || '[]').map(zpad3));
     const union = new Set([...cloud, ...local]);
     localStorage.setItem(LS_OWNED, JSON.stringify([...union]));
     await upsertManyCodes(user.id, union);
-    // small UX hint
-    authMsg.innerHTML = ok('Inventory synced. Open the catalog to see your On-Hand items.');
+    authMsg.innerHTML = ok('Inventory synced. Tap Enter to open your catalog.');
   } catch (e) {
     console.warn('inventory sync failed', e);
   }
+
+  // Make sure Enter buttons point to index with ?bn=
+  wireEnterLinks();
 }
 
-// ---- BUSINESS NAME: auto-save on edit (debounced)
+// BUSINESS NAME: auto-save on edit (debounced) + update Enter link
 bizname.addEventListener('input', debounce(async () => {
   const { data: { user } } = await supabase.auth.getUser();
   const val = bizname.value.trim();
   localStorage.setItem('business_name', val);
+  wireEnterLinks();
   if (!user) { bizMsg.innerHTML = ok('Saved on this device.'); return; }
   try {
     await saveProfile(user.id, val);
@@ -164,8 +177,9 @@ bizname.addEventListener('input', debounce(async () => {
   }
 }, 600));
 
-// ---- Auto-show dashboard if already logged in
+// ---- Auto-show dashboard if already logged in; set Enter hrefs initially
 (async function boot(){
+  wireEnterLinks();
   const { data: { user } } = await supabase.auth.getUser();
   if (user) await onAuthed();
 })();
