@@ -85,7 +85,8 @@ function render(items) {
     codeEl.textContent = `#${item.code || ''} · ${String(item.collection || '').toUpperCase()}`;
 
     // Buy link
-    buy.href = affiliateUrl(item);
+   buy.href = item.product_url || '#';
+
 
     // Owned toggle
     const isOwned = ownedSet.has(item.code);
