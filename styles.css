@@ -27,10 +27,10 @@ html,body{
   display:flex;
   flex-direction:column;
   gap:8px;
-  align-items:center;             /* center contents horizontally */
+  align-items:center;             /* center everything horizontally */
 }
 
-/* TOP ROW: logo | business name | select | buttons */
+/* TOP ROW: centered inline (logo | name | select | buttons) */
 .topbar{
   display:flex;
   align-items:center;
@@ -41,7 +41,7 @@ html,body{
 }
 
 .topbar__logo{
-  width:160px;
+  width:160px;                    /* requested fixed width */
   height:auto;
   display:block;
   flex:0 0 auto;
@@ -55,27 +55,27 @@ html,body{
   flex:0 0 auto;
 }
 
-/* Controls in the topbar */
+/* Controls in the top row */
 .topbar__select,
 .btn{
   border:1px solid var(--line);
   background:#fff;
   border-radius:10px;
   padding:8px 10px;
-  height:36px;
+  height:36px;                    /* unify control heights */
   line-height:20px;
   flex:0 0 auto;
   cursor:pointer;
 }
 
-/* SEARCH ROW (below the inline bar) */
+/* SEARCH ROW (below) */
 .searchbar{
   display:flex;
-  justify-content:center;         /* center the search bar */
+  justify-content:center;         /* center the search */
   width:100%;
 }
 .searchbar input[type="search"]{
-  flex:0 1 780px;                 /* max width of 780px, shrink on small screens */
+  flex:0 1 780px;                 /* max width, shrinks on small screens */
   width:100%;
   border:1px solid var(--line);
   border-radius:10px;
@@ -87,7 +87,7 @@ html,body{
   padding:10px 12px;
   border-bottom:1px solid var(--line);
   color:var(--ink-2);
-  text-align:center;              /* center stats too */
+  text-align:center;              /* center the stats line */
 }
 
 .grid{
@@ -105,13 +105,20 @@ html,body{
   flex-direction:column;
   min-height:230px;
 }
+
+/* Image-friendly swatch (uses image if provided; else gradient) */
 .card .swatch{
-  height:100px;
+  height:100px; /* increase to 140px if you want taller images */
   background:linear-gradient(135deg,#f3f4f6,#e5e7eb);
+  background-size:cover;          /* make image fill the swatch */
+  background-position:center;     /* center the image */
+  background-repeat:no-repeat;    /* no tiling */
 }
+
 .card .meta{ padding:10px 12px 0; }
 .card .name{ font-size:1rem; margin:0 0 2px; }
 .card .code{ margin:0 0 8px; color:var(--ink-2); font-size:.9rem; }
+
 .card .controls{
   margin-top:auto;
   display:flex;
