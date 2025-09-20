@@ -62,12 +62,10 @@ function fmtStats(items) {
   return `Showing ${total} shades · Owned: ${owned} · Not owned: ${notOwned}`;
 }
 
-// Direct product link (already provided in JSON)
+// Direct product link (already provided in JSON; fallback builder included)
 function productLink(item) {
-  return (item.product_url && item.product_url.trim()) || '#';
+  return (item.product_url && item.product_url.trim()) || buildProductUrl(item);
 }
-
-// Optional fallback builder (only used if product_url missing)
 function slugifyName(name = '') {
   return name
     .toString()
@@ -109,6 +107,14 @@ async function fetchProductImage(productUrl) {
   }
 }
 
+// Swatch image setter: show full image (not cropped)
+function setSwatchImage(swatch, url) {
+  swatch.style.backgroundImage = `url("${url}")`;
+  swatch.style.backgroundSize = 'contain';
+  swatch.style.backgroundRepeat = 'no-repeat';
+  swatch.style.backgroundPosition = 'center';
+}
+
 // ==================== Render ====================
 function render(items) {
   if (!grid || !tpl) return;
@@ -124,7 +130,7 @@ function render(items) {
     const buy    = node.querySelector('.buy');
     const owned  = node.querySelector('.owned');
 
-    // Default visual (hex or neutral)
+    // Default visual (hex or neutral) — this remains behind any image we set
     if (item.hex) {
       swatch.style.background = `linear-gradient(135deg, ${item.hex}, #f3f4f6)`;
     } else {
@@ -133,12 +139,12 @@ function render(items) {
 
     // Prefer explicit image in JSON; else fetch from product page
     if (item.image) {
-      swatch.style.background = `center / cover no-repeat url("${item.image}")`;
+      setSwatchImage(swatch, item.image);
     } else if (item.product_url) {
       swatch.dataset.productUrl = item.product_url;
       fetchProductImage(item.product_url).then(url => {
         if (url && swatch.dataset.productUrl === item.product_url) {
-          swatch.style.background = `center / cover no-repeat url("${url}")`;
+          setSwatchImage(swatch, url);
         }
       });
     }
@@ -148,7 +154,7 @@ function render(items) {
     codeEl.textContent = `#${item.code || ''} · ${String(item.collection || '').toUpperCase()}`;
 
     // Buy link (direct)
-    buy.href = item.product_url || buildProductUrl(item);
+    buy.href = productLink(item);
 
     // Owned toggle
     const isOwned = ownedSet.has(item.code);
