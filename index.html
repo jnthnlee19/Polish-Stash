@@ -8,21 +8,21 @@
     <link rel="stylesheet" href="styles.css" />
   </head>
   <body>
-    <header class="site-header">
-      <div class="brand">
-<img src="./assets/polish-stash-logo.png" alt="Polish Stash logo" class="logo"/>
+<header class="site-header">
+  <div class="brand">
+    <img src="./assets/polish-stash-logo.svg" alt="Polish Stash logo" class="logo"/>
+    <h1>Polish Stash</h1>
+  </div>
+  <div class="actions">
+    <input id="search" type="search" placeholder="Search by #, name, shade…" />
+    <select id="filter-collection">
+      <option value="all">All collections</option>
+      <option value="diva" selected>DND Diva</option>
+    </select>
+    <button id="owned-toggle" class="secondary">Show: All</button>
+  </div>
+</header>
 
-        <h1>Polish Stash</h1>
-      </div>
-      <div class="actions">
-        <input id="search" type="search" placeholder="Search by #, name, shade…" />
-        <select id="filter-collection">
-          <option value="all">All collections</option>
-          <option value="diva" selected>DND Diva</option>
-        </select>
-        <button id="owned-toggle" class="secondary">Show: All</button>
-      </div>
-    </header>
 
     <main>
       <section id="stats" class="stats"></section>
