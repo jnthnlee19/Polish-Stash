@@ -30,17 +30,24 @@ async function fetchCloudCodes(userId) {
   if (error) { console.warn('cloud fetch error', error); return []; }
   return Array.from(new Set((data || []).map(r => String(r.code))));
 }
+// NEW: replace cloud set with current set (delete all, then insert)
+async function replaceCloudCodes(userId, codesIterable) {
+  // delete everything first
+  const del = await supabase.from('inventory').delete().eq('user_id', userId);
+  if (del.error) throw new Error(del.error.message || 'Delete failed');
+  // insert current set
+  const rows = [...codesIterable].map(code => ({ user_id: userId, code: String(code) }));
+  if (!rows.length) return;
+  const ins = await supabase.from('inventory').insert(rows);
+  if (ins.error) throw new Error(ins.error.message || 'Insert failed');
+}
+
+// (kept for per-item live sync while toggling)
 async function upsertCloudCode(userId, code) {
   try { await supabase.from('inventory').upsert({ user_id: userId, code: String(code) }); } catch(e){ console.warn('cloud upsert error', e); }
 }
 async function deleteCloudCode(userId, code) {
   try { await supabase.from('inventory').delete().eq('user_id', userId).eq('code', String(code)); } catch(e){ console.warn('cloud delete error', e); }
-}
-async function upsertManyCodes(userId, codesIterable) {
-  const rows = [...codesIterable].map(code => ({ user_id: userId, code: String(code) }));
-  if (!rows.length) return;
-  const { error } = await supabase.from('inventory').upsert(rows, { onConflict: 'user_id,code' });
-  if (error) throw error;
 }
 
 // ==================== Local Storage (owned) ====================
@@ -68,7 +75,7 @@ const search           = document.getElementById('search');
 const filterCollection = document.getElementById('filter-collection');
 const showAllBtn       = document.getElementById('show-all');
 const showOwnedBtn     = document.getElementById('show-owned');
-const saveOwnedBtn     = document.getElementById('save-owned');   // NEW
+const saveOwnedBtn     = document.getElementById('save-owned');   // Save button exists in your HTML
 const tpl              = document.getElementById('card-tpl');
 
 // ==================== UI State ====================
@@ -124,197 +131,4 @@ function slugifyName(name = '') {
     .replace(/-?diva$/, '')      // avoid double '-diva'
     .replace(/^-|-$/g, '');
 }
-function pad3(code) {
-  const s = String(code || '').trim();
-  return /^\d+$/.test(s) ? s.padStart(3, '0') : s;
-}
-function buildProductUrl(item) {
-  const slug = slugifyName(item.name || '');
-  const code = pad3(item.code || '');
-  return slug && code ? `https://www.dndgel.com/products/${slug}-diva-${code}` : '#';
-}
-
-// ==================== Product images via Netlify Function ====================
-const imgCache = new Map();
-
-async function fetchProductImage(productUrl) {
-  if (!productUrl) return '';
-  if (imgCache.has(productUrl)) return imgCache.get(productUrl);
-  try {
-    const r = await fetch(`/.netlify/functions/img?dest=${encodeURIComponent(productUrl)}`);
-    if (!r.ok) throw new Error(`img ${r.status}`);
-    const { image } = await r.json();
-    const url = image || '';
-    imgCache.set(productUrl, url);
-    return url;
-  } catch (e) {
-    console.warn('Image fetch failed:', e);
-    imgCache.set(productUrl, '');
-    return '';
-  }
-}
-
-// Swatch image setter: show full image (not cropped)
-function setSwatchImage(swatch, url) {
-  swatch.style.backgroundImage = `url("${url}")`;
-  swatch.style.backgroundSize = 'contain';
-  swatch.style.backgroundRepeat = 'no-repeat';
-  swatch.style.backgroundPosition = 'center';
-}
-
-// ==================== Render ====================
-function render(items) {
-  if (!grid || !tpl) return;
-
-  grid.innerHTML = '';
-  const frag = document.createDocumentFragment();
-
-  items.forEach(item => {
-    const node   = tpl.content.cloneNode(true);
-    const swatch = node.querySelector('.swatch');
-    const nameEl = node.querySelector('.name');
-    const codeEl = node.querySelector('.code');
-    const buy    = node.querySelector('.buy');
-    const owned  = node.querySelector('.owned');
-
-    // Default visual (hex or neutral)
-    if (item.hex) {
-      swatch.style.background = `linear-gradient(135deg, ${item.hex}, #f3f4f6)`;
-    } else {
-      swatch.style.background = 'linear-gradient(135deg,#f3f4f6,#e5e7eb)';
-    }
-
-    // Prefer explicit image in JSON; else fetch from product page
-    if (item.image) {
-      setSwatchImage(swatch, item.image);
-    } else if (item.product_url) {
-      swatch.dataset.productUrl = item.product_url;
-      fetchProductImage(item.product_url).then(url => {
-        if (url && swatch.dataset.productUrl === item.product_url) {
-          setSwatchImage(swatch, url);
-        }
-      });
-    }
-
-    // Meta
-    nameEl.textContent = item.name || '';
-    codeEl.textContent = `#${item.code || ''} · ${collectionLabel(item.collection)}`;
-
-    // Buy link (direct)
-    buy.href = productLink(item);
-
-    // Owned toggle (+ per-item cloud sync if logged in)
-    const isOwned = ownedSet.has(item.code);
-    owned.checked = isOwned;
-    owned.addEventListener('change', async () => {
-      if (owned.checked) {
-        ownedSet.add(item.code);
-        if (user) await upsertCloudCode(user.id, item.code);
-      } else {
-        ownedSet.delete(item.code);
-        if (user) await deleteCloudCode(user.id, item.code);
-      }
-      saveOwnedLocal();
-      stats && (stats.textContent = fmtStats(items.filter(matches)));
-    });
-
-    frag.appendChild(node);
-  });
-
-  grid.appendChild(frag);
-  stats && (stats.textContent = fmtStats(items.filter(matches)));
-}
-
-// ==================== Business Name injection ====================
-function setBusinessName() {
-  const target = document.getElementById('custom-site-name');
-  if (!target) return;
-
-  const params    = new URLSearchParams(location.search);
-  const fromUrl   = params.get('bn');
-  const fromStore = localStorage.getItem('business_name');
-
-  const name = (fromUrl && fromUrl.trim())
-            || (fromStore && fromStore.trim())
-            || 'Your Business Name';
-
-  target.textContent = name;
-  if (fromUrl) localStorage.setItem('business_name', name);
-}
-
-// ==================== Events ====================
-function wireEvents() {
-  if (search) {
-    search.addEventListener('input', e => {
-      state.q = normalize(e.target.value);
-      render(catalog.filter(matches));
-    });
-  }
-
-  if (filterCollection) {
-    filterCollection.addEventListener('change', e => {
-      state.collection = e.target.value;
-      render(catalog.filter(matches));
-    });
-  }
-
-  if (showAllBtn) {
-    showAllBtn.addEventListener('click', () => {
-      state.show = 'all';
-      render(catalog.filter(matches));
-    });
-  }
-
-  if (showOwnedBtn) {
-    showOwnedBtn.addEventListener('click', () => {
-      state.show = 'owned'; // On Hand
-      render(catalog.filter(matches));
-    });
-  }
-
-  // NEW: Save button — push full On-Hand set to cloud now
-  if (saveOwnedBtn) {
-    saveOwnedBtn.addEventListener('click', async () => {
-      const u = await currentUser();
-      if (!u) {
-        alert('Please log in on the Account page first.');
-        return;
-      }
-      const original = saveOwnedBtn.textContent;
-      saveOwnedBtn.disabled = true;
-      saveOwnedBtn.textContent = 'Saving…';
-      try {
-        await upsertManyCodes(u.id, ownedSet);
-        saveOwnedBtn.textContent = 'Saved';
-      } catch (e) {
-        console.warn('save error', e);
-        saveOwnedBtn.textContent = 'Save';
-        alert('Save failed. Try again.');
-      } finally {
-        setTimeout(() => { saveOwnedBtn.textContent = original; saveOwnedBtn.disabled = false; }, 800);
-      }
-    });
-  }
-}
-
-// ==================== Boot (with cloud merge on load) ====================
-(async function main(){
-  setBusinessName();
-  catalog = await loadData();
-  user = await currentUser();
-
-  // If logged in, merge cloud + local and render
-  if (user) {
-    try {
-      const cloud = await fetchCloudCodes(user.id);     // from DB
-      const local = new Set(JSON.parse(localStorage.getItem(LS_OWNED) || '[]'));
-      const union = new Set([...cloud, ...local]);
-      ownedSet.clear();
-      union.forEach(c => ownedSet.add(c));
-      saveOwnedLocal();
-    } catch(e) { console.warn('initial cloud sync failed', e); }
-  }
-
-  wireEvents();
-  render(catalog.filter(matches));
-})();
+function pad3(code)
