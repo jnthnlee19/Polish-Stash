@@ -1,26 +1,27 @@
-// Load catalog (make sure data/dnd-diva.json exists)
+// Load catalog (ensure data/dnd-diva.json exists)
 import data from './data/dnd-diva.json' assert { type: 'json' };
 
-// DOM refs
+// ---------- DOM ----------
 const grid = document.getElementById('grid');
 const stats = document.getElementById('stats');
 const search = document.getElementById('search');
 const filterCollection = document.getElementById('filter-collection');
-const ownedToggle = document.getElementById('owned-toggle');
+const showAllBtn = document.getElementById('show-all');
+const showOwnedBtn = document.getElementById('show-owned');
 const tpl = document.getElementById('card-tpl');
 
-// Local storage
+// ---------- Local Storage for "owned" ----------
 const LS_KEY = 'polish-stash-owned';
 const ownedSet = new Set(JSON.parse(localStorage.getItem(LS_KEY) || '[]'));
 
-// UI state
+// ---------- UI State ----------
 const state = {
   q: '',
-  collection: (filterCollection && filterCollection.value) || 'diva',
-  show: 'all', // all | owned | not
+  collection: (filterCollection && filterCollection.value) || 'all',
+  show: 'all', // 'all' | 'owned'
 };
 
-// Helpers
+// ---------- Helpers ----------
 function normalize(str) {
   return (str || '').toString().toLowerCase();
 }
@@ -30,24 +31,28 @@ function matches(item) {
   const okQ = hay.includes(state.q);
   const okCol = state.collection === 'all' || item.collection === state.collection;
   const isOwned = ownedSet.has(item.code);
-  const okShow = state.show === 'all' || (state.show === 'owned' ? isOwned : !isOwned);
+  const okShow = state.show === 'all' || (state.show === 'owned' && isOwned);
   return okQ && okCol && okShow;
 }
 
 function fmtStats(items) {
   const total = items.length;
   const owned = items.filter(i => ownedSet.has(i.code)).length;
-  return `Showing ${total} shades · Owned: ${owned} · Not owned: ${total - owned}`;
+  const notOwned = total - owned;
+  return `Showing ${total} shades · Owned: ${owned} · Not owned: ${notOwned}`;
 }
 
 function affiliateUrl(item) {
-  // Centralized click-through for affiliate tagging via Netlify Function
+  // Central redirect for affiliate tagging via Netlify Function
   const dest = encodeURIComponent(item.product_url || 'https://www.dndgel.com/');
   const sku = encodeURIComponent(item.code);
   return `/.netlify/functions/go?sku=${sku}&dest=${dest}`;
 }
 
+// ---------- Render ----------
 function render(items) {
+  if (!grid || !tpl) return;
+
   grid.innerHTML = '';
   const frag = document.createDocumentFragment();
 
@@ -59,35 +64,36 @@ function render(items) {
     const buy = node.querySelector('.buy');
     const owned = node.querySelector('.owned');
 
-    // visual
+    // Visual
     swatch.style.background = item.hex
       ? `linear-gradient(135deg, ${item.hex}, #f3f4f6)`
       : 'linear-gradient(135deg,#f3f4f6,#e5e7eb)';
 
-    // meta
+    // Meta
     name.textContent = item.name;
     code.textContent = `#${item.code} · ${item.collection.toUpperCase()}`;
 
-    // buy link
+    // Buy link
     buy.href = affiliateUrl(item);
 
-    // owned toggle
+    // Owned toggle
     owned.checked = ownedSet.has(item.code);
     owned.addEventListener('change', () => {
       if (owned.checked) ownedSet.add(item.code);
       else ownedSet.delete(item.code);
       localStorage.setItem(LS_KEY, JSON.stringify([...ownedSet]));
-      stats.textContent = fmtStats(items.filter(matches));
+      // Update stats based on current filters
+      stats && (stats.textContent = fmtStats(items.filter(matches)));
     });
 
     frag.appendChild(node);
   });
 
   grid.appendChild(frag);
-  stats.textContent = fmtStats(items.filter(matches));
+  stats && (stats.textContent = fmtStats(items.filter(matches)));
 }
 
-// Events
+// ---------- Events ----------
 if (search) {
   search.addEventListener('input', e => {
     state.q = normalize(e.target.value);
@@ -102,18 +108,24 @@ if (filterCollection) {
   });
 }
 
-if (ownedToggle) {
-  ownedToggle.addEventListener('click', () => {
-    state.show = state.show === 'all' ? 'owned' : state.show === 'owned' ? 'not' : 'all';
-    ownedToggle.textContent = `Show: ${state.show[0].toUpperCase()}${state.show.slice(1)}`;
+if (showAllBtn) {
+  showAllBtn.addEventListener('click', () => {
+    state.show = 'all';
     render(data.filter(matches));
   });
 }
 
-// Initial paint
+if (showOwnedBtn) {
+  showOwnedBtn.addEventListener('click', () => {
+    state.show = 'owned'; // “On Hand”
+    render(data.filter(matches));
+  });
+}
+
+// ---------- Initial Paint ----------
 render(data.filter(matches));
 
-// ---------------- Business Name injection (URL/localStorage; ready for backend later) --------------
+// ---------- Business Name injection (URL > localStorage > default) ----------
 (function setBusinessName() {
   const el = document.getElementById('custom-site-name');
   if (!el) return;
@@ -122,13 +134,15 @@ render(data.filter(matches));
   const params = new URLSearchParams(location.search);
   const fromUrl = params.get('bn');
 
-  // LocalStorage (remembered user setting)
+  // LocalStorage preference
   const fromStorage = localStorage.getItem('business_name');
 
-  // Priority: URL > LocalStorage > default placeholder
-  const name = (fromUrl && fromUrl.trim()) || (fromStorage && fromStorage.trim()) || 'Your Business Name';
+  const name =
+    (fromUrl && fromUrl.trim()) ||
+    (fromStorage && fromStorage.trim()) ||
+    'Your Business Name';
+
   el.textContent = name;
 
-  // If set via URL, persist it
   if (fromUrl) localStorage.setItem('business_name', name);
 })();
