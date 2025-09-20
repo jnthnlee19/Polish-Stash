@@ -7,76 +7,82 @@
 }
 
 /* Base */
-*{box-sizing:border-box}
+*{ box-sizing:border-box; }
 html,body{
   margin:0;
   padding:0;
   background:var(--bg);
   color:var(--ink);
-  font:16px/1.5 system-ui,-apple-system,Segoe UI,Roboto,Inter,Helvetica,Arial,sans-serif
+  font:16px/1.5 system-ui,-apple-system,Segoe UI,Roboto,Inter,Helvetica,Arial,sans-serif;
 }
 
-/* ---------- Header (stacked layout) ---------- */
+/* ===================== HEADER ===================== */
+/* Sticky header wrapper */
 .site-header{
-  position:sticky; top:0; z-index:10;
+  position: sticky;
+  top: 0;
+  z-index: 10;
   background:#fff;
   border-bottom:1px solid var(--line);
-  padding:8px 12px;            /* compact */
+  padding:8px 12px;               /* compact vertical space */
   display:flex;
   flex-direction:column;
-  align-items:center;
-  gap:8px;                     /* small gaps between rows */
+  gap:8px;                        /* tiny space between top row and search row */
 }
 
-/* 1) Logo */
-.site-header .logo{
-  width:160px;                 /* fixed per your request */
+/* TOP ROW: logo | business name | select | buttons (inline) */
+.topbar{
+  display:flex;
+  align-items:center;             /* align all items baseline */
+  justify-content:flex-start;
+  gap:14px;
+  white-space:nowrap;             /* keep in one line on wide screens */
+  width:100%;
+}
+
+.topbar__logo{
+  width:160px;                    /* requested fixed width */
   height:auto;
   display:block;
+  flex:0 0 auto;
 }
 
-/* 2) Business name */
-.site-name{
-  font-size:1.3rem;
-  font-weight:600;
+.topbar__name{
   margin:0;
-  text-align:center;
+  font-size:1.2rem;
+  font-weight:600;
   color:var(--ink);
+  flex:0 0 auto;
 }
 
-/* 3–5) Rows */
-.row{
+/* Controls in the topbar */
+.topbar__select,
+.btn{
+  border:1px solid var(--line);
+  background:#fff;
+  border-radius:10px;
+  padding:8px 10px;
+  height:36px;                    /* unify heights */
+  line-height:20px;
+  flex:0 0 auto;
+  cursor:pointer;
+}
+
+/* SEARCH ROW (below the inline bar) */
+.searchbar{
   width:100%;
   display:flex;
-  align-items:center;
-  justify-content:center;
+  justify-content:flex-start;
 }
-
-.row-controls,
-.row-filters{
-  gap:8px;
-}
-
-.row-search input[type="search"]{
-  width:min(780px, 92%);
-}
-
-/* Controls styling */
-select, input[type="search"]{
+.searchbar input[type="search"]{
+  flex:1;
+  max-width:780px;
   border:1px solid var(--line);
   border-radius:10px;
   padding:8px 10px;
 }
 
-button.secondary{
-  border:1px solid var(--line);
-  background:#fff;
-  border-radius:10px;
-  padding:8px 12px;
-  cursor:pointer;
-}
-
-/* ---------- Content ---------- */
+/* ===================== CONTENT ===================== */
 .stats{
   padding:10px 12px;
   border-bottom:1px solid var(--line);
@@ -103,9 +109,9 @@ button.secondary{
   height:100px;
   background:linear-gradient(135deg,#f3f4f6,#e5e7eb);
 }
-.card .meta{padding:10px 12px 0}
-.card .name{font-size:1rem;margin:0 0 2px}
-.card .code{margin:0 0 8px;color:var(--ink-2);font-size:.9rem}
+.card .meta{ padding:10px 12px 0; }
+.card .name{ font-size:1rem; margin:0 0 2px; }
+.card .code{ margin:0 0 8px; color:var(--ink-2); font-size:.9rem; }
 .card .controls{
   margin-top:auto;
   display:flex;
@@ -115,13 +121,13 @@ button.secondary{
 }
 
 /* Heart toggle */
-.heart{display:flex;align-items:center;gap:6px;user-select:none}
-.heart input{display:none}
+.heart{ display:flex; align-items:center; gap:6px; user-select:none; }
+.heart input{ display:none; }
 .heart span{
   font-size:20px; line-height:1; cursor:pointer;
-  filter:grayscale(1); opacity:.6; transition:.15s
+  filter:grayscale(1); opacity:.6; transition:.15s;
 }
-.heart input:checked + span{filter:none;opacity:1;color:var(--accent)}
+.heart input:checked + span{ filter:none; opacity:1; color:var(--accent); }
 
 /* Buy button */
 .buy{
@@ -129,7 +135,7 @@ button.secondary{
   border-radius:10px;
   padding:6px 10px;
   text-decoration:none;
-  color:var(--ink)
+  color:var(--ink);
 }
 
 /* Footer */
@@ -137,11 +143,16 @@ button.secondary{
   padding:20px 12px;
   border-top:1px solid var(--line);
   text-align:center;
-  color:var(--ink-2)
+  color:var(--ink-2);
 }
 
-/* ---------- Small screens ---------- */
+/* ===================== RESPONSIVE ===================== */
+/* On narrow screens allow the top row to wrap gracefully. */
+@media (max-width: 900px){
+  .topbar{ flex-wrap:wrap; gap:10px; }
+  .topbar__logo{ width:140px; }
+}
 @media (max-width: 640px){
-  .site-header .logo{ width:140px; }
-  .site-name{ font-size:1.15rem; }
+  .topbar__name{ font-size:1rem; }
+  .searchbar input[type="search"]{ max-width:100%; }
 }
