@@ -17,31 +17,31 @@ html,body{
 }
 
 /* ===================== HEADER ===================== */
-/* Sticky header wrapper */
 .site-header{
   position: sticky;
   top: 0;
   z-index: 10;
   background:#fff;
   border-bottom:1px solid var(--line);
-  padding:8px 12px;               /* compact vertical space */
+  padding:8px 12px;
   display:flex;
   flex-direction:column;
-  gap:8px;                        /* tiny space between top row and search row */
+  gap:8px;
+  align-items:center;             /* center contents horizontally */
 }
 
-/* TOP ROW: logo | business name | select | buttons (inline) */
+/* TOP ROW: logo | business name | select | buttons */
 .topbar{
   display:flex;
-  align-items:center;             /* align all items baseline */
-  justify-content:flex-start;
+  align-items:center;
+  justify-content:center;         /* center the whole row */
   gap:14px;
-  white-space:nowrap;             /* keep in one line on wide screens */
+  flex-wrap:wrap;                 /* wrap gracefully on small screens */
   width:100%;
 }
 
 .topbar__logo{
-  width:160px;                    /* requested fixed width */
+  width:160px;
   height:auto;
   display:block;
   flex:0 0 auto;
@@ -62,7 +62,7 @@ html,body{
   background:#fff;
   border-radius:10px;
   padding:8px 10px;
-  height:36px;                    /* unify heights */
+  height:36px;
   line-height:20px;
   flex:0 0 auto;
   cursor:pointer;
@@ -70,13 +70,13 @@ html,body{
 
 /* SEARCH ROW (below the inline bar) */
 .searchbar{
-  width:100%;
   display:flex;
-  justify-content:flex-start;
+  justify-content:center;         /* center the search bar */
+  width:100%;
 }
 .searchbar input[type="search"]{
-  flex:1;
-  max-width:780px;
+  flex:0 1 780px;                 /* max width of 780px, shrink on small screens */
+  width:100%;
   border:1px solid var(--line);
   border-radius:10px;
   padding:8px 10px;
@@ -87,7 +87,7 @@ html,body{
   padding:10px 12px;
   border-bottom:1px solid var(--line);
   color:var(--ink-2);
-  text-align:left;
+  text-align:center;              /* center stats too */
 }
 
 .grid{
@@ -147,9 +147,8 @@ html,body{
 }
 
 /* ===================== RESPONSIVE ===================== */
-/* On narrow screens allow the top row to wrap gracefully. */
 @media (max-width: 900px){
-  .topbar{ flex-wrap:wrap; gap:10px; }
+  .topbar{ gap:10px; }
   .topbar__logo{ width:140px; }
 }
 @media (max-width: 640px){
