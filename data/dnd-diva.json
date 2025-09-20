@@ -1,4 +1,24 @@
 [
+    {
+    "code": "100",
+    "name": "Diva Base Gel",
+    "hex": "",
+    "collection": "diva",
+    "product_url": "https://www.dndgel.com/products/diva-base-gel-100",
+    "finish": "",
+    "image": "",
+    "tags": ""
+  },
+    {
+    "code": "300",
+    "name": "Diva Top Gel - No Cleanse",
+    "hex": "",
+    "collection": "diva",
+    "product_url": "https://www.dndgel.com/products/diva-top-gel-300-no-cleanse",
+    "finish": "",
+    "image": "",
+    "tags": ""
+  },
   {
     "code": "001",
     "name": "Icy Glitz DIVA",
@@ -989,16 +1009,7 @@
     "image": "",
     "tags": ""
   },
-  {
-    "code": "100",
-    "name": "Base / Top Coat product, not a color shade",
-    "hex": "",
-    "collection": "diva",
-    "product_url": "https://www.dndgel.com/products/base-top-coat-product-not-a-color-shade-diva-100",
-    "finish": "",
-    "image": "",
-    "tags": ""
-  },
+
   {
     "code": "101",
     "name": "Cotton Candy Lilac DIVA",
@@ -1989,16 +2000,7 @@
     "image": "",
     "tags": ""
   },
-  {
-    "code": "200",
-    "name": "NO COLOR",
-    "hex": "",
-    "collection": "diva",
-    "product_url": "https://www.dndgel.com/products/no-color-diva-200",
-    "finish": "",
-    "image": "",
-    "tags": ""
-  },
+
   {
     "code": "201",
     "name": "Got The Juice DIVA",
