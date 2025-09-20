@@ -276,3 +276,15 @@ function wireEvents() {
   if (user) {
     try {
       const cloud = await fetchCloudCodes(user.id);     // from DB
+      const local = new Set(JSON.parse(localStorage.getItem(LS_OWNED) || '[]'));
+      // union so nothing is lost
+      const union = new Set([...cloud, ...local]);
+      ownedSet.clear();
+      union.forEach(c => ownedSet.add(c));
+      saveOwnedLocal();
+    } catch(e) { console.warn('initial cloud sync failed', e); }
+  }
+
+  wireEvents();
+  render(catalog.filter(matches));
+})();
