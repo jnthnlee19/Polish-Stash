@@ -1,0 +1,14 @@
+[build]
+  functions = "netlify/functions"
+  publish   = "."
+
+[[redirects]]
+  from = "/api/*"
+  to = "/.netlify/functions/:splat"
+  status = 200
+
+# Uncomment if you later convert to a SPA router
+# [[redirects]]
+#   from = "/*"
+#   to = "/index.html"
+#   status = 200

@@ -1,0 +1,54 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Polish Stash — DND Diva Inventory</title>
+    <link rel="icon" href="https://upload.wikimedia.org/wikipedia/commons/3/33/Nail_polish_bottle_icon.svg">
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <header class="site-header">
+      <div class="brand">
+        <img src="https://upload.wikimedia.org/wikipedia/commons/3/33/Nail_polish_bottle_icon.svg" alt="logo" class="logo"/>
+        <h1>Polish Stash</h1>
+      </div>
+      <div class="actions">
+        <input id="search" type="search" placeholder="Search by #, name, shade…" />
+        <select id="filter-collection">
+          <option value="all">All collections</option>
+          <option value="diva" selected>DND Diva</option>
+        </select>
+        <button id="owned-toggle" class="secondary">Show: All</button>
+      </div>
+    </header>
+
+    <main>
+      <section id="stats" class="stats"></section>
+      <section id="grid" class="grid" aria-live="polite"></section>
+    </main>
+
+    <footer class="site-footer">
+      <p>Made with ❤️ in Austin · Free to use · Some links may be affiliate links</p>
+    </footer>
+
+    <template id="card-tpl">
+      <article class="card">
+        <div class="swatch" aria-hidden="true"></div>
+        <div class="meta">
+          <h3 class="name"></h3>
+          <p class="code"></p>
+        </div>
+        <div class="controls">
+          <label class="heart">
+            <input type="checkbox" class="owned" />
+            <span title="Toggle owned">❤</span>
+          </label>
+          <a class="buy" target="_blank" rel="noopener">Buy</a>
+        </div>
+      </article>
+    </template>
+
+    <script type="module" src="app.js"></script>
+  </body>
+</html>
