@@ -1,1 +1,2902 @@
-
+[
+  {
+    "code": "1",
+    "name": "Icy Glitz DIVA",
+    "hex": "",
+    "collection": "diva",
+    "product_url": "",
+    "finish": "",
+    "image": "",
+    "tags": ""
+  },
+  {
+    "code": "2",
+    "name": "Full Moon DIVA",
+    "hex": "",
+    "collection": "diva",
+    "product_url": "",
+    "finish": "",
+    "image": "",
+    "tags": ""
+  },
+  {
+    "code": "3",
+    "name": "Mercury Blues DIVA",
+    "hex": "",
+    "collection": "diva",
+    "product_url": "",
+    "finish": "",
+    "image": "",
+    "tags": ""
+  },
+  {
+    "code": "4",
+    "name": "Holo, Hi? DIVA",
+    "hex": "",
+    "collection": "diva",
+    "product_url": "",
+    "finish": "",
+    "image": "",
+    "tags": ""
+  },
+  {
+    "code": "5",
+    "name": "Rainbow Disco DIVA",
+    "hex": "",
+    "collection": "diva",
+    "product_url": "",
+    "finish": "",
+    "image": "",
+    "tags": ""
+  },
+  {
+    "code": "6",
+    "name": "Sugar & Sprinkles DIVA",
+    "hex": "",
+    "collection": "diva",
+    "product_url": "",
+    "finish": "",
+    "image": "",
+    "tags": ""
+  },
+  {
+    "code": "7",
+    "name": "Stargirl DIVA",
+    "hex": "",
+    "collection": "diva",
+    "product_url": "",
+    "finish": "",
+    "image": "",
+    "tags": ""
+  },
+  {
+    "code": "8",
+    "name": "Queen Conch DIVA",
+    "hex": "",
+    "collection": "diva",
+    "product_url": "",
+    "finish": "",
+    "image": "",
+    "tags": ""
+  },
+  {
+    "code": "9",
+    "name": "Jewel DIVA",
+    "hex": "",
+    "collection": "diva",
+    "product_url": "",
+    "finish": "",
+    "image": "",
+    "tags": ""
+  },
+  {
+    "code": "10",
+    "name": "Pink Glazed DIVA",
+    "hex": "",
+    "collection": "diva",
+    "product_url": "",
+    "finish": "",
+    "image": "",
+    "tags": ""
+  },
+  {
+    "code": "11",
+    "name": "Doll’s Pearls DIVA",
+    "hex": "",
+    "collection": "diva",
+    "product_url": "",
+    "finish": "",
+    "image": "",
+    "tags": ""
+  },
+  {
+    "code": "12",
+    "name": "Dollhouse DIVA",
+    "hex": "",
+    "collection": "diva",
+    "product_url": "",
+    "finish": "",
+    "image": "",
+    "tags": ""
+  },
+  {
+    "code": "13",
+    "name": "Fairy Heels DIVA",
+    "hex": "",
+    "collection": "diva",
+    "product_url": "",
+    "finish": "",
+    "image": "",
+    "tags": ""
+  },
+  {
+    "code": "14",
+    "name": "Balanced Libra DIVA",
+    "hex": "",
+    "collection": "diva",
+    "product_url": "",
+    "finish": "",
+    "image": "",
+    "tags": ""
+  },
+  {
+    "code": "15",
+    "name": "Norah DIVA",
+    "hex": "",
+    "collection": "diva",
+    "product_url": "",
+    "finish": "",
+    "image": "",
+    "tags": ""
+  },
+  {
+    "code": "16",
+    "name": "Limoncello Bling DIVA",
+    "hex": "",
+    "collection": "diva",
+    "product_url": "",
+    "finish": "",
+    "image": "",
+    "tags": ""
+  },
+  {
+    "code": "17",
+    "name": "UFO Meets Earth DIVA",
+    "hex": "",
+    "collection": "diva",
+    "product_url": "",
+    "finish": "",
+    "image": "",
+    "tags": ""
+  },
+  {
+    "code": "18",
+    "name": "Rêve Palais DIVA",
+    "hex": "",
+    "collection": "diva",
+    "product_url": "",
+    "finish": "",
+    "image": "",
+    "tags": ""
+  },
+  {
+    "code": "19",
+    "name": "Out Of Place DIVA",
+    "hex": "",
+    "collection": "diva",
+    "product_url": "",
+    "finish": "",
+    "image": "",
+    "tags": ""
+  },
+  {
+    "code": "20",
+    "name": "Meet On The Dancefloor DIVA",
+    "hex": "",
+    "collection": "diva",
+    "product_url": "",
+    "finish": "",
+    "image": "",
+    "tags": ""
+  },
+  {
+    "code": "21",
+    "name": "Hologra‑Fun DIVA",
+    "hex": "",
+    "collection": "diva",
+    "product_url": "",
+    "finish": "",
+    "image": "",
+    "tags": ""
+  },
+  {
+    "code": "22",
+    "name": "Glimmer Galaxy DIVA",
+    "hex": "",
+    "collection": "diva",
+    "product_url": "",
+    "finish": "",
+    "image": "",
+    "tags": ""
+  },
+  {
+    "code": "23",
+    "name": "Oz of Holo DIVA",
+    "hex": "",
+    "collection": "diva",
+    "product_url": "",
+    "finish": "",
+    "image": "",
+    "tags": ""
+  },
+  {
+    "code": "24",
+    "name": "Rainbow Prisms DIVA",
+    "hex": "",
+    "collection": "diva",
+    "product_url": "",
+    "finish": "",
+    "image": "",
+    "tags": ""
+  },
+  {
+    "code": "25",
+    "name": "Chunky Holo DIVA",
+    "hex": "",
+    "collection": "diva",
+    "product_url": "",
+    "finish": "",
+    "image": "",
+    "tags": ""
+  },
+  {
+    "code": "26",
+    "name": "Smokey Shimmy DIVA",
+    "hex": "",
+    "collection": "diva",
+    "product_url": "",
+    "finish": "",
+    "image": "",
+    "tags": ""
+  },
+  {
+    "code": "27",
+    "name": "Bulletproof DIVA",
+    "hex": "",
+    "collection": "diva",
+    "product_url": "",
+    "finish": "",
+    "image": "",
+    "tags": ""
+  },
+  {
+    "code": "28",
+    "name": "Ready For The Ball DIVA",
+    "hex": "",
+    "collection": "diva",
+    "product_url": "",
+    "finish": "",
+    "image": "",
+    "tags": ""
+  },
+  {
+    "code": "29",
+    "name": "Golden Treasure Waves DIVA",
+    "hex": "",
+    "collection": "diva",
+    "product_url": "",
+    "finish": "",
+    "image": "",
+    "tags": ""
+  },
+  {
+    "code": "30",
+    "name": "Jade Jingle DIVA",
+    "hex": "",
+    "collection": "diva",
+    "product_url": "",
+    "finish": "",
+    "image": "",
+    "tags": ""
+  },
+  {
+    "code": "31",
+    "name": "Let’s Go To Vegas DIVA",
+    "hex": "",
+    "collection": "diva",
+    "product_url": "",
+    "finish": "",
+    "image": "",
+    "tags": ""
+  },
+  {
+    "code": "32",
+    "name": "Fight For Love DIVA",
+    "hex": "",
+    "collection": "diva",
+    "product_url": "",
+    "finish": "",
+    "image": "",
+    "tags": ""
+  },
+  {
+    "code": "33",
+    "name": "Firecracker DIVA",
+    "hex": "",
+    "collection": "diva",
+    "product_url": "",
+    "finish": "",
+    "image": "",
+    "tags": ""
+  },
+  {
+    "code": "34",
+    "name": "Sequin Lipstick DIVA",
+    "hex": "",
+    "collection": "diva",
+    "product_url": "",
+    "finish": "",
+    "image": "",
+    "tags": ""
+  },
+  {
+    "code": "35",
+    "name": "Sip N’ Glitz DIVA",
+    "hex": "",
+    "collection": "diva",
+    "product_url": "",
+    "finish": "",
+    "image": "",
+    "tags": ""
+  },
+  {
+    "code": "36",
+    "name": "Sultry Gem DIVA",
+    "hex": "",
+    "collection": "diva",
+    "product_url": "",
+    "finish": "",
+    "image": "",
+    "tags": ""
+  },
+  {
+    "code": "37",
+    "name": "Jet Life DIVA",
+    "hex": "",
+    "collection": "diva",
+    "product_url": "",
+    "finish": "",
+    "image": "",
+    "tags": ""
+  },
+  {
+    "code": "38",
+    "name": "Smokey White DIVA",
+    "hex": "",
+    "collection": "diva",
+    "product_url": "",
+    "finish": "",
+    "image": "",
+    "tags": ""
+  },
+  {
+    "code": "39",
+    "name": "Petal Haze DIVA",
+    "hex": "",
+    "collection": "diva",
+    "product_url": "",
+    "finish": "",
+    "image": "",
+    "tags": ""
+  },
+  {
+    "code": "40",
+    "name": "Milkshake DIVA",
+    "hex": "",
+    "collection": "diva",
+    "product_url": "",
+    "finish": "",
+    "image": "",
+    "tags": ""
+  },
+  {
+    "code": "41",
+    "name": "With Grayce DIVA",
+    "hex": "",
+    "collection": "diva",
+    "product_url": "",
+    "finish": "",
+    "image": "",
+    "tags": ""
+  },
+  {
+    "code": "42",
+    "name": "Porcelain Fine DIVA",
+    "hex": "",
+    "collection": "diva",
+    "product_url": "",
+    "finish": "",
+    "image": "",
+    "tags": ""
+  },
+  {
+    "code": "43",
+    "name": "Vanilla Creme DIVA",
+    "hex": "",
+    "collection": "diva",
+    "product_url": "",
+    "finish": "",
+    "image": "",
+    "tags": ""
+  },
+  {
+    "code": "44",
+    "name": "Spill the Tea DIVA",
+    "hex": "",
+    "collection": "diva",
+    "product_url": "",
+    "finish": "",
+    "image": "",
+    "tags": ""
+  },
+  {
+    "code": "45",
+    "name": "Sandy Claws DIVA",
+    "hex": "",
+    "collection": "diva",
+    "product_url": "",
+    "finish": "",
+    "image": "",
+    "tags": ""
+  },
+  {
+    "code": "46",
+    "name": "Sand Storm DIVA",
+    "hex": "",
+    "collection": "diva",
+    "product_url": "",
+    "finish": "",
+    "image": "",
+    "tags": ""
+  },
+  {
+    "code": "47",
+    "name": "Gourmet Nude DIVA",
+    "hex": "",
+    "collection": "diva",
+    "product_url": "",
+    "finish": "",
+    "image": "",
+    "tags": ""
+  },
+  {
+    "code": "48",
+    "name": "Pale Dume DIVA",
+    "hex": "",
+    "collection": "diva",
+    "product_url": "",
+    "finish": "",
+    "image": "",
+    "tags": ""
+  },
+  {
+    "code": "49",
+    "name": "Starfish Chai DIVA",
+    "hex": "",
+    "collection": "diva",
+    "product_url": "",
+    "finish": "",
+    "image": "",
+    "tags": ""
+  },
+  {
+    "code": "50",
+    "name": "Pinky Nude DIVA",
+    "hex": "",
+    "collection": "diva",
+    "product_url": "",
+    "finish": "",
+    "image": "",
+    "tags": ""
+  },
+  {
+    "code": "51",
+    "name": "Toasted DIVA",
+    "hex": "",
+    "collection": "diva",
+    "product_url": "",
+    "finish": "",
+    "image": "",
+    "tags": ""
+  },
+  {
+    "code": "52",
+    "name": "Biscuits N’ Honey DIVA",
+    "hex": "",
+    "collection": "diva",
+    "product_url": "",
+    "finish": "",
+    "image": "",
+    "tags": ""
+  },
+  {
+    "code": "53",
+    "name": "Snatched DIVA",
+    "hex": "",
+    "collection": "diva",
+    "product_url": "",
+    "finish": "",
+    "image": "",
+    "tags": ""
+  },
+  {
+    "code": "54",
+    "name": "Jurassic Grey DIVA",
+    "hex": "",
+    "collection": "diva",
+    "product_url": "",
+    "finish": "",
+    "image": "",
+    "tags": ""
+  },
+  {
+    "code": "55",
+    "name": "Unicorn Lantern DIVA",
+    "hex": "",
+    "collection": "diva",
+    "product_url": "",
+    "finish": "",
+    "image": "",
+    "tags": ""
+  },
+  {
+    "code": "56",
+    "name": "Snow Lilac DIVA",
+    "hex": "",
+    "collection": "diva",
+    "product_url": "",
+    "finish": "",
+    "image": "",
+    "tags": ""
+  },
+  {
+    "code": "57",
+    "name": "Only The Good DIVA",
+    "hex": "",
+    "collection": "diva",
+    "product_url": "",
+    "finish": "",
+    "image": "",
+    "tags": ""
+  },
+  {
+    "code": "58",
+    "name": "Grey Meets Purple DIVA",
+    "hex": "",
+    "collection": "diva",
+    "product_url": "",
+    "finish": "",
+    "image": "",
+    "tags": ""
+  },
+  {
+    "code": "59",
+    "name": "Azalea Flower DIVA",
+    "hex": "",
+    "collection": "diva",
+    "product_url": "",
+    "finish": "",
+    "image": "",
+    "tags": ""
+  },
+  {
+    "code": "60",
+    "name": "Timeless Tea DIVA",
+    "hex": "",
+    "collection": "diva",
+    "product_url": "",
+    "finish": "",
+    "image": "",
+    "tags": ""
+  },
+  {
+    "code": "61",
+    "name": "French Girl DIVA",
+    "hex": "",
+    "collection": "diva",
+    "product_url": "",
+    "finish": "",
+    "image": "",
+    "tags": ""
+  },
+  {
+    "code": "62",
+    "name": "Winter Wedding DIVA",
+    "hex": "",
+    "collection": "diva",
+    "product_url": "",
+    "finish": "",
+    "image": "",
+    "tags": ""
+  },
+  {
+    "code": "63",
+    "name": "Shortbread DIVA",
+    "hex": "",
+    "collection": "diva",
+    "product_url": "",
+    "finish": "",
+    "image": "",
+    "tags": ""
+  },
+  {
+    "code": "64",
+    "name": "Beige Sand DIVA",
+    "hex": "",
+    "collection": "diva",
+    "product_url": "",
+    "finish": "",
+    "image": "",
+    "tags": ""
+  },
+  {
+    "code": "65",
+    "name": "Kitty’s Paw DIVA",
+    "hex": "",
+    "collection": "diva",
+    "product_url": "",
+    "finish": "",
+    "image": "",
+    "tags": ""
+  },
+  {
+    "code": "66",
+    "name": "Texas Rose DIVA",
+    "hex": "",
+    "collection": "diva",
+    "product_url": "",
+    "finish": "",
+    "image": "",
+    "tags": ""
+  },
+  {
+    "code": "67",
+    "name": "Kangaroo’s Paw DIVA",
+    "hex": "",
+    "collection": "diva",
+    "product_url": "",
+    "finish": "",
+    "image": "",
+    "tags": ""
+  },
+  {
+    "code": "68",
+    "name": "Mauve Nude DIVA",
+    "hex": "",
+    "collection": "diva",
+    "product_url": "",
+    "finish": "",
+    "image": "",
+    "tags": ""
+  },
+  {
+    "code": "69",
+    "name": "Opposites Attract DIVA",
+    "hex": "",
+    "collection": "diva",
+    "product_url": "",
+    "finish": "",
+    "image": "",
+    "tags": ""
+  },
+  {
+    "code": "70",
+    "name": "Nude Glamour DIVA",
+    "hex": "",
+    "collection": "diva",
+    "product_url": "",
+    "finish": "",
+    "image": "",
+    "tags": ""
+  },
+  {
+    "code": "71",
+    "name": "Toasted Apricot DIVA",
+    "hex": "",
+    "collection": "diva",
+    "product_url": "",
+    "finish": "",
+    "image": "",
+    "tags": ""
+  },
+  {
+    "code": "72",
+    "name": "Chai Latte DIVA",
+    "hex": "",
+    "collection": "diva",
+    "product_url": "",
+    "finish": "",
+    "image": "",
+    "tags": ""
+  },
+  {
+    "code": "73",
+    "name": "Cheesecake DIVA",
+    "hex": "",
+    "collection": "diva",
+    "product_url": "",
+    "finish": "",
+    "image": "",
+    "tags": ""
+  },
+  {
+    "code": "74",
+    "name": "Creampuff DIVA",
+    "hex": "",
+    "collection": "diva",
+    "product_url": "",
+    "finish": "",
+    "image": "",
+    "tags": ""
+  },
+  {
+    "code": "75",
+    "name": "Dune Princess DIVA",
+    "hex": "",
+    "collection": "diva",
+    "product_url": "",
+    "finish": "",
+    "image": "",
+    "tags": ""
+  },
+  {
+    "code": "76",
+    "name": "Attention Seeker DIVA",
+    "hex": "",
+    "collection": "diva",
+    "product_url": "",
+    "finish": "",
+    "image": "",
+    "tags": ""
+  },
+  {
+    "code": "77",
+    "name": "Girl Next Door DIVA",
+    "hex": "",
+    "collection": "diva",
+    "product_url": "",
+    "finish": "",
+    "image": "",
+    "tags": ""
+  },
+  {
+    "code": "78",
+    "name": "Rose Nude DIVA",
+    "hex": "",
+    "collection": "diva",
+    "product_url": "",
+    "finish": "",
+    "image": "",
+    "tags": ""
+  },
+  {
+    "code": "79",
+    "name": "Oatmeal Rose DIVA",
+    "hex": "",
+    "collection": "diva",
+    "product_url": "",
+    "finish": "",
+    "image": "",
+    "tags": ""
+  },
+  {
+    "code": "80",
+    "name": "Pink About It DIVA",
+    "hex": "",
+    "collection": "diva",
+    "product_url": "",
+    "finish": "",
+    "image": "",
+    "tags": ""
+  },
+  {
+    "code": "81",
+    "name": "Pink Milkshake DIVA",
+    "hex": "",
+    "collection": "diva",
+    "product_url": "",
+    "finish": "",
+    "image": "",
+    "tags": ""
+  },
+  {
+    "code": "82",
+    "name": "Sunny Delight DIVA",
+    "hex": "",
+    "collection": "diva",
+    "product_url": "",
+    "finish": "",
+    "image": "",
+    "tags": ""
+  },
+  {
+    "code": "83",
+    "name": "Lemon Sorbet DIVA",
+    "hex": "",
+    "collection": "diva",
+    "product_url": "",
+    "finish": "",
+    "image": "",
+    "tags": ""
+  },
+  {
+    "code": "84",
+    "name": "Dandelion DIVA",
+    "hex": "",
+    "collection": "diva",
+    "product_url": "",
+    "finish": "",
+    "image": "",
+    "tags": ""
+  },
+  {
+    "code": "85",
+    "name": "Banana Cream DIVA",
+    "hex": "",
+    "collection": "diva",
+    "product_url": "",
+    "finish": "",
+    "image": "",
+    "tags": ""
+  },
+  {
+    "code": "86",
+    "name": "Durian, Plz DIVA",
+    "hex": "",
+    "collection": "diva",
+    "product_url": "",
+    "finish": "",
+    "image": "",
+    "tags": ""
+  },
+  {
+    "code": "87",
+    "name": "Moral Conscience DIVA",
+    "hex": "",
+    "collection": "diva",
+    "product_url": "",
+    "finish": "",
+    "image": "",
+    "tags": ""
+  },
+  {
+    "code": "88",
+    "name": "Hot N’ Juicy DIVA",
+    "hex": "",
+    "collection": "diva",
+    "product_url": "",
+    "finish": "",
+    "image": "",
+    "tags": ""
+  },
+  {
+    "code": "89",
+    "name": "Sour Geek DIVA",
+    "hex": "",
+    "collection": "diva",
+    "product_url": "",
+    "finish": "",
+    "image": "",
+    "tags": ""
+  },
+  {
+    "code": "90",
+    "name": "Coral Cravers DIVA",
+    "hex": "",
+    "collection": "diva",
+    "product_url": "",
+    "finish": "",
+    "image": "",
+    "tags": ""
+  },
+  {
+    "code": "91",
+    "name": "Nordic Breeze DIVA",
+    "hex": "",
+    "collection": "diva",
+    "product_url": "",
+    "finish": "",
+    "image": "",
+    "tags": ""
+  },
+  {
+    "code": "92",
+    "name": "Looking Glass DIVA",
+    "hex": "",
+    "collection": "diva",
+    "product_url": "",
+    "finish": "",
+    "image": "",
+    "tags": ""
+  },
+  {
+    "code": "93",
+    "name": "Standout DIVA",
+    "hex": "",
+    "collection": "diva",
+    "product_url": "",
+    "finish": "",
+    "image": "",
+    "tags": ""
+  },
+  {
+    "code": "94",
+    "name": "French Baguette DIVA",
+    "hex": "",
+    "collection": "diva",
+    "product_url": "",
+    "finish": "",
+    "image": "",
+    "tags": ""
+  },
+  {
+    "code": "95",
+    "name": "Paint Me Like A French Girl DIVA",
+    "hex": "",
+    "collection": "diva",
+    "product_url": "",
+    "finish": "",
+    "image": "",
+    "tags": ""
+  },
+  {
+    "code": "96",
+    "name": "Morphed Unicorn DIVA",
+    "hex": "",
+    "collection": "diva",
+    "product_url": "",
+    "finish": "",
+    "image": "",
+    "tags": ""
+  },
+  {
+    "code": "97",
+    "name": "Snatched Fairy DIVA",
+    "hex": "",
+    "collection": "diva",
+    "product_url": "",
+    "finish": "",
+    "image": "",
+    "tags": ""
+  },
+  {
+    "code": "98",
+    "name": "Wanna Kiss? DIVA",
+    "hex": "",
+    "collection": "diva",
+    "product_url": "",
+    "finish": "",
+    "image": "",
+    "tags": ""
+  },
+  {
+    "code": "99",
+    "name": "Blush Blossom DIVA",
+    "hex": "",
+    "collection": "diva",
+    "product_url": "",
+    "finish": "",
+    "image": "",
+    "tags": ""
+  },
+  {
+    "code": "100",
+    "name": "Base / Top Coat product, not a color shade",
+    "hex": "",
+    "collection": "diva",
+    "product_url": "",
+    "finish": "",
+    "image": "",
+    "tags": ""
+  },
+  {
+    "code": "101",
+    "name": "Cotton Candy Lilac DIVA",
+    "hex": "",
+    "collection": "diva",
+    "product_url": "",
+    "finish": "",
+    "image": "",
+    "tags": ""
+  },
+  {
+    "code": "102",
+    "name": "Off The Grid DIVA",
+    "hex": "",
+    "collection": "diva",
+    "product_url": "",
+    "finish": "",
+    "image": "",
+    "tags": ""
+  },
+  {
+    "code": "103",
+    "name": "Dainty Lavender DIVA",
+    "hex": "",
+    "collection": "diva",
+    "product_url": "",
+    "finish": "",
+    "image": "",
+    "tags": ""
+  },
+  {
+    "code": "104",
+    "name": "Peppermint Marshmallow DIVA",
+    "hex": "",
+    "collection": "diva",
+    "product_url": "",
+    "finish": "",
+    "image": "",
+    "tags": ""
+  },
+  {
+    "code": "105",
+    "name": "Pastel Pear DIVA",
+    "hex": "",
+    "collection": "diva",
+    "product_url": "",
+    "finish": "",
+    "image": "",
+    "tags": ""
+  },
+  {
+    "code": "106",
+    "name": "Pistachio Lemonade DIVA",
+    "hex": "",
+    "collection": "diva",
+    "product_url": "",
+    "finish": "",
+    "image": "",
+    "tags": ""
+  },
+  {
+    "code": "107",
+    "name": "Periwinkle Tides DIVA",
+    "hex": "",
+    "collection": "diva",
+    "product_url": "",
+    "finish": "",
+    "image": "",
+    "tags": ""
+  },
+  {
+    "code": "108",
+    "name": "Lather Me Up DIVA",
+    "hex": "",
+    "collection": "diva",
+    "product_url": "",
+    "finish": "",
+    "image": "",
+    "tags": ""
+  },
+  {
+    "code": "109",
+    "name": "Sky High DIVA",
+    "hex": "",
+    "collection": "diva",
+    "product_url": "",
+    "finish": "",
+    "image": "",
+    "tags": ""
+  },
+  {
+    "code": "110",
+    "name": "Little Miss Pointe DIVA",
+    "hex": "",
+    "collection": "diva",
+    "product_url": "",
+    "finish": "",
+    "image": "",
+    "tags": ""
+  },
+  {
+    "code": "111",
+    "name": "Pink A Boo DIVA",
+    "hex": "",
+    "collection": "diva",
+    "product_url": "",
+    "finish": "",
+    "image": "",
+    "tags": ""
+  },
+  {
+    "code": "112",
+    "name": "Sugared Rose DIVA",
+    "hex": "",
+    "collection": "diva",
+    "product_url": "",
+    "finish": "",
+    "image": "",
+    "tags": ""
+  },
+  {
+    "code": "113",
+    "name": "Cupcake Frosting DIVA",
+    "hex": "",
+    "collection": "diva",
+    "product_url": "",
+    "finish": "",
+    "image": "",
+    "tags": ""
+  },
+  {
+    "code": "114",
+    "name": "Homemade Tart DIVA",
+    "hex": "",
+    "collection": "diva",
+    "product_url": "",
+    "finish": "",
+    "image": "",
+    "tags": ""
+  },
+  {
+    "code": "115",
+    "name": "Pale Blush DIVA",
+    "hex": "",
+    "collection": "diva",
+    "product_url": "",
+    "finish": "",
+    "image": "",
+    "tags": ""
+  },
+  {
+    "code": "116",
+    "name": "Pastel Lily DIVA",
+    "hex": "",
+    "collection": "diva",
+    "product_url": "",
+    "finish": "",
+    "image": "",
+    "tags": ""
+  },
+  {
+    "code": "117",
+    "name": "Dewy Limeade DIVA",
+    "hex": "",
+    "collection": "diva",
+    "product_url": "",
+    "finish": "",
+    "image": "",
+    "tags": ""
+  },
+  {
+    "code": "118",
+    "name": "Pale Kiwi DIVA",
+    "hex": "",
+    "collection": "diva",
+    "product_url": "",
+    "finish": "",
+    "image": "",
+    "tags": ""
+  },
+  {
+    "code": "119",
+    "name": "Voo‑DEW Green DIVA",
+    "hex": "",
+    "collection": "diva",
+    "product_url": "",
+    "finish": "",
+    "image": "",
+    "tags": ""
+  },
+  {
+    "code": "120",
+    "name": "Mellow Gemini DIVA",
+    "hex": "",
+    "collection": "diva",
+    "product_url": "",
+    "finish": "",
+    "image": "",
+    "tags": ""
+  },
+  {
+    "code": "121",
+    "name": "Sunny Side Up DIVA",
+    "hex": "",
+    "collection": "diva",
+    "product_url": "",
+    "finish": "",
+    "image": "",
+    "tags": ""
+  },
+  {
+    "code": "122",
+    "name": "Vitamin D DIVA",
+    "hex": "",
+    "collection": "diva",
+    "product_url": "",
+    "finish": "",
+    "image": "",
+    "tags": ""
+  },
+  {
+    "code": "123",
+    "name": "Citrus Sizzle DIVA",
+    "hex": "",
+    "collection": "diva",
+    "product_url": "",
+    "finish": "",
+    "image": "",
+    "tags": ""
+  },
+  {
+    "code": "124",
+    "name": "Canary Crush DIVA",
+    "hex": "",
+    "collection": "diva",
+    "product_url": "",
+    "finish": "",
+    "image": "",
+    "tags": ""
+  },
+  {
+    "code": "125",
+    "name": "From the Swamp DIVA",
+    "hex": "",
+    "collection": "diva",
+    "product_url": "",
+    "finish": "",
+    "image": "",
+    "tags": ""
+  },
+  {
+    "code": "126",
+    "name": "Camp Cacti DIVA",
+    "hex": "",
+    "collection": "diva",
+    "product_url": "",
+    "finish": "",
+    "image": "",
+    "tags": ""
+  },
+  {
+    "code": "127",
+    "name": "Caterpillar Chronicles DIVA",
+    "hex": "",
+    "collection": "diva",
+    "product_url": "",
+    "finish": "",
+    "image": "",
+    "tags": ""
+  },
+  {
+    "code": "128",
+    "name": "Classic Waltz DIVA",
+    "hex": "",
+    "collection": "diva",
+    "product_url": "",
+    "finish": "",
+    "image": "",
+    "tags": ""
+  },
+  {
+    "code": "129",
+    "name": "Pies in the Sky DIVA",
+    "hex": "",
+    "collection": "diva",
+    "product_url": "",
+    "finish": "",
+    "image": "",
+    "tags": ""
+  },
+  {
+    "code": "130",
+    "name": "Delicate Blush DIVA",
+    "hex": "",
+    "collection": "diva",
+    "product_url": "",
+    "finish": "",
+    "image": "",
+    "tags": ""
+  },
+  {
+    "code": "131",
+    "name": "Sunday Brunch DIVA",
+    "hex": "",
+    "collection": "diva",
+    "product_url": "",
+    "finish": "",
+    "image": "",
+    "tags": ""
+  },
+  {
+    "code": "132",
+    "name": "Mauve Token DIVA",
+    "hex": "",
+    "collection": "diva",
+    "product_url": "",
+    "finish": "",
+    "image": "",
+    "tags": ""
+  },
+  {
+    "code": "133",
+    "name": "Purple Meets Pink DIVA",
+    "hex": "",
+    "collection": "diva",
+    "product_url": "",
+    "finish": "",
+    "image": "",
+    "tags": ""
+  },
+  {
+    "code": "134",
+    "name": "Bubblegum Bliss DIVA",
+    "hex": "",
+    "collection": "diva",
+    "product_url": "",
+    "finish": "",
+    "image": "",
+    "tags": ""
+  },
+  {
+    "code": "135",
+    "name": "Sweet Peony DIVA",
+    "hex": "",
+    "collection": "diva",
+    "product_url": "",
+    "finish": "",
+    "image": "",
+    "tags": ""
+  },
+  {
+    "code": "136",
+    "name": "Candy Coated DIVA",
+    "hex": "",
+    "collection": "diva",
+    "product_url": "",
+    "finish": "",
+    "image": "",
+    "tags": ""
+  },
+  {
+    "code": "137",
+    "name": "Little Pink Dress DIVA",
+    "hex": "",
+    "collection": "diva",
+    "product_url": "",
+    "finish": "",
+    "image": "",
+    "tags": ""
+  },
+  {
+    "code": "138",
+    "name": "Circus Pink DIVA",
+    "hex": "",
+    "collection": "diva",
+    "product_url": "",
+    "finish": "",
+    "image": "",
+    "tags": ""
+  },
+  {
+    "code": "139",
+    "name": "Panther’s Paws DIVA",
+    "hex": "",
+    "collection": "diva",
+    "product_url": "",
+    "finish": "",
+    "image": "",
+    "tags": ""
+  },
+  {
+    "code": "140",
+    "name": "Little Piggy DIVA",
+    "hex": "",
+    "collection": "diva",
+    "product_url": "",
+    "finish": "",
+    "image": "",
+    "tags": ""
+  },
+  {
+    "code": "141",
+    "name": "Classical Pink DIVA",
+    "hex": "",
+    "collection": "diva",
+    "product_url": "",
+    "finish": "",
+    "image": "",
+    "tags": ""
+  },
+  {
+    "code": "142",
+    "name": "Don’t Sugarcoat It DIVA",
+    "hex": "",
+    "collection": "diva",
+    "product_url": "",
+    "finish": "",
+    "image": "",
+    "tags": ""
+  },
+  {
+    "code": "143",
+    "name": "Coral Rose DIVA",
+    "hex": "",
+    "collection": "diva",
+    "product_url": "",
+    "finish": "",
+    "image": "",
+    "tags": ""
+  },
+  {
+    "code": "144",
+    "name": "Zesty Sunshine DIVA",
+    "hex": "",
+    "collection": "diva",
+    "product_url": "",
+    "finish": "",
+    "image": "",
+    "tags": ""
+  },
+  {
+    "code": "145",
+    "name": "Créme Peach DIVA",
+    "hex": "",
+    "collection": "diva",
+    "product_url": "",
+    "finish": "",
+    "image": "",
+    "tags": ""
+  },
+  {
+    "code": "146",
+    "name": "Toasted Butterscotch DIVA",
+    "hex": "",
+    "collection": "diva",
+    "product_url": "",
+    "finish": "",
+    "image": "",
+    "tags": ""
+  },
+  {
+    "code": "147",
+    "name": "Buried Treasure DIVA",
+    "hex": "",
+    "collection": "diva",
+    "product_url": "",
+    "finish": "",
+    "image": "",
+    "tags": ""
+  },
+  {
+    "code": "148",
+    "name": "Slate Mocha DIVA",
+    "hex": "",
+    "collection": "diva",
+    "product_url": "",
+    "finish": "",
+    "image": "",
+    "tags": ""
+  },
+  {
+    "code": "149",
+    "name": "Nude Musical DIVA",
+    "hex": "",
+    "collection": "diva",
+    "product_url": "",
+    "finish": "",
+    "image": "",
+    "tags": ""
+  },
+  {
+    "code": "150",
+    "name": "Overcast DIVA",
+    "hex": "",
+    "collection": "diva",
+    "product_url": "",
+    "finish": "",
+    "image": "",
+    "tags": ""
+  },
+  {
+    "code": "151",
+    "name": "Castles In Spain DIVA",
+    "hex": "",
+    "collection": "diva",
+    "product_url": "",
+    "finish": "",
+    "image": "",
+    "tags": ""
+  },
+  {
+    "code": "152",
+    "name": "Misty Pink DIVA",
+    "hex": "",
+    "collection": "diva",
+    "product_url": "",
+    "finish": "",
+    "image": "",
+    "tags": ""
+  },
+  {
+    "code": "153",
+    "name": "Glass Princess DIVA",
+    "hex": "",
+    "collection": "diva",
+    "product_url": "",
+    "finish": "",
+    "image": "",
+    "tags": ""
+  },
+  {
+    "code": "154",
+    "name": "Painter’s Antidote DIVA",
+    "hex": "",
+    "collection": "diva",
+    "product_url": "",
+    "finish": "",
+    "image": "",
+    "tags": ""
+  },
+  {
+    "code": "155",
+    "name": "Ghostride DIVA",
+    "hex": "",
+    "collection": "diva",
+    "product_url": "",
+    "finish": "",
+    "image": "",
+    "tags": ""
+  },
+  {
+    "code": "156",
+    "name": "Perfect White DIVA",
+    "hex": "",
+    "collection": "diva",
+    "product_url": "",
+    "finish": "",
+    "image": "",
+    "tags": ""
+  },
+  {
+    "code": "157",
+    "name": "Snowglobe DIVA",
+    "hex": "",
+    "collection": "diva",
+    "product_url": "",
+    "finish": "",
+    "image": "",
+    "tags": ""
+  },
+  {
+    "code": "158",
+    "name": "Matrix DIVA",
+    "hex": "",
+    "collection": "diva",
+    "product_url": "",
+    "finish": "",
+    "image": "",
+    "tags": ""
+  },
+  {
+    "code": "159",
+    "name": "Mi Amor DIVA",
+    "hex": "",
+    "collection": "diva",
+    "product_url": "",
+    "finish": "",
+    "image": "",
+    "tags": ""
+  },
+  {
+    "code": "160",
+    "name": "DIVA Red DIVA",
+    "hex": "",
+    "collection": "diva",
+    "product_url": "",
+    "finish": "",
+    "image": "",
+    "tags": ""
+  },
+  {
+    "code": "161",
+    "name": "Lovebug DIVA",
+    "hex": "",
+    "collection": "diva",
+    "product_url": "",
+    "finish": "",
+    "image": "",
+    "tags": ""
+  },
+  {
+    "code": "162",
+    "name": "Rebel Red DIVA",
+    "hex": "",
+    "collection": "diva",
+    "product_url": "",
+    "finish": "",
+    "image": "",
+    "tags": ""
+  },
+  {
+    "code": "163",
+    "name": "Left Him On Red DIVA",
+    "hex": "",
+    "collection": "diva",
+    "product_url": "",
+    "finish": "",
+    "image": "",
+    "tags": ""
+  },
+  {
+    "code": "164",
+    "name": "Raise the Barre DIVA",
+    "hex": "",
+    "collection": "diva",
+    "product_url": "",
+    "finish": "",
+    "image": "",
+    "tags": ""
+  },
+  {
+    "code": "165",
+    "name": "Need A Bellini DIVA",
+    "hex": "",
+    "collection": "diva",
+    "product_url": "",
+    "finish": "",
+    "image": "",
+    "tags": ""
+  },
+  {
+    "code": "166",
+    "name": "Daiquiri Cream DIVA",
+    "hex": "",
+    "collection": "diva",
+    "product_url": "",
+    "finish": "",
+    "image": "",
+    "tags": ""
+  },
+  {
+    "code": "167",
+    "name": "Golden Cheeks DIVA",
+    "hex": "",
+    "collection": "diva",
+    "product_url": "",
+    "finish": "",
+    "image": "",
+    "tags": ""
+  },
+  {
+    "code": "168",
+    "name": "Tangy Apricot DIVA",
+    "hex": "",
+    "collection": "diva",
+    "product_url": "",
+    "finish": "",
+    "image": "",
+    "tags": ""
+  },
+  {
+    "code": "169",
+    "name": "Dramatic Persimmon DIVA",
+    "hex": "",
+    "collection": "diva",
+    "product_url": "",
+    "finish": "",
+    "image": "",
+    "tags": ""
+  },
+  {
+    "code": "170",
+    "name": "Sunday Chills DIVA",
+    "hex": "",
+    "collection": "diva",
+    "product_url": "",
+    "finish": "",
+    "image": "",
+    "tags": ""
+  },
+  {
+    "code": "171",
+    "name": "Bella Pink DIVA",
+    "hex": "",
+    "collection": "diva",
+    "product_url": "",
+    "finish": "",
+    "image": "",
+    "tags": ""
+  },
+  {
+    "code": "172",
+    "name": "Where’s My Beret? DIVA",
+    "hex": "",
+    "collection": "diva",
+    "product_url": "",
+    "finish": "",
+    "image": "",
+    "tags": ""
+  },
+  {
+    "code": "173",
+    "name": "Sippin’ Rose Tea DIVA",
+    "hex": "",
+    "collection": "diva",
+    "product_url": "",
+    "finish": "",
+    "image": "",
+    "tags": ""
+  },
+  {
+    "code": "174",
+    "name": "Cool As A Coral DIVA",
+    "hex": "",
+    "collection": "diva",
+    "product_url": "",
+    "finish": "",
+    "image": "",
+    "tags": ""
+  },
+  {
+    "code": "175",
+    "name": "Coral Sunset DIVA",
+    "hex": "",
+    "collection": "diva",
+    "product_url": "",
+    "finish": "",
+    "image": "",
+    "tags": ""
+  },
+  {
+    "code": "176",
+    "name": "Nude Leather DIVA",
+    "hex": "",
+    "collection": "diva",
+    "product_url": "",
+    "finish": "",
+    "image": "",
+    "tags": ""
+  },
+  {
+    "code": "177",
+    "name": "Stage Right DIVA",
+    "hex": "",
+    "collection": "diva",
+    "product_url": "",
+    "finish": "",
+    "image": "",
+    "tags": ""
+  },
+  {
+    "code": "178",
+    "name": "Fawn Over Me DIVA",
+    "hex": "",
+    "collection": "diva",
+    "product_url": "",
+    "finish": "",
+    "image": "",
+    "tags": ""
+  },
+  {
+    "code": "179",
+    "name": "Dusty Mauve DIVA",
+    "hex": "",
+    "collection": "diva",
+    "product_url": "",
+    "finish": "",
+    "image": "",
+    "tags": ""
+  },
+  {
+    "code": "180",
+    "name": "Feelin’ Calm DIVA",
+    "hex": "",
+    "collection": "diva",
+    "product_url": "",
+    "finish": "",
+    "image": "",
+    "tags": ""
+  },
+  {
+    "code": "181",
+    "name": "Toasted Melody DIVA",
+    "hex": "",
+    "collection": "diva",
+    "product_url": "",
+    "finish": "",
+    "image": "",
+    "tags": ""
+  },
+  {
+    "code": "182",
+    "name": "Pleasant Pink DIVA",
+    "hex": "",
+    "collection": "diva",
+    "product_url": "",
+    "finish": "",
+    "image": "",
+    "tags": ""
+  },
+  {
+    "code": "183",
+    "name": "Pink Ribbons DIVA",
+    "hex": "",
+    "collection": "diva",
+    "product_url": "",
+    "finish": "",
+    "image": "",
+    "tags": ""
+  },
+  {
+    "code": "184",
+    "name": "Clean Pallet DIVA",
+    "hex": "",
+    "collection": "diva",
+    "product_url": "",
+    "finish": "",
+    "image": "",
+    "tags": ""
+  },
+  {
+    "code": "185",
+    "name": "Peach Cobbler DIVA",
+    "hex": "",
+    "collection": "diva",
+    "product_url": "",
+    "finish": "",
+    "image": "",
+    "tags": ""
+  },
+  {
+    "code": "186",
+    "name": "Peach Mimosa DIVA",
+    "hex": "",
+    "collection": "diva",
+    "product_url": "",
+    "finish": "",
+    "image": "",
+    "tags": ""
+  },
+  {
+    "code": "187",
+    "name": "Princesa Rosa DIVA",
+    "hex": "",
+    "collection": "diva",
+    "product_url": "",
+    "finish": "",
+    "image": "",
+    "tags": ""
+  },
+  {
+    "code": "188",
+    "name": "Highlighter Yellow DIVA",
+    "hex": "",
+    "collection": "diva",
+    "product_url": "",
+    "finish": "",
+    "image": "",
+    "tags": ""
+  },
+  {
+    "code": "189",
+    "name": "Tennis Ball DIVA",
+    "hex": "",
+    "collection": "diva",
+    "product_url": "",
+    "finish": "",
+    "image": "",
+    "tags": ""
+  },
+  {
+    "code": "190",
+    "name": "Tokyo Tea DIVA",
+    "hex": "",
+    "collection": "diva",
+    "product_url": "",
+    "finish": "",
+    "image": "",
+    "tags": ""
+  },
+  {
+    "code": "191",
+    "name": "Lizard State DIVA",
+    "hex": "",
+    "collection": "diva",
+    "product_url": "",
+    "finish": "",
+    "image": "",
+    "tags": ""
+  },
+  {
+    "code": "192",
+    "name": "Lawn Green DIVA",
+    "hex": "",
+    "collection": "diva",
+    "product_url": "",
+    "finish": "",
+    "image": "",
+    "tags": ""
+  },
+  {
+    "code": "193",
+    "name": "Hot Girl Walks DIVA",
+    "hex": "",
+    "collection": "diva",
+    "product_url": "",
+    "finish": "",
+    "image": "",
+    "tags": ""
+  },
+  {
+    "code": "194",
+    "name": "Clique-Bait DIVA",
+    "hex": "",
+    "collection": "diva",
+    "product_url": "",
+    "finish": "",
+    "image": "",
+    "tags": ""
+  },
+  {
+    "code": "195",
+    "name": "Side Of Ube DIVA",
+    "hex": "",
+    "collection": "diva",
+    "product_url": "",
+    "finish": "",
+    "image": "",
+    "tags": ""
+  },
+  {
+    "code": "196",
+    "name": "Lavender Silk DIVA",
+    "hex": "",
+    "collection": "diva",
+    "product_url": "",
+    "finish": "",
+    "image": "",
+    "tags": ""
+  },
+  {
+    "code": "197",
+    "name": "Masquerade DIVA",
+    "hex": "",
+    "collection": "diva",
+    "product_url": "",
+    "finish": "",
+    "image": "",
+    "tags": ""
+  },
+  {
+    "code": "198",
+    "name": "Overseas DIVA",
+    "hex": "",
+    "collection": "diva",
+    "product_url": "",
+    "finish": "",
+    "image": "",
+    "tags": ""
+  },
+  {
+    "code": "199",
+    "name": "Call Me Your Highness DIVA",
+    "hex": "",
+    "collection": "diva",
+    "product_url": "",
+    "finish": "",
+    "image": "",
+    "tags": ""
+  },
+  {
+    "code": "200",
+    "name": "NO COLOR",
+    "hex": "",
+    "collection": "diva",
+    "product_url": "",
+    "finish": "",
+    "image": "",
+    "tags": ""
+  },
+  {
+    "code": "201",
+    "name": "Got The Juice DIVA",
+    "hex": "",
+    "collection": "diva",
+    "product_url": "",
+    "finish": "",
+    "image": "",
+    "tags": ""
+  },
+  {
+    "code": "202",
+    "name": "In The Mix DIVA",
+    "hex": "",
+    "collection": "diva",
+    "product_url": "",
+    "finish": "",
+    "image": "",
+    "tags": ""
+  },
+  {
+    "code": "203",
+    "name": "Mimosa DIVA",
+    "hex": "",
+    "collection": "diva",
+    "product_url": "",
+    "finish": "",
+    "image": "",
+    "tags": ""
+  },
+  {
+    "code": "204",
+    "name": "Marigold DIVA",
+    "hex": "",
+    "collection": "diva",
+    "product_url": "",
+    "finish": "",
+    "image": "",
+    "tags": ""
+  },
+  {
+    "code": "205",
+    "name": "Papaya Pop DIVA",
+    "hex": "",
+    "collection": "diva",
+    "product_url": "",
+    "finish": "",
+    "image": "",
+    "tags": ""
+  },
+  {
+    "code": "206",
+    "name": "Peach Paradise DIVA",
+    "hex": "",
+    "collection": "diva",
+    "product_url": "",
+    "finish": "",
+    "image": "",
+    "tags": ""
+  },
+  {
+    "code": "207",
+    "name": "Sunset Creamsicle DIVA",
+    "hex": "",
+    "collection": "diva",
+    "product_url": "",
+    "finish": "",
+    "image": "",
+    "tags": ""
+  },
+  {
+    "code": "208",
+    "name": "Perfect Orange DIVA",
+    "hex": "",
+    "collection": "diva",
+    "product_url": "",
+    "finish": "",
+    "image": "",
+    "tags": ""
+  },
+  {
+    "code": "209",
+    "name": "Coral Breeze DIVA",
+    "hex": "",
+    "collection": "diva",
+    "product_url": "",
+    "finish": "",
+    "image": "",
+    "tags": ""
+  },
+  {
+    "code": "210",
+    "name": "Sunkissed Coral DIVA",
+    "hex": "",
+    "collection": "diva",
+    "product_url": "",
+    "finish": "",
+    "image": "",
+    "tags": ""
+  },
+  {
+    "code": "211",
+    "name": "What A Tease DIVA",
+    "hex": "",
+    "collection": "diva",
+    "product_url": "",
+    "finish": "",
+    "image": "",
+    "tags": ""
+  },
+  {
+    "code": "212",
+    "name": "Sour Bubblegum DIVA",
+    "hex": "",
+    "collection": "diva",
+    "product_url": "",
+    "finish": "",
+    "image": "",
+    "tags": ""
+  },
+  {
+    "code": "213",
+    "name": "Juicy Fruit DIVA",
+    "hex": "",
+    "collection": "diva",
+    "product_url": "",
+    "finish": "",
+    "image": "",
+    "tags": ""
+  },
+  {
+    "code": "214",
+    "name": "Candy Store DIVA",
+    "hex": "",
+    "collection": "diva",
+    "product_url": "",
+    "finish": "",
+    "image": "",
+    "tags": ""
+  },
+  {
+    "code": "215",
+    "name": "Fuchsia Rose DIVA",
+    "hex": "",
+    "collection": "diva",
+    "product_url": "",
+    "finish": "",
+    "image": "",
+    "tags": ""
+  },
+  {
+    "code": "216",
+    "name": "Tropic Like It's Hot DIVA",
+    "hex": "",
+    "collection": "diva",
+    "product_url": "",
+    "finish": "",
+    "image": "",
+    "tags": ""
+  },
+  {
+    "code": "217",
+    "name": "Fire Breather DIVA",
+    "hex": "",
+    "collection": "diva",
+    "product_url": "",
+    "finish": "",
+    "image": "",
+    "tags": ""
+  },
+  {
+    "code": "218",
+    "name": "Astral Spark DIVA",
+    "hex": "",
+    "collection": "diva",
+    "product_url": "",
+    "finish": "",
+    "image": "",
+    "tags": ""
+  },
+  {
+    "code": "219",
+    "name": "Bumblebee DIVA",
+    "hex": "",
+    "collection": "diva",
+    "product_url": "",
+    "finish": "",
+    "image": "",
+    "tags": ""
+  },
+  {
+    "code": "220",
+    "name": "Little Miss Sunshine DIVA",
+    "hex": "",
+    "collection": "diva",
+    "product_url": "",
+    "finish": "",
+    "image": "",
+    "tags": ""
+  },
+  {
+    "code": "221",
+    "name": "Aloha! DIVA",
+    "hex": "",
+    "collection": "diva",
+    "product_url": "",
+    "finish": "",
+    "image": "",
+    "tags": ""
+  },
+  {
+    "code": "222",
+    "name": "Angel Numbers DIVA",
+    "hex": "",
+    "collection": "diva",
+    "product_url": "",
+    "finish": "",
+    "image": "",
+    "tags": ""
+  },
+  {
+    "code": "223",
+    "name": "Star Student DIVA",
+    "hex": "",
+    "collection": "diva",
+    "product_url": "",
+    "finish": "",
+    "image": "",
+    "tags": ""
+  },
+  {
+    "code": "224",
+    "name": "Gypsy Soul DIVA",
+    "hex": "",
+    "collection": "diva",
+    "product_url": "",
+    "finish": "",
+    "image": "",
+    "tags": ""
+  },
+  {
+    "code": "225",
+    "name": "Scorpio’s Discovery DIVA",
+    "hex": "",
+    "collection": "diva",
+    "product_url": "",
+    "finish": "",
+    "image": "",
+    "tags": ""
+  },
+  {
+    "code": "226",
+    "name": "Acai On The Prize DIVA",
+    "hex": "",
+    "collection": "diva",
+    "product_url": "",
+    "finish": "",
+    "image": "",
+    "tags": ""
+  },
+  {
+    "code": "227",
+    "name": "R U Jelly? DIVA",
+    "hex": "",
+    "collection": "diva",
+    "product_url": "",
+    "finish": "",
+    "image": "",
+    "tags": ""
+  },
+  {
+    "code": "228",
+    "name": "I Have A Crush DIVA",
+    "hex": "",
+    "collection": "diva",
+    "product_url": "",
+    "finish": "",
+    "image": "",
+    "tags": ""
+  },
+  {
+    "code": "229",
+    "name": "Juicy Cowgirl DIVA",
+    "hex": "",
+    "collection": "diva",
+    "product_url": "",
+    "finish": "",
+    "image": "",
+    "tags": ""
+  },
+  {
+    "code": "230",
+    "name": "Strawberry Martini DIVA",
+    "hex": "",
+    "collection": "diva",
+    "product_url": "",
+    "finish": "",
+    "image": "",
+    "tags": ""
+  },
+  {
+    "code": "231",
+    "name": "Blazing Berry DIVA",
+    "hex": "",
+    "collection": "diva",
+    "product_url": "",
+    "finish": "",
+    "image": "",
+    "tags": ""
+  },
+  {
+    "code": "232",
+    "name": "Coral Craze DIVA",
+    "hex": "",
+    "collection": "diva",
+    "product_url": "",
+    "finish": "",
+    "image": "",
+    "tags": ""
+  },
+  {
+    "code": "233",
+    "name": "Heatwave DIVA",
+    "hex": "",
+    "collection": "diva",
+    "product_url": "",
+    "finish": "",
+    "image": "",
+    "tags": ""
+  },
+  {
+    "code": "234",
+    "name": "Jellyfish Candy DIVA",
+    "hex": "",
+    "collection": "diva",
+    "product_url": "",
+    "finish": "",
+    "image": "",
+    "tags": ""
+  },
+  {
+    "code": "235",
+    "name": "\"Sorry There Was Traffic\" DIVA",
+    "hex": "",
+    "collection": "diva",
+    "product_url": "",
+    "finish": "",
+    "image": "",
+    "tags": ""
+  },
+  {
+    "code": "236",
+    "name": "Heart Eyes 4 U DIVA",
+    "hex": "",
+    "collection": "diva",
+    "product_url": "",
+    "finish": "",
+    "image": "",
+    "tags": ""
+  },
+  {
+    "code": "237",
+    "name": "Detective Mauve DIVA",
+    "hex": "",
+    "collection": "diva",
+    "product_url": "",
+    "finish": "",
+    "image": "",
+    "tags": ""
+  },
+  {
+    "code": "238",
+    "name": "Warm Stone DIVA",
+    "hex": "",
+    "collection": "diva",
+    "product_url": "",
+    "finish": "",
+    "image": "",
+    "tags": ""
+  },
+  {
+    "code": "239",
+    "name": "Chestnut Wonders DIVA",
+    "hex": "",
+    "collection": "diva",
+    "product_url": "",
+    "finish": "",
+    "image": "",
+    "tags": ""
+  },
+  {
+    "code": "240",
+    "name": "Deep Taupe DIVA",
+    "hex": "",
+    "collection": "diva",
+    "product_url": "",
+    "finish": "",
+    "image": "",
+    "tags": ""
+  },
+  {
+    "code": "241",
+    "name": "Wild Sage DIVA",
+    "hex": "",
+    "collection": "diva",
+    "product_url": "",
+    "finish": "",
+    "image": "",
+    "tags": ""
+  },
+  {
+    "code": "242",
+    "name": "Nautical Gray DIVA",
+    "hex": "",
+    "collection": "diva",
+    "product_url": "",
+    "finish": "",
+    "image": "",
+    "tags": ""
+  },
+  {
+    "code": "243",
+    "name": "Imperial Jade DIVA",
+    "hex": "",
+    "collection": "diva",
+    "product_url": "",
+    "finish": "",
+    "image": "",
+    "tags": ""
+  },
+  {
+    "code": "244",
+    "name": "Emerald Meadow DIVA",
+    "hex": "",
+    "collection": "diva",
+    "product_url": "",
+    "finish": "",
+    "image": "",
+    "tags": ""
+  },
+  {
+    "code": "245",
+    "name": "Teal Treasures DIVA",
+    "hex": "",
+    "collection": "diva",
+    "product_url": "",
+    "finish": "",
+    "image": "",
+    "tags": ""
+  },
+  {
+    "code": "246",
+    "name": "Blue Lagoon DIVA",
+    "hex": "",
+    "collection": "diva",
+    "product_url": "",
+    "finish": "",
+    "image": "",
+    "tags": ""
+  },
+  {
+    "code": "247",
+    "name": "Jelly Marine DIVA",
+    "hex": "",
+    "collection": "diva",
+    "product_url": "",
+    "finish": "",
+    "image": "",
+    "tags": ""
+  },
+  {
+    "code": "248",
+    "name": "Cherry On Top DIVA",
+    "hex": "",
+    "collection": "diva",
+    "product_url": "",
+    "finish": "",
+    "image": "",
+    "tags": ""
+  },
+  {
+    "code": "249",
+    "name": "Red-Y Or Not DIVA",
+    "hex": "",
+    "collection": "diva",
+    "product_url": "",
+    "finish": "",
+    "image": "",
+    "tags": ""
+  },
+  {
+    "code": "250",
+    "name": "Cedar Brown DIVA",
+    "hex": "",
+    "collection": "diva",
+    "product_url": "",
+    "finish": "",
+    "image": "",
+    "tags": ""
+  },
+  {
+    "code": "251",
+    "name": "Chocolate Red DIVA.",
+    "hex": "",
+    "collection": "diva",
+    "product_url": "",
+    "finish": "",
+    "image": "",
+    "tags": ""
+  },
+  {
+    "code": "252",
+    "name": "Silky Beets DIVA.",
+    "hex": "",
+    "collection": "diva",
+    "product_url": "",
+    "finish": "",
+    "image": "",
+    "tags": ""
+  },
+  {
+    "code": "253",
+    "name": "Gothic Grape DIVA.",
+    "hex": "",
+    "collection": "diva",
+    "product_url": "",
+    "finish": "",
+    "image": "",
+    "tags": ""
+  },
+  {
+    "code": "254",
+    "name": "Vampire’s Kiss DIVA.",
+    "hex": "",
+    "collection": "diva",
+    "product_url": "",
+    "finish": "",
+    "image": "",
+    "tags": ""
+  },
+  {
+    "code": "255",
+    "name": "Misty Morning DIVA.",
+    "hex": "",
+    "collection": "diva",
+    "product_url": "",
+    "finish": "",
+    "image": "",
+    "tags": ""
+  },
+  {
+    "code": "256",
+    "name": "Pale Pebble DIVA.",
+    "hex": "",
+    "collection": "diva",
+    "product_url": "",
+    "finish": "",
+    "image": "",
+    "tags": ""
+  },
+  {
+    "code": "257",
+    "name": "Dewdrop Gray DIVA.",
+    "hex": "",
+    "collection": "diva",
+    "product_url": "",
+    "finish": "",
+    "image": "",
+    "tags": ""
+  },
+  {
+    "code": "258",
+    "name": "Dusk Delight DIVA.",
+    "hex": "",
+    "collection": "diva",
+    "product_url": "",
+    "finish": "",
+    "image": "",
+    "tags": ""
+  },
+  {
+    "code": "259",
+    "name": "Airy Daze DIVA.",
+    "hex": "",
+    "collection": "diva",
+    "product_url": "",
+    "finish": "",
+    "image": "",
+    "tags": ""
+  },
+  {
+    "code": "260",
+    "name": "Slate Of The Art DIVA.",
+    "hex": "",
+    "collection": "diva",
+    "product_url": "",
+    "finish": "",
+    "image": "",
+    "tags": ""
+  },
+  {
+    "code": "261",
+    "name": "One Hit Wonder DIVA.",
+    "hex": "",
+    "collection": "diva",
+    "product_url": "",
+    "finish": "",
+    "image": "",
+    "tags": ""
+  },
+  {
+    "code": "262",
+    "name": "Seafoam Serenade DIVA.",
+    "hex": "",
+    "collection": "diva",
+    "product_url": "",
+    "finish": "",
+    "image": "",
+    "tags": ""
+  },
+  {
+    "code": "263",
+    "name": "Trip To NYC DIVA.",
+    "hex": "",
+    "collection": "diva",
+    "product_url": "",
+    "finish": "",
+    "image": "",
+    "tags": ""
+  },
+  {
+    "code": "264",
+    "name": "Taupe Temptation DIVA.",
+    "hex": "",
+    "collection": "diva",
+    "product_url": "",
+    "finish": "",
+    "image": "",
+    "tags": ""
+  },
+  {
+    "code": "265",
+    "name": "Driftwood DIVA.",
+    "hex": "",
+    "collection": "diva",
+    "product_url": "",
+    "finish": "",
+    "image": "",
+    "tags": ""
+  },
+  {
+    "code": "266",
+    "name": "Nude Mocha DIVA.",
+    "hex": "",
+    "collection": "diva",
+    "product_url": "",
+    "finish": "",
+    "image": "",
+    "tags": ""
+  },
+  {
+    "code": "267",
+    "name": "Almond Toffee DIVA.",
+    "hex": "",
+    "collection": "diva",
+    "product_url": "",
+    "finish": "",
+    "image": "",
+    "tags": ""
+  },
+  {
+    "code": "268",
+    "name": "Cedar-licious DIVA.",
+    "hex": "",
+    "collection": "diva",
+    "product_url": "",
+    "finish": "",
+    "image": "",
+    "tags": ""
+  },
+  {
+    "code": "269",
+    "name": "Chocolate Therapy DIVA.",
+    "hex": "",
+    "collection": "diva",
+    "product_url": "",
+    "finish": "",
+    "image": "",
+    "tags": ""
+  },
+  {
+    "code": "270",
+    "name": "Triple Espresso DIVA.",
+    "hex": "",
+    "collection": "diva",
+    "product_url": "",
+    "finish": "",
+    "image": "",
+    "tags": ""
+  },
+  {
+    "code": "271",
+    "name": "Western Cedar DIVA.",
+    "hex": "",
+    "collection": "diva",
+    "product_url": "",
+    "finish": "",
+    "image": "",
+    "tags": ""
+  },
+  {
+    "code": "272",
+    "name": "Autumn Blaze DIVA.",
+    "hex": "",
+    "collection": "diva",
+    "product_url": "",
+    "finish": "",
+    "image": "",
+    "tags": ""
+  },
+  {
+    "code": "273",
+    "name": "Sound Of Rain DIVA.",
+    "hex": "",
+    "collection": "diva",
+    "product_url": "",
+    "finish": "",
+    "image": "",
+    "tags": ""
+  },
+  {
+    "code": "274",
+    "name": "Mint Julep DIVA.",
+    "hex": "",
+    "collection": "diva",
+    "product_url": "",
+    "finish": "",
+    "image": "",
+    "tags": ""
+  },
+  {
+    "code": "275",
+    "name": "Botanical Bliss DIVA.",
+    "hex": "",
+    "collection": "diva",
+    "product_url": "",
+    "finish": "",
+    "image": "",
+    "tags": ""
+  },
+  {
+    "code": "276",
+    "name": "Kiss The Prince DIVA.",
+    "hex": "",
+    "collection": "diva",
+    "product_url": "",
+    "finish": "",
+    "image": "",
+    "tags": ""
+  },
+  {
+    "code": "277",
+    "name": "Foggy Fern DIVA.",
+    "hex": "",
+    "collection": "diva",
+    "product_url": "",
+    "finish": "",
+    "image": "",
+    "tags": ""
+  },
+  {
+    "code": "278",
+    "name": "Meditation DIVA.",
+    "hex": "",
+    "collection": "diva",
+    "product_url": "",
+    "finish": "",
+    "image": "",
+    "tags": ""
+  },
+  {
+    "code": "279",
+    "name": "Wasabi Baby DIVA.",
+    "hex": "",
+    "collection": "diva",
+    "product_url": "",
+    "finish": "",
+    "image": "",
+    "tags": ""
+  },
+  {
+    "code": "280",
+    "name": "Salsa Verde DIVA.",
+    "hex": "",
+    "collection": "diva",
+    "product_url": "",
+    "finish": "",
+    "image": "",
+    "tags": ""
+  },
+  {
+    "code": "281",
+    "name": "Collard Greens DIVA.",
+    "hex": "",
+    "collection": "diva",
+    "product_url": "",
+    "finish": "",
+    "image": "",
+    "tags": ""
+  },
+  {
+    "code": "282",
+    "name": "Dirty Martini DIVA.",
+    "hex": "",
+    "collection": "diva",
+    "product_url": "",
+    "finish": "",
+    "image": "",
+    "tags": ""
+  },
+  {
+    "code": "283",
+    "name": "Army Green DIVA.",
+    "hex": "",
+    "collection": "diva",
+    "product_url": "",
+    "finish": "",
+    "image": "",
+    "tags": ""
+  },
+  {
+    "code": "284",
+    "name": "Olive Green DIVA.",
+    "hex": "",
+    "collection": "diva",
+    "product_url": "",
+    "finish": "",
+    "image": "",
+    "tags": ""
+  },
+  {
+    "code": "285",
+    "name": "Sage’d The Day DIVA.",
+    "hex": "",
+    "collection": "diva",
+    "product_url": "",
+    "finish": "",
+    "image": "",
+    "tags": ""
+  },
+  {
+    "code": "286",
+    "name": "First Place DIVA.",
+    "hex": "",
+    "collection": "diva",
+    "product_url": "",
+    "finish": "",
+    "image": "",
+    "tags": ""
+  },
+  {
+    "code": "287",
+    "name": "Houseplant DIVA.",
+    "hex": "",
+    "collection": "diva",
+    "product_url": "",
+    "finish": "",
+    "image": "",
+    "tags": ""
+  },
+  {
+    "code": "288",
+    "name": "Going Camo DIVA.",
+    "hex": "",
+    "collection": "diva",
+    "product_url": "",
+    "finish": "",
+    "image": "",
+    "tags": ""
+  },
+  {
+    "code": "289",
+    "name": "Crocodile Tales DIVA.",
+    "hex": "",
+    "collection": "diva",
+    "product_url": "",
+    "finish": "",
+    "image": "",
+    "tags": ""
+  },
+  {
+    "code": "290",
+    "name": "Art House DIVA.",
+    "hex": "",
+    "collection": "diva",
+    "product_url": "",
+    "finish": "",
+    "image": "",
+    "tags": ""
+  }
+]
