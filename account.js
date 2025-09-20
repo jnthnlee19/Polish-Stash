@@ -1,14 +1,14 @@
 // account.js
 import { createClient } from 'https://esm.sh/@supabase/supabase-js@2';
 
-// ---- 1) SET THESE from your Supabase project (Project Settings → API)
+// ---- SET THESE from your Supabase project (Project Settings → API)
 const SUPABASE_URL = 'https://kgghfsnawrddnvssxham.supabase.co';
 const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImtnZ2hmc25hd3JkZG52c3N4aGFtIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTgzODkwMjgsImV4cCI6MjA3Mzk2NTAyOH0.RtTZhVPeoxhamYxczVf-crkG8_jIBBpIJlfz9rvjCIg';
 
-// ---- 2) Init
+// ---- Init
 const supabase = createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
-// ---- 3) DOM
+// ---- DOM
 const el = (id) => document.getElementById(id);
 const email = el('email');
 const password = el('password');
@@ -22,74 +22,61 @@ const who = el('who');
 const logoutBtn = el('logout');
 
 const bizname = el('bizname');
-const saveBiz = el('save-biz');
-const applyBiz = el('apply-biz');
 const bizMsg = el('biz-msg');
 
-const saveCloud = el('save-cloud');
-const loadCloud = el('load-cloud');
-const resetCloud = el('reset-cloud');
-const invMsg = el('inv-msg');
-
-// Local storage key (same as catalog)
+// Same key used by catalog app
 const LS_OWNED = 'polish-stash-owned';
 
-// ---- 4) Helpers
+// ---- Helpers
 const ok = (m) => `<span class="ok">${m}</span>`;
 const err = (m) => `<span class="err">${m}</span>`;
+const sleep = (ms) => new Promise(r => setTimeout(r, ms));
 
-// Ensure tables exist in Supabase (see SQL below). We assume RLS is on.
+function zpad3(code) {
+  const s = String(code || '').trim();
+  return /^\d+$/.test(s) ? s.padStart(3, '0') : s;
+}
+
+// Debounce helper for auto-save
+function debounce(fn, ms = 500) {
+  let t; return (...args) => { clearTimeout(t); t = setTimeout(() => fn(...args), ms); };
+}
+
+// ---- DB helpers
 async function ensureProfile(userId) {
-  // create row if missing
   await supabase.from('profiles').upsert({ id: userId }, { onConflict: 'id' });
 }
-
 async function loadProfile(userId) {
   const { data, error } = await supabase.from('profiles').select('business_name').eq('id', userId).single();
-  if (error && error.code !== 'PGRST116') throw error; // ignore "not found" when no row yet
+  if (error && error.code !== 'PGRST116') throw error; // ignore not-found
   return data || { business_name: '' };
 }
-
 async function saveProfile(userId, businessName) {
   const { error } = await supabase.from('profiles').upsert({ id: userId, business_name: businessName });
   if (error) throw error;
 }
-
-async function saveOwnedToCloud(userId) {
-  const owned = JSON.parse(localStorage.getItem(LS_OWNED) || '[]');
-  // Upsert owned codes as rows; we store *only* owned items.
-  if (!owned.length) {
-    return { count: 0 };
-  }
-  const rows = owned.map(code => ({ user_id: userId, code: String(code) }));
+async function fetchCloudCodes(userId) {
+  const { data, error } = await supabase.from('inventory').select('code').eq('user_id', userId);
+  if (error) { console.warn('cloud fetch error', error); return []; }
+  return Array.from(new Set((data || []).map(r => zpad3(r.code))));
+}
+async function upsertManyCodes(userId, codesSet) {
+  const rows = [...codesSet].map(code => ({ user_id: userId, code: zpad3(code) }));
+  if (!rows.length) return;
   const { error } = await supabase.from('inventory').upsert(rows, { onConflict: 'user_id,code' });
-  if (error) throw error;
-  return { count: rows.length };
+  if (error) console.warn('upsert error', error);
 }
 
-async function loadOwnedFromCloud(userId) {
-  const { data, error } = await supabase.from('inventory').select('code').eq('user_id', userId).order('code');
-  if (error) throw error;
-  const codes = [...new Set((data || []).map(r => String(r.code)))];
-  localStorage.setItem(LS_OWNED, JSON.stringify(codes));
-  return { count: codes.length };
-}
-
-async function resetCloudInventory(userId) {
-  const { error } = await supabase.from('inventory').delete().eq('user_id', userId);
-  if (error) throw error;
-}
-
-// ---- 5) Auth wiring
+// ---- Auth actions
 signupBtn.addEventListener('click', async () => {
   authMsg.innerHTML = 'Creating account…';
   try {
-    const { data, error } = await supabase.auth.signUp({
+    const { error } = await supabase.auth.signUp({
       email: email.value.trim(),
       password: password.value
     });
     if (error) throw error;
-    authMsg.innerHTML = ok('Check your email to confirm your account. Then log in.');
+    authMsg.innerHTML = ok('Check your email to confirm, then log in.');
   } catch (e) {
     authMsg.innerHTML = err(e.message || 'Sign up failed');
   }
@@ -98,7 +85,7 @@ signupBtn.addEventListener('click', async () => {
 signinBtn.addEventListener('click', async () => {
   authMsg.innerHTML = 'Signing in…';
   try {
-    const { data, error } = await supabase.auth.signInWithPassword({
+    const { error } = await supabase.auth.signInWithPassword({
       email: email.value.trim(),
       password: password.value
     });
@@ -116,7 +103,7 @@ logoutBtn.addEventListener('click', async () => {
   authMsg.innerHTML = ok('Logged out');
 });
 
-// ---- 6) Post-auth dashboard init
+// ---- After login: SHOW dashboard + AUTO SYNC everything
 async function onAuthed() {
   const { data: { user } } = await supabase.auth.getUser();
   if (!user) return;
@@ -127,70 +114,57 @@ async function onAuthed() {
 
   await ensureProfile(user.id);
 
-  // Load profile → fill biz name
+  // 1) BUSINESS NAME — apply from cloud if present; else push local up
   try {
-    const p = await loadProfile(user.id);
-    bizname.value = p.business_name || (localStorage.getItem('business_name') || '');
+    const profile = await loadProfile(user.id);
+    const cloudName = (profile && profile.business_name) || '';
+    const localName = localStorage.getItem('business_name') || '';
+    if (cloudName) {
+      // prefer cloud
+      localStorage.setItem('business_name', cloudName);
+      bizname.value = cloudName;
+      bizMsg.innerHTML = ok('Loaded business name from cloud.');
+    } else if (localName) {
+      await saveProfile(user.id, localName);
+      bizname.value = localName;
+      bizMsg.innerHTML = ok('Saved your business name to cloud.');
+    } else {
+      bizname.value = '';
+      bizMsg.innerHTML = '';
+    }
   } catch (e) {
-    bizMsg.innerHTML = err('Could not load business name');
+    bizMsg.innerHTML = err('Could not sync business name.');
+  }
+
+  // 2) INVENTORY — merge cloud + local (union), write both places
+  try {
+    const cloud = new Set(await fetchCloudCodes(user.id));
+    const local = new Set(JSON.parse(localStorage.getItem(LS_OWNED) || '[]').map(zpad3));
+    const union = new Set([...cloud, ...local]);
+    localStorage.setItem(LS_OWNED, JSON.stringify([...union]));
+    await upsertManyCodes(user.id, union);
+    // small UX hint
+    authMsg.innerHTML = ok('Inventory synced. Open the catalog to see your On-Hand items.');
+  } catch (e) {
+    console.warn('inventory sync failed', e);
   }
 }
 
-// ---- 7) Profile + inventory actions
-saveBiz.addEventListener('click', async () => {
+// ---- BUSINESS NAME: auto-save on edit (debounced)
+bizname.addEventListener('input', debounce(async () => {
   const { data: { user } } = await supabase.auth.getUser();
-  if (!user) return bizMsg.innerHTML = err('Please log in first.');
+  const val = bizname.value.trim();
+  localStorage.setItem('business_name', val);
+  if (!user) { bizMsg.innerHTML = ok('Saved on this device.'); return; }
   try {
-    await saveProfile(user.id, bizname.value.trim());
+    await saveProfile(user.id, val);
     bizMsg.innerHTML = ok('Saved to cloud.');
   } catch (e) {
     bizMsg.innerHTML = err('Save failed.');
   }
-});
+}, 600));
 
-applyBiz.addEventListener('click', () => {
-  localStorage.setItem('business_name', bizname.value.trim());
-  bizMsg.innerHTML = ok('Applied to this device. Refresh your catalog to see it.');
-});
-
-saveCloud.addEventListener('click', async () => {
-  const { data: { user } } = await supabase.auth.getUser();
-  if (!user) return invMsg.innerHTML = err('Please log in first.');
-  invMsg.innerHTML = 'Saving…';
-  try {
-    const { count } = await saveOwnedToCloud(user.id);
-    invMsg.innerHTML = ok(`Saved ${count} on-hand items to cloud.`);
-  } catch (e) {
-    invMsg.innerHTML = err('Save failed.');
-  }
-});
-
-loadCloud.addEventListener('click', async () => {
-  const { data: { user } } = await supabase.auth.getUser();
-  if (!user) return invMsg.innerHTML = err('Please log in first.');
-  invMsg.innerHTML = 'Loading…';
-  try {
-    const { count } = await loadOwnedFromCloud(user.id);
-    invMsg.innerHTML = ok(`Loaded ${count} on-hand items to this device. Refresh your catalog to see them.`);
-  } catch (e) {
-    invMsg.innerHTML = err('Load failed.');
-  }
-});
-
-resetCloud.addEventListener('click', async () => {
-  const { data: { user } } = await supabase.auth.getUser();
-  if (!user) return invMsg.innerHTML = err('Please log in first.');
-  if (!confirm('This will remove all your On-Hand entries from the cloud. Continue?')) return;
-  invMsg.innerHTML = 'Resetting…';
-  try {
-    await resetCloudInventory(user.id);
-    invMsg.innerHTML = ok('Cloud On-Hand inventory cleared.');
-  } catch (e) {
-    invMsg.innerHTML = err('Reset failed.');
-  }
-});
-
-// ---- 8) Bootstrap: show dashboard if already logged in
+// ---- Auto-show dashboard if already logged in
 (async function boot(){
   const { data: { user } } = await supabase.auth.getUser();
   if (user) await onAuthed();
