@@ -9,23 +9,27 @@
   </head>
   <body>
 <header class="site-header">
-  <!-- Top row: everything inline -->
-  <div class="top-row">
-    <img src="./assets/polish-stash-logo.png" alt="Polish Stash logo" class="logo"/>
-    <h2 id="custom-site-name" class="site-name">Your Business Name</h2>
-    <select id="filter-collection">
+  <!-- TOP ROW: all inline, left → right -->
+  <div class="topbar">
+    <img src="./assets/polish-stash-logo.png" alt="Polish Stash logo" class="topbar__logo" />
+
+    <h2 id="custom-site-name" class="topbar__name">Your Business Name</h2>
+
+    <select id="filter-collection" class="topbar__select">
       <option value="all">All collections</option>
       <option value="diva" selected>DND Diva</option>
     </select>
-    <button id="show-all" class="secondary">Show All</button>
-    <button id="show-owned" class="secondary">Show On Hand</button>
+
+    <button id="show-all"   class="btn">Show All</button>
+    <button id="show-owned" class="btn">Show On Hand</button>
   </div>
 
-  <!-- Search row -->
-  <div class="search-row">
+  <!-- SEARCH ROW (below the inline bar) -->
+  <div class="searchbar">
     <input id="search" type="search" placeholder="Search by #, name, shade…" />
   </div>
 </header>
+
 
 
 
