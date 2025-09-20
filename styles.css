@@ -32,16 +32,16 @@ html,body{
   display:flex;
   align-items:center;
   justify-content:flex-start;
-  gap:12px;
+  gap:10px;
   width:100%;
   margin:0;
 }
 .brand-inline .logo{
-  width:48px;                       /* tweak size as you like (40–56px works well) */
+  width:40px;                       /* compact logo size */
   height:auto;
 }
 .brand-inline h2{
-  font-size:1.4rem;
+  font-size:1.2rem;
   font-weight:600;
   margin:0;
   color:var(--ink);
@@ -136,7 +136,7 @@ html,body{
 
 /* ---------- Small screens ---------- */
 @media (max-width: 640px){
-  .brand-inline .logo{ width:42px; }
-  .brand-inline h2{ font-size:1.25rem; }
+  .brand-inline .logo{ width:36px; }
+  .brand-inline h2{ font-size:1.05rem; }
   .actions{ gap:8px; }
 }
