@@ -33,10 +33,10 @@ html,body{
   display:flex;
   justify-content:center;
   align-items:center;
-  margin:8px 0 4px;
+  margin:1px 0 1px;
 }
 .brand .logo{
-  width:128px;     /* adjust to taste (100–150px) */
+  width:168px;     /* adjust to taste (100–150px) */
   height:auto;
 }
 .brand h1{display:none;} /* hide legacy text label */
