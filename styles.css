@@ -16,57 +16,63 @@ html,body{
   font:16px/1.5 system-ui,-apple-system,Segoe UI,Roboto,Inter,Helvetica,Arial,sans-serif
 }
 
-/* ---------- Header (inline logo + business name + controls) ---------- */
+/* ---------- Header (stacked layout) ---------- */
 .site-header{
   position:sticky; top:0; z-index:10;
   background:#fff;
   border-bottom:1px solid var(--line);
-  padding:6px 12px;                 /* compact vertical padding */
+  padding:8px 12px;            /* compact */
   display:flex;
   flex-direction:column;
-  gap:6px;                          /* small gap between rows */
+  align-items:center;
+  gap:8px;                     /* small gaps between rows */
 }
 
-/* First row: logo + name inline */
-.brand-inline{
-  display:flex;
-  align-items:center;
-  justify-content:flex-start;
-  gap:10px;
-  width:100%;
-  margin:0;
-}
-.brand-inline .logo{
-  width:40px;                       /* compact logo size */
+/* 1) Logo */
+.site-header .logo{
+  width:160px;                 /* fixed per your request */
   height:auto;
+  display:block;
 }
-.brand-inline h2{
-  font-size:1.2rem;
+
+/* 2) Business name */
+.site-name{
+  font-size:1.3rem;
   font-weight:600;
   margin:0;
+  text-align:center;
   color:var(--ink);
 }
 
-/* Second row: controls */
-.actions{
+/* 3–5) Rows */
+.row{
   width:100%;
   display:flex;
-  gap:10px;
   align-items:center;
-  flex-wrap:wrap;
-  justify-content:flex-start;       /* left align to match brand row */
+  justify-content:center;
 }
-.actions input[type="search"],
-.actions select{
+
+.row-controls,
+.row-filters{
+  gap:8px;
+}
+
+.row-search input[type="search"]{
+  width:min(780px, 92%);
+}
+
+/* Controls styling */
+select, input[type="search"]{
   border:1px solid var(--line);
   border-radius:10px;
   padding:8px 10px;
 }
-.actions button{
+
+button.secondary{
   border:1px solid var(--line);
   background:#fff;
   border-radius:10px;
-  padding:8px 10px;
+  padding:8px 12px;
   cursor:pointer;
 }
 
@@ -136,7 +142,6 @@ html,body{
 
 /* ---------- Small screens ---------- */
 @media (max-width: 640px){
-  .brand-inline .logo{ width:36px; }
-  .brand-inline h2{ font-size:1.05rem; }
-  .actions{ gap:8px; }
+  .site-header .logo{ width:140px; }
+  .site-name{ font-size:1.15rem; }
 }
