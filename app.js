@@ -44,6 +44,16 @@ const state = {
 let catalog = []; // filled in main()
 
 // ==================== Helpers ====================
+// Pretty labels for collections shown on the cards
+const COLLECTION_LABELS = {
+  diva: 'Diva Colors',
+  dnd: 'DND Colors',
+  dc: 'DC Colors',
+  tools: 'Nail Tools',
+  essentials: 'Essentials'
+};
+const collectionLabel = (key) => COLLECTION_LABELS[key] || (key ? key.toUpperCase() : '');
+
 const normalize = (s) => (s || '').toString().toLowerCase();
 
 function matches(item) {
@@ -151,7 +161,7 @@ function render(items) {
 
     // Meta
     nameEl.textContent = item.name || '';
-    codeEl.textContent = `#${item.code || ''} · ${String(item.collection || '').toUpperCase()}`;
+ codeEl.textContent = `#${item.code || ''} · ${collectionLabel(item.collection)}`;
 
     // Buy link (direct)
     buy.href = productLink(item);
