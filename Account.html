@@ -14,7 +14,7 @@
     input[type="email"], input[type="password"], input[type="text"] {
       border:1px solid var(--line); border-radius:10px; padding:8px 10px; width:100%;
     }
-    button { border:1px solid var(--line); border-radius:10px; background:#fff; padding:8px 12px; cursor:pointer; }
+    button, a.btn { border:1px solid var(--line); border-radius:10px; background:#fff; padding:8px 12px; cursor:pointer; text-decoration:none; color:inherit; }
     .muted { color:var(--ink-2); font-size:.9rem; }
     .right { display:flex; justify-content:flex-end; gap:8px; }
     .ok { color:#1a7f37; }
@@ -26,7 +26,8 @@
     <div class="topbar">
       <img src="./assets/polish-stash-logo.png" alt="Polish Stash logo" class="topbar__logo" />
       <h2 class="topbar__name">Account</h2>
-      <a class="btn" href="./index.html">Back to Catalog</a>
+      <!-- New: Enter button in header -->
+      <a class="btn" id="enter-top" href="./index.html">Enter</a>
     </div>
   </header>
 
@@ -56,7 +57,11 @@
     <section id="dash" class="cardish" style="display:none; margin-top:14px">
       <div class="row" style="justify-content:space-between">
         <h3>Welcome, <span id="who"></span></h3>
-        <button id="logout">Log out</button>
+        <div class="row">
+          <!-- New: Enter button in dashboard -->
+          <button id="enter">Enter</button>
+          <button id="logout">Log out</button>
+        </div>
       </div>
 
       <p class="muted" style="margin:6px 0 14px">
