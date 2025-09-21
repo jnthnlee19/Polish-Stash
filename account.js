@@ -5,44 +5,50 @@ import { createClient } from 'https://esm.sh/@supabase/supabase-js@2';
 const SUPABASE_URL = 'https://kgghfsnawrddnvssxham.supabase.co';
 const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImtnZ2hmc25hd3JkZG52c3N4aGFtIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTgzODkwMjgsImV4cCI6MjA3Mzk2NTAyOH0.RtTZhVPeoxhamYxczVf-crkG8_jIBBpIJlfz9rvjCIg';
 
+
 // ---- Init
 const supabase = createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
 // ---- DOM
 const el = (id) => document.getElementById(id);
-const email = el('email');
-const password = el('password');
-const signupBtn = el('signup');
-const signinBtn = el('signin');
-const authMsg = el('auth-msg');
 
+// Sign in (existing users)
+const inEmail = el('in-email');
+const inPassword = el('in-password');
+const signinBtn = el('signin');
+const signinMsg = el('signin-msg');
+
+// Sign up (new users)
+const upEmail = el('up-email');
+const upPassword = el('up-password');
+const upBizname = el('up-bizname');
+const signupBtn = el('signup');
+const signupMsg = el('signup-msg');
+
+// Dashboard
 const dash = el('dash');
-const authCard = el('auth-card');
 const who = el('who');
 const logoutBtn = el('logout');
-
 const bizname = el('bizname');
 const bizMsg = el('biz-msg');
 
-// New: Enter buttons/link
+// Enter buttons/link
 const enterBtn = el('enter');
 const enterTop = el('enter-top');
 
-// Same key used by catalog app
+// Local storage keys
 const LS_OWNED = 'polish-stash-owned';
+const LS_BIZ   = 'business_name';
+const LS_PENDING_BIZ = 'pending_business_name';
 
 // ---- Helpers
 const ok = (m) => `<span class="ok">${m}</span>`;
 const err = (m) => `<span class="err">${m}</span>`;
-function zpad3(code) {
-  const s = String(code || '').trim();
-  return /^\d+$/.test(s) ? s.padStart(3, '0') : s;
-}
-function debounce(fn, ms = 500) {
-  let t; return (...args) => { clearTimeout(t); t = setTimeout(() => fn(...args), ms); };
-}
+function zpad3(code) { const s = String(code || '').trim(); return /^\d+$/.test(s) ? s.padStart(3,'0') : s; }
+function debounce(fn, ms = 500) { let t; return (...a)=>{ clearTimeout(t); t=setTimeout(()=>fn(...a), ms); }; }
+
 function buildCatalogUrl() {
-  const name = (bizname && bizname.value.trim()) || (localStorage.getItem('business_name') || '').trim();
+  const name = (bizname && bizname.value.trim()) || (localStorage.getItem(LS_BIZ) || '').trim();
   return name ? `./index.html?bn=${encodeURIComponent(name)}` : './index.html';
 }
 function wireEnterLinks() {
@@ -76,98 +82,129 @@ async function upsertManyCodes(userId, codesSet) {
   if (error) console.warn('upsert error', error);
 }
 
-// ---- Auth actions
+// ---- Auth: Sign up
 signupBtn.addEventListener('click', async () => {
-  authMsg.innerHTML = 'Creating account…';
+  signupMsg.innerHTML = 'Creating account…';
   try {
+    const email = upEmail.value.trim();
+    const pwd   = upPassword.value;
+    const bn    = upBizname.value.trim();
+
+    // Save business name locally for after confirmation & login
+    if (bn) {
+      localStorage.setItem(LS_BIZ, bn);
+      localStorage.setItem(LS_PENDING_BIZ, bn); // apply to profile after first login
+    }
+
     const { error } = await supabase.auth.signUp({
-      email: email.value.trim(),
-      password: password.value
+      email,
+      password: pwd,
+      options: {
+        emailRedirectTo: `${location.origin}/account.html`, // send back to this page
+        data: { signup_business_name: bn } // optional metadata
+      }
     });
     if (error) throw error;
-    authMsg.innerHTML = ok('Check your email to confirm, then log in.');
+
+    signupMsg.innerHTML = ok('Check your email to confirm, then log in.');
   } catch (e) {
-    authMsg.innerHTML = err(e.message || 'Sign up failed');
+    signupMsg.innerHTML = err(e.message || 'Sign up failed');
   }
 });
 
+// ---- Auth: Sign in
 signinBtn.addEventListener('click', async () => {
-  authMsg.innerHTML = 'Signing in…';
+  signinMsg.innerHTML = 'Signing in…';
   try {
     const { error } = await supabase.auth.signInWithPassword({
-      email: email.value.trim(),
-      password: password.value
+      email: inEmail.value.trim(),
+      password: inPassword.value
     });
     if (error) throw error;
     await onAuthed();
   } catch (e) {
-    authMsg.innerHTML = err(e.message || 'Log in failed');
+    signinMsg.innerHTML = err(e.message || 'Log in failed');
   }
 });
 
-logoutBtn.addEventListener('click', async () => {
-  await supabase.auth.signOut();
-  dash.style.display = 'none';
-  authCard.style.display = '';
-  authMsg.innerHTML = ok('Logged out');
-  wireEnterLinks(); // keep Enter pointing somewhere sensible
-});
+// ---- Logout
+if (logoutBtn) {
+  logoutBtn.addEventListener('click', async () => {
+    await supabase.auth.signOut();
+    dash.style.display = 'none';
+    // Keep the two auth cards visible (they’re the default UI in account.html)
+    document.querySelectorAll('.grid2, .cardish').forEach(el => el.style.display = '');
+    wireEnterLinks(); // keep Enter pointing somewhere sensible
+  });
+}
 
-// ---- After login: SHOW dashboard + AUTO SYNC everything
+// ---- After login: show dashboard + auto-sync
 async function onAuthed() {
   const { data: { user } } = await supabase.auth.getUser();
   if (!user) return;
 
-  who.textContent = user.email || user.id;
-  authCard.style.display = 'none';
+  // Hide the two auth cards and show dashboard
+  document.querySelectorAll('.grid2, .cardish').forEach((el, i) => {
+    // only hide the first grid (auth cards); dash is separate
+    if (i === 0) el.style.display = 'none';
+  });
   dash.style.display = '';
+
+  who.textContent = user.email || user.id;
 
   await ensureProfile(user.id);
 
-  // BUSINESS NAME — prefer cloud; else push local up
+  // BUSINESS NAME — prefer pending (from signup) > cloud > local
   try {
+    const pending = localStorage.getItem(LS_PENDING_BIZ) || '';
     const profile = await loadProfile(user.id);
     const cloudName = (profile && profile.business_name) || '';
-    const localName = localStorage.getItem('business_name') || '';
-    if (cloudName) {
-      localStorage.setItem('business_name', cloudName);
-      bizname.value = cloudName;
-      bizMsg.innerHTML = ok('Loaded business name from cloud.');
+    const localName = localStorage.getItem(LS_BIZ) || '';
+
+    let finalName = '';
+    if (pending) {
+      await saveProfile(user.id, pending);
+      finalName = pending;
+      localStorage.removeItem(LS_PENDING_BIZ);
+    } else if (cloudName) {
+      finalName = cloudName;
     } else if (localName) {
       await saveProfile(user.id, localName);
-      bizname.value = localName;
-      bizMsg.innerHTML = ok('Saved your business name to cloud.');
+      finalName = localName;
+    }
+
+    bizname.value = finalName || '';
+    if (finalName) {
+      localStorage.setItem(LS_BIZ, finalName);
+      bizMsg.innerHTML = ok('Business name synced.');
     } else {
-      bizname.value = '';
       bizMsg.innerHTML = '';
     }
   } catch (e) {
     bizMsg.innerHTML = err('Could not sync business name.');
   }
 
-  // INVENTORY — merge cloud + local and write both
+  // INVENTORY — merge cloud + local and write both (union)
   try {
-    const { data: { user } } = await supabase.auth.getUser();
     const cloud = new Set(await fetchCloudCodes(user.id));
     const local = new Set(JSON.parse(localStorage.getItem(LS_OWNED) || '[]').map(zpad3));
     const union = new Set([...cloud, ...local]);
     localStorage.setItem(LS_OWNED, JSON.stringify([...union]));
     await upsertManyCodes(user.id, union);
-    authMsg.innerHTML = ok('Inventory synced. Tap Enter to open your catalog.');
   } catch (e) {
     console.warn('inventory sync failed', e);
   }
 
-  // Make sure Enter buttons point to index with ?bn=
   wireEnterLinks();
 }
 
-// BUSINESS NAME: auto-save on edit (debounced) + update Enter link
+// Business Name: auto-save to cloud (debounced)
 bizname.addEventListener('input', debounce(async () => {
-  const { data: { user } } = await supabase.auth.getUser();
   const val = bizname.value.trim();
-  localStorage.setItem('business_name', val);
+  localStorage.setItem(LS_BIZ, val);
   wireEnterLinks();
+
+  const { data: { user } } = await supabase.auth.getUser();
   if (!user) { bizMsg.innerHTML = ok('Saved on this device.'); return; }
   try {
     await saveProfile(user.id, val);
@@ -177,7 +214,16 @@ bizname.addEventListener('input', debounce(async () => {
   }
 }, 600));
 
-// ---- Auto-show dashboard if already logged in; set Enter hrefs initially
+// Handle email-confirm redirect
+(function handleEmailLink(){
+  const p = new URLSearchParams(location.search);
+  if (p.get('type') === 'signup') {
+    const el = signupMsg || signinMsg;
+    if (el) el.innerHTML = ok('Email confirmed! You can log in now.');
+  }
+})();
+
+// Boot: wire Enter + auto-open dashboard if already logged in
 (async function boot(){
   wireEnterLinks();
   const { data: { user } } = await supabase.auth.getUser();
