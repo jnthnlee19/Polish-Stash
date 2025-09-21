@@ -1,13 +1,17 @@
 // ==================== Data loader ====================
-async function loadData() {
+async function loadJson(path) {
   try {
-    const res = await fetch('./data/dnd-diva.json', { cache: 'no-store' });
-    if (!res.ok) throw new Error(`HTTP ${res.status}`);
+    const res = await fetch(path, { cache: 'no-store' });
+    if (!res.ok) return [];
     return await res.json();
-  } catch (err) {
-    console.error('Failed to load catalog:', err);
-    return [];
-  }
+  } catch { return []; }
+}
+async function loadData() {
+  const [diva, extras] = await Promise.all([
+    loadJson('./data/dnd-diva.json'),
+    loadJson('./data/extras.json')     // new file
+  ]);
+  return [...diva, ...extras];
 }
 
 // ==================== Supabase (for cloud sync) ====================
@@ -16,6 +20,7 @@ import { createClient } from 'https://esm.sh/@supabase/supabase-js@2';
 // --- PASTE THE SAME VALUES YOU USED IN account.js ---
 const SUPABASE_URL = 'https://kgghfsnawrddnvssxham.supabase.co';
 const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImtnZ2hmc25hd3JkZG52c3N4aGFtIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTgzODkwMjgsImV4cCI6MjA3Mzk2NTAyOH0.RtTZhVPeoxhamYxczVf-crkG8_jIBBpIJlfz9rvjCIg';
+
 
 const supabase = createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
@@ -30,19 +35,16 @@ async function fetchCloudCodes(userId) {
   if (error) { console.warn('cloud fetch error', error); return []; }
   return Array.from(new Set((data || []).map(r => String(r.code))));
 }
-// NEW: replace cloud set with current set (delete all, then insert)
+// Replace cloud set with current set (delete all, then insert)
 async function replaceCloudCodes(userId, codesIterable) {
-  // delete everything first
   const del = await supabase.from('inventory').delete().eq('user_id', userId);
   if (del.error) throw new Error(del.error.message || 'Delete failed');
-  // insert current set
   const rows = [...codesIterable].map(code => ({ user_id: userId, code: String(code) }));
   if (!rows.length) return;
   const ins = await supabase.from('inventory').insert(rows);
   if (ins.error) throw new Error(ins.error.message || 'Insert failed');
 }
-
-// (kept for per-item live sync while toggling)
+// Per-item helpers (when toggling)
 async function upsertCloudCode(userId, code) {
   try { await supabase.from('inventory').upsert({ user_id: userId, code: String(code) }); } catch(e){ console.warn('cloud upsert error', e); }
 }
@@ -52,8 +54,6 @@ async function deleteCloudCode(userId, code) {
 
 // ==================== Local Storage (owned) ====================
 const LS_OWNED = 'polish-stash-owned';
-
-// Migrate any old short numeric codes to 3 digits (e.g., "2" -> "002")
 (function migrateOwned() {
   const raw = JSON.parse(localStorage.getItem(LS_OWNED) || '[]');
   const migrated = Array.from(new Set(raw.map(c => {
@@ -62,7 +62,6 @@ const LS_OWNED = 'polish-stash-owned';
   })));
   localStorage.setItem(LS_OWNED, JSON.stringify(migrated));
 })();
-
 const ownedSet = new Set(JSON.parse(localStorage.getItem(LS_OWNED) || '[]'));
 function saveOwnedLocal() {
   localStorage.setItem(LS_OWNED, JSON.stringify([...ownedSet]));
@@ -75,24 +74,24 @@ const search           = document.getElementById('search');
 const filterCollection = document.getElementById('filter-collection');
 const showAllBtn       = document.getElementById('show-all');
 const showOwnedBtn     = document.getElementById('show-owned');
-const saveOwnedBtn     = document.getElementById('save-owned');   // Save button exists in your HTML
+const saveOwnedBtn     = document.getElementById('save-owned');
 const tpl              = document.getElementById('card-tpl');
 
 // ==================== UI State ====================
 const state = {
   q: '',
-  collection: (filterCollection && filterCollection.value) || 'diva', // default to Diva
+  collection: (filterCollection && filterCollection.value) || 'diva',
   show: 'all', // 'all' | 'owned'
 };
 
-let catalog = []; // filled in main()
-let user = null;  // supabase user if logged in
+let catalog = [];
+let user = null;
 
 // ==================== Helpers ====================
 const normalize = (s) => (s || '').toString().toLowerCase();
 
 function matches(item) {
-  const hay     = `${item.code} ${item.name} ${item.collection}`.toLowerCase();
+  const hay     = `${item.code || ''} ${item.name || ''} ${item.collection || ''}`.toLowerCase();
   const okQ     = hay.includes(state.q);
   const okCol   = state.collection === 'all' || item.collection === state.collection;
   const isOwned = ownedSet.has(item.code);
@@ -102,6 +101,8 @@ function matches(item) {
 
 const COLLECTION_LABELS = {
   diva: 'Diva Colors',
+  gelx: 'Gel X',
+  kupa: 'Kupa',
   dnd: 'DND Colors',
   dc: 'DC Colors',
   tools: 'Nail Tools',
@@ -113,23 +114,20 @@ function fmtStats(items) {
   const total    = items.length;
   const owned    = items.filter(i => ownedSet.has(i.code)).length;
   const notOwned = total - owned;
-  return `Showing ${total} shades · Owned: ${owned} · Not owned: ${notOwned}`;
+  return `Showing ${total} items · Owned: ${owned} · Not owned: ${notOwned}`;
 }
 
-// Direct product link (from JSON; fallback builder)
+// Direct product link (from JSON; fallback builder for Diva only)
 function productLink(item) {
-  return (item.product_url && item.product_url.trim()) || buildProductUrl(item);
+  if (item.product_url) return item.product_url.trim();
+  // keep the diva fallback just in case
+  if (item.collection === 'diva') return buildProductUrl(item);
+  return '#';
 }
 function slugifyName(name = '') {
-  return name
-    .toString()
-    .trim()
-    .toLowerCase()
-    .replace(/&/g, 'and')
-    .replace(/[^a-z0-9]+/g, '-')
-    .replace(/-+/g, '-')
-    .replace(/-?diva$/, '')      // avoid double '-diva'
-    .replace(/^-|-$/g, '');
+  return name.toString().trim().toLowerCase()
+    .replace(/&/g, 'and').replace(/[^a-z0-9]+/g, '-').replace(/-+/g, '-')
+    .replace(/-?diva$/, '').replace(/^-|-$/g, '');
 }
 function pad3(code) {
   const s = String(code || '').trim();
@@ -141,9 +139,8 @@ function buildProductUrl(item) {
   return slug && code ? `https://www.dndgel.com/products/${slug}-diva-${code}` : '#';
 }
 
-// ==================== Product images via Netlify Function ====================
+// ==================== Product images (serverless) ====================
 const imgCache = new Map();
-
 async function fetchProductImage(productUrl) {
   if (!productUrl) return '';
   if (imgCache.has(productUrl)) return imgCache.get(productUrl);
@@ -160,8 +157,6 @@ async function fetchProductImage(productUrl) {
     return '';
   }
 }
-
-// Swatch image setter: show full image (not cropped)
 function setSwatchImage(swatch, url) {
   swatch.style.backgroundImage = `url("${url}")`;
   swatch.style.backgroundSize = 'contain';
@@ -197,23 +192,26 @@ function render(items) {
     } else if (item.product_url) {
       swatch.dataset.productUrl = item.product_url;
       fetchProductImage(item.product_url).then(url => {
-        if (url && swatch.dataset.productUrl === item.product_url) {
-          setSwatchImage(swatch, url);
-        }
+        if (url && swatch.dataset.productUrl === item.product_url) setSwatchImage(swatch, url);
       });
     }
 
     // Meta
     nameEl.textContent = item.name || '';
-    codeEl.textContent = `#${item.code || ''} · ${collectionLabel(item.collection)}`;
+    const parts = [];
+    if (item.code) parts.push(`#${item.code}`);
+    const label = collectionLabel(item.collection);
+    if (label) parts.push(label);
+    codeEl.textContent = parts.join(' · ');
 
-    // Buy link (direct)
+    // Buy link
     buy.href = productLink(item);
 
-    // Owned toggle (+ per-item cloud sync if logged in)
-    const isOwned = ownedSet.has(item.code);
-    owned.checked = isOwned;
+    // Owned toggle (only meaningful for coded items; still works if you want to track tools as owned)
+    const isOwned = item.code && ownedSet.has(item.code);
+    owned.checked = !!isOwned;
     owned.addEventListener('change', async () => {
+      if (!item.code) return; // skip if no code
       if (owned.checked) {
         ownedSet.add(item.code);
         if (user) await upsertCloudCode(user.id, item.code);
@@ -236,62 +234,30 @@ function render(items) {
 function setBusinessName() {
   const target = document.getElementById('custom-site-name');
   if (!target) return;
-
   const params    = new URLSearchParams(location.search);
   const fromUrl   = params.get('bn');
   const fromStore = localStorage.getItem('business_name');
-
-  const name = (fromUrl && fromUrl.trim())
-            || (fromStore && fromStore.trim())
-            || 'Your Business Name';
-
+  const name = (fromUrl && fromUrl.trim()) || (fromStore && fromStore.trim()) || 'Your Business Name';
   target.textContent = name;
   if (fromUrl) localStorage.setItem('business_name', name);
 }
 
 // ==================== Events ====================
 function wireEvents() {
-  if (search) {
-    search.addEventListener('input', e => {
-      state.q = normalize(e.target.value);
-      render(catalog.filter(matches));
-    });
-  }
+  if (search) search.addEventListener('input', e => { state.q = normalize(e.target.value); render(catalog.filter(matches)); });
+  if (filterCollection) filterCollection.addEventListener('change', e => { state.collection = e.target.value; render(catalog.filter(matches)); });
+  if (showAllBtn) showAllBtn.addEventListener('click', () => { state.show = 'all'; render(catalog.filter(matches)); });
+  if (showOwnedBtn) showOwnedBtn.addEventListener('click', () => { state.show = 'owned'; render(catalog.filter(matches)); });
 
-  if (filterCollection) {
-    filterCollection.addEventListener('change', e => {
-      state.collection = e.target.value;
-      render(catalog.filter(matches));
-    });
-  }
-
-  if (showAllBtn) {
-    showAllBtn.addEventListener('click', () => {
-      state.show = 'all';
-      render(catalog.filter(matches));
-    });
-  }
-
-  if (showOwnedBtn) {
-    showOwnedBtn.addEventListener('click', () => {
-      state.show = 'owned'; // On Hand
-      render(catalog.filter(matches));
-    });
-  }
-
-  // Save button — push EXACT current On-Hand set to cloud (replace)
   if (saveOwnedBtn) {
     saveOwnedBtn.addEventListener('click', async () => {
       const u = await currentUser();
-      if (!u) {
-        alert('Please log in on the Account page first.');
-        return;
-      }
+      if (!u) return alert('Please log in on the Account page first.');
       const original = saveOwnedBtn.textContent;
       saveOwnedBtn.disabled = true;
       saveOwnedBtn.textContent = 'Saving…';
       try {
-        await replaceCloudCodes(u.id, ownedSet); // << replace instead of upsert
+        await replaceCloudCodes(u.id, ownedSet);
         saveOwnedBtn.textContent = 'Saved';
       } catch (e) {
         console.warn('save error', e);
@@ -304,13 +270,13 @@ function wireEvents() {
   }
 }
 
-// ==================== Boot (CLOUD is the source of truth) ====================
+// ==================== Boot ====================
 (async function main(){
   setBusinessName();
   catalog = await loadData();
   user = await currentUser();
 
-  // If logged in, REPLACE local with cloud on load (no union)
+  // Cloud is the source of truth for coded items (diva, etc.)
   if (user) {
     try {
       const cloud = await fetchCloudCodes(user.id);
