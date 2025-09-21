@@ -57,9 +57,13 @@
       <section id="grid" class="grid" aria-live="polite"></section>
     </main>
 
-    <footer class="site-footer">
-      <p>Made with ❤️ in Austin · Free to use · Some links may be affiliate links</p>
-    </footer>
+<footer class="site-footer">
+  <p>Made with ❤️ in Austin · Free to use · Some links may be affiliate links</p>
+  <p style="margin-top:8px; color: var(--ink-2); font-size: .9rem;">
+    As an Amazon Associate, I earn from qualifying purchases.
+  </p>
+</footer>
+
 
     <template id="card-tpl">
       <article class="card">
@@ -73,7 +77,8 @@
             <input type="checkbox" class="owned" />
             <span title="Toggle owned">❤</span>
           </label>
-          <a class="buy" target="_blank" rel="noopener">Buy</a>
+       <a class="buy" href="#" target="_blank" rel="nofollow sponsored noopener">Buy</a>
+
         </div>
       </article>
     </template>
