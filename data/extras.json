@@ -1,0 +1,37 @@
+[
+  { "collection":"gelx", "name":"Apres Non-Wipe Extend Gel", "product_url":"https://www.amazon.com/APR%C3%89S-Non-Wipe-Extend-HEMA-Free-Adhesive/dp/B0FF6F6L3V?ref_=cpl_dp" },
+  { "collection":"gelx", "name":"Apres Extend Gel Sensitive", "product_url":"https://www.amazon.com/Apr%C3%A9s-Extend-Gel-Sensitive-HEMA-Free/dp/B0DCLPF949?ref_=ast_sto_dp" },
+  { "collection":"gelx", "name":"Apres Extend Novice", "product_url":"https://www.amazon.com/Apres-Extend-Novice-Gel-X-Adhesive/dp/B0DLYJFM88?ref_=ast_sto_dp" },
+  { "collection":"gelx", "name":"Apres Gel-X Tip Sculpted Almond Medium", "product_url":"https://www.amazon.com/Gel-X%C2%AE-Sculpted-Almond-Premium-Quality/dp/B0CQPM986W/ref=ast_sto_dp_puis?th=1" },
+  { "collection":"gelx", "name":"Apres Gel-X Tip Sculpted Square Long", "product_url":"https://www.amazon.com/Gel-X%C2%AE-Sculpted-Square-Premium-Quality/dp/B0CVCFG29V/ref=ast_sto_dp_puis" },
+  { "collection":"gelx", "name":"Apres Gel-X Tip Sculpted Square Medium", "product_url":"https://www.amazon.com/Gel-X%C2%AE-Scupted-Square-Premium-Quality/dp/B0CVCDZNLT/ref=ast_sto_dp_puis" },
+  { "collection":"gelx", "name":"Apres Gel-X Tip Sculpted Stiletto Long", "product_url":"https://www.amazon.com/Gel-X%C2%AE-Sculpted-Stiletto-Premium-Quality/dp/B0CVCL9DSM/ref=ast_sto_dp_puis" },
+  { "collection":"gelx", "name":"Apres Gel-X Tip Sculpted Square Short", "product_url":"https://www.amazon.com/Gel-X%C2%AE-Sculpted-Square-Premium-Quality/dp/B0CVCJJHYM/ref=ast_sto_dp_puis" },
+  { "collection":"gelx", "name":"Apres Gel-X Tip Sculpted Coffin Medium", "product_url":"https://www.amazon.com/Gel-X%C2%AE-Sculpted-Coffin-Premium-Quality/dp/B0CVCB2NNM/ref=ast_sto_dp_puis" },
+  { "collection":"gelx", "name":"Apres Gel-X Tip Sculpted Round Short", "product_url":"https://www.amazon.com/Apres-Gel-X%C2%AE-Sculpted-Premium-Quality/dp/B0CVCLV57T/ref=ast_sto_dp_puis" },
+  { "collection":"gelx", "name":"Apres Gel-X Tip Sculpted Stiletto Medium", "product_url":"https://www.amazon.com/Gel-X%C2%AE-Sculpted-Stiletto-Premium-Quality/dp/B0CVCCC2J6/ref=ast_sto_dp_puis" },
+  { "collection":"gelx", "name":"Apres Gel-X Tip Sculpted Coffin Short", "product_url":"https://www.amazon.com/Gel-X%C2%AE-Sculpted-Coffin-Premium-Quality/dp/B0CVCDWDJD/ref=ast_sto_dp_puis" },
+  { "collection":"gelx", "name":"Apres Gel-X Tip Sculpted Coffin Long", "product_url":"https://www.amazon.com/Gel-X%C2%AE-Sculpted-Coffin-Premium-Quality/dp/B0CVCNDZZD/ref=ast_sto_dp_puis" },
+  { "collection":"gelx", "name":"Apres Gel-X Tip Sculpted Coffin Extra Long", "product_url":"https://www.amazon.com/Gel-XTM-Sculpted-Premium-Quality-included/dp/B09QVYQMQR/ref=ast_sto_dp_puis" },
+  { "collection":"gelx", "name":"Apres Gel-X Tip Sculpted Round Medium", "product_url":"https://www.amazon.com/Gel-X%C2%AE-Sculpted-Medium-Premium-Quality/dp/B0CVCK2SCG/ref=ast_sto_dp_puis" },
+
+  { "collection":"tools", "name":"Nail Buffers", "product_url":"https://www.amazon.com/Buffers-Acrylic-Double-Disposable-Manicure/dp/B0BHSL7NQG/ref=sr_1_39?crid=2XD42MHT7WW4A&qid=1758486328&sr=8-39&th=1" },
+  { "collection":"tools", "name":"Nail Files 100/180", "product_url":"https://amazon.com/BTYMS-Professional-Double-Sided-Acrylic-Natural/dp/B085R9VBJ5/ref=sr_1_25?qid=1758486419&sr=8-25" },
+
+  { "collection":"essentials", "name":"KDS Nail Glue", "product_url":"https://www.amazon.com/pcs-KDS-Nail-Tip-Glue/dp/B01LZ7J5QZ/ref=sr_1_1?qid=1758486521&sr=8-1" },
+  { "collection":"essentials", "name":"Dental Bibs", "product_url":"https://www.amazon.com/JMU-Dental-Disposable-Waterproof-Patient/dp/B08FY3MZ3K/ref=sr_1_1?qid=1758486559&sr=8-1" },
+  { "collection":"essentials", "name":"Soak Off Nail Foils", "product_url":"https://www.amazon.com/400Pcs-Polish-Remover-Aluminium-Removal/dp/B09PVKHLRN/ref=sr_1_1?qid=1758486585&sr=8-1" },
+
+  { "collection":"tools", "name":"240 Grit Nail Drill Bits - mini", "product_url":"https://www.amazon.com/BLESWIN-Sanding-Polishing-Cleaning-Preparation/dp/B0D7H3TZ5D/ref=sr_1_3?qid=1758486643&sr=8-3" },
+  { "collection":"tools", "name":"240 Grit Nail Drill Bits", "product_url":"https://www.amazon.com/Rolybag-Sanding-Professional-Manicures-Pedicure/dp/B0C7QCP4XD/ref=sr_1_7?qid=1758486643&sr=8-7&th=1" },
+
+  { "collection":"essentials", "name":"Nail Swatch Sticks", "product_url":"https://www.amazon.com/Stickers-Display-Stiletto-Fan-shaped-Practice/dp/B09LV3BMGR/ref=sr_1_6?qid=1758486961&sr=8-6&th=1" },
+  { "collection":"essentials", "name":"Acetone", "product_url":"https://www.amazon.com/Acetone-Remover-Professional-Quality-Rapidly/dp/B0DVSS196D/ref=sr_1_6?qid=1758487031&sr=8-6&th=1" },
+  { "collection":"essentials", "name":"Lint Free Wipes", "product_url":"https://amazon.com/BLUERISE-Remover-Absorbable-Extension-Cleaning/dp/B09HBTDMY5/ref=sr_1_4?qid=1758487067&sr=8-4&th=1" },
+
+  { "collection":"kupa", "name":"Kupa - Top Coat Glossy", "product_url":"https://amazon.com/KUPA-GelFinity-Glossy-Finish-No-Wipe/dp/B08VZ6VSJ5/ref=ast_sto_dp_puis" },
+  { "collection":"kupa", "name":"Kupa - Top Coat Glossy Bulk", "product_url":"https://amazon.com/Kupa-Inc-GelFinity-Topcoat-Finish/dp/B08VYRB3W6/ref=ast_sto_dp_puis" },
+  { "collection":"kupa", "name":"Kupa - Top Coat Matte", "product_url":"https://www.amazon.com/KUPA-GelFinity-Matte-Finish-No-Wipe/dp/B07QF3J3R7/ref=ast_sto_dp_puis?th=1" },
+
+  { "collection":"essentials", "name":"Rhinestone Glue", "product_url":"https://www.amazon.com/Makartt-Rhinestone-Adhesive-Rhinestones-Crystal/dp/B0868BTPYW/ref=sr_1_6?qid=1758487173&sr=8-6" }
+]
