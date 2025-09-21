@@ -9,44 +9,49 @@ const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBh
 // ---- Init
 const supabase = createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
-// ---- DOM
+// ---- DOM helpers
 const el = (id) => document.getElementById(id);
 
 // Sign in (existing users)
-const inEmail = el('in-email');
+const inEmail    = el('in-email');
 const inPassword = el('in-password');
-const signinBtn = el('signin');
-const signinMsg = el('signin-msg');
+const signinBtn  = el('signin');
+const signinMsg  = el('signin-msg');
 
 // Sign up (new users)
-const upEmail = el('up-email');
+const upEmail    = el('up-email');
 const upPassword = el('up-password');
-const upBizname = el('up-bizname');
-const signupBtn = el('signup');
-const signupMsg = el('signup-msg');
+const upBizname  = el('up-bizname');
+const signupBtn  = el('signup');
+const signupMsg  = el('signup-msg');
 
 // Dashboard
-const dash = el('dash');
-const who = el('who');
-const logoutBtn = el('logout');
-const bizname = el('bizname');
-const bizMsg = el('biz-msg');
+const dash     = el('dash');
+const who      = el('who');
+const logoutBtn= el('logout');
+const bizname  = el('bizname');
+const bizMsg   = el('biz-msg');
 
 // Enter buttons/link
 const enterBtn = el('enter');
 const enterTop = el('enter-top');
 
-// Local storage keys
-const LS_OWNED = 'polish-stash-owned';
-const LS_BIZ   = 'business_name';
-const LS_PENDING_BIZ = 'pending_business_name';
+// The auth boxes container (two columns)
+const authGrid = document.querySelector('.grid2');
 
-// ---- Helpers
-const ok = (m) => `<span class="ok">${m}</span>`;
+// Local storage keys
+const LS_OWNED        = 'polish-stash-owned';
+const LS_BIZ          = 'business_name';
+const LS_PENDING_BIZ  = 'pending_business_name'; // used after signup until first login
+const LS_USER         = 'ps_user_id';            // last signed-in user on this device
+
+// ---- Utils
+const ok  = (m) => `<span class="ok">${m}</span>`;
 const err = (m) => `<span class="err">${m}</span>`;
 function zpad3(code) { const s = String(code || '').trim(); return /^\d+$/.test(s) ? s.padStart(3,'0') : s; }
 function debounce(fn, ms = 500) { let t; return (...a)=>{ clearTimeout(t); t=setTimeout(()=>fn(...a), ms); }; }
 
+// Build catalog URL (adds ?bn= when available)
 function buildCatalogUrl() {
   const name = (bizname && bizname.value.trim()) || (localStorage.getItem(LS_BIZ) || '').trim();
   return name ? `./index.html?bn=${encodeURIComponent(name)}` : './index.html';
@@ -82,7 +87,7 @@ async function upsertManyCodes(userId, codesSet) {
   if (error) console.warn('upsert error', error);
 }
 
-// ---- Auth: Sign up
+// ---- SIGN UP (Create Account)
 signupBtn.addEventListener('click', async () => {
   signupMsg.innerHTML = 'Creating account…';
   try {
@@ -90,18 +95,18 @@ signupBtn.addEventListener('click', async () => {
     const pwd   = upPassword.value;
     const bn    = upBizname.value.trim();
 
-    // Save business name locally for after confirmation & login
+    // Save business name locally so we can apply it on first login after email confirm
     if (bn) {
       localStorage.setItem(LS_BIZ, bn);
-      localStorage.setItem(LS_PENDING_BIZ, bn); // apply to profile after first login
+      localStorage.setItem(LS_PENDING_BIZ, bn);
     }
 
     const { error } = await supabase.auth.signUp({
       email,
       password: pwd,
       options: {
-        emailRedirectTo: `${location.origin}/account.html`, // send back to this page
-        data: { signup_business_name: bn } // optional metadata
+        emailRedirectTo: `${location.origin}/account.html`, // comes back here
+        data: { signup_business_name: bn }
       }
     });
     if (error) throw error;
@@ -112,7 +117,7 @@ signupBtn.addEventListener('click', async () => {
   }
 });
 
-// ---- Auth: Sign in
+// ---- SIGN IN
 signinBtn.addEventListener('click', async () => {
   signinMsg.innerHTML = 'Signing in…';
   try {
@@ -127,39 +132,49 @@ signinBtn.addEventListener('click', async () => {
   }
 });
 
-// ---- Logout
+// ---- LOG OUT
 if (logoutBtn) {
   logoutBtn.addEventListener('click', async () => {
     await supabase.auth.signOut();
-    dash.style.display = 'none';
-    // Keep the two auth cards visible (they’re the default UI in account.html)
-    document.querySelectorAll('.grid2, .cardish').forEach(el => el.style.display = '');
-    wireEnterLinks(); // keep Enter pointing somewhere sensible
+
+    // Hide dashboard, show auth boxes again
+    if (dash) dash.style.display = 'none';
+    if (authGrid) authGrid.style.display = '';
+
+    // Clear local selections so a new person doesn't see prior checks before logging in
+    localStorage.setItem(LS_OWNED, '[]');
+    // Keep LS_USER to detect "different user" next time.
+    // (Optional) Clear local business name to avoid showing prior branding in header:
+    // localStorage.removeItem(LS_BIZ);
+    // localStorage.removeItem(LS_PENDING_BIZ);
+
+    wireEnterLinks();
   });
 }
 
-// ---- After login: show dashboard + auto-sync
+// ---- AFTER LOGIN: show dashboard + prevent carryover between users
 async function onAuthed() {
   const { data: { user } } = await supabase.auth.getUser();
   if (!user) return;
 
-  // Hide the two auth cards and show dashboard
-  document.querySelectorAll('.grid2, .cardish').forEach((el, i) => {
-    // only hide the first grid (auth cards); dash is separate
-    if (i === 0) el.style.display = 'none';
-  });
-  dash.style.display = '';
+  // Detect if this is a different user than last time on this device
+  const prevUser = localStorage.getItem(LS_USER);
+  const isDifferentUser = !!(prevUser && prevUser !== user.id);
+  localStorage.setItem(LS_USER, user.id);
 
-  who.textContent = user.email || user.id;
+  // UI: show dashboard, hide auth boxes
+  if (authGrid) authGrid.style.display = 'none';
+  if (dash) dash.style.display = '';
+  if (who)  who.textContent = user.email || user.id;
 
   await ensureProfile(user.id);
 
-  // BUSINESS NAME — prefer pending (from signup) > cloud > local
+  // BUSINESS NAME — pending (from signup) > cloud > (if same user) local
   try {
-    const pending = localStorage.getItem(LS_PENDING_BIZ) || '';
-    const profile = await loadProfile(user.id);
+    const pending   = localStorage.getItem(LS_PENDING_BIZ) || '';
+    const profile   = await loadProfile(user.id);
     const cloudName = (profile && profile.business_name) || '';
-    const localName = localStorage.getItem(LS_BIZ) || '';
+    const localName = isDifferentUser ? '' : (localStorage.getItem(LS_BIZ) || '');
 
     let finalName = '';
     if (pending) {
@@ -173,24 +188,32 @@ async function onAuthed() {
       finalName = localName;
     }
 
-    bizname.value = finalName || '';
+    if (bizname) bizname.value = finalName || '';
     if (finalName) {
       localStorage.setItem(LS_BIZ, finalName);
-      bizMsg.innerHTML = ok('Business name synced.');
+      if (bizMsg) bizMsg.innerHTML = ok('Business name synced.');
     } else {
-      bizMsg.innerHTML = '';
+      localStorage.removeItem(LS_BIZ);
+      if (bizMsg) bizMsg.innerHTML = '';
     }
   } catch (e) {
-    bizMsg.innerHTML = err('Could not sync business name.');
+    if (bizMsg) bizMsg.innerHTML = err('Could not sync business name.');
   }
 
-  // INVENTORY — merge cloud + local and write both (union)
+  // INVENTORY (On Hand)
   try {
     const cloud = new Set(await fetchCloudCodes(user.id));
-    const local = new Set(JSON.parse(localStorage.getItem(LS_OWNED) || '[]').map(zpad3));
-    const union = new Set([...cloud, ...local]);
-    localStorage.setItem(LS_OWNED, JSON.stringify([...union]));
-    await upsertManyCodes(user.id, union);
+
+    if (isDifferentUser) {
+      // Different person on this device → DO NOT MERGE
+      localStorage.setItem(LS_OWNED, JSON.stringify([...cloud])); // usually empty on first login
+    } else {
+      // Same person or first time on this device → merge and push up
+      const local = new Set(JSON.parse(localStorage.getItem(LS_OWNED) || '[]').map(zpad3));
+      const union = new Set([...cloud, ...local]);
+      localStorage.setItem(LS_OWNED, JSON.stringify([...union]));
+      await upsertManyCodes(user.id, union);
+    }
   } catch (e) {
     console.warn('inventory sync failed', e);
   }
@@ -198,32 +221,34 @@ async function onAuthed() {
   wireEnterLinks();
 }
 
-// Business Name: auto-save to cloud (debounced)
-bizname.addEventListener('input', debounce(async () => {
-  const val = bizname.value.trim();
-  localStorage.setItem(LS_BIZ, val);
-  wireEnterLinks();
+// ---- Business Name: auto-save to cloud (debounced)
+if (bizname) {
+  bizname.addEventListener('input', debounce(async () => {
+    const val = bizname.value.trim();
+    localStorage.setItem(LS_BIZ, val);
+    wireEnterLinks();
 
-  const { data: { user } } = await supabase.auth.getUser();
-  if (!user) { bizMsg.innerHTML = ok('Saved on this device.'); return; }
-  try {
-    await saveProfile(user.id, val);
-    bizMsg.innerHTML = ok('Saved to cloud.');
-  } catch (e) {
-    bizMsg.innerHTML = err('Save failed.');
-  }
-}, 600));
+    const { data: { user } } = await supabase.auth.getUser();
+    if (!user) { if (bizMsg) bizMsg.innerHTML = ok('Saved on this device.'); return; }
+    try {
+      await saveProfile(user.id, val);
+      if (bizMsg) bizMsg.innerHTML = ok('Saved to cloud.');
+    } catch (e) {
+      if (bizMsg) bizMsg.innerHTML = err('Save failed.');
+    }
+  }, 600));
+}
 
-// Handle email-confirm redirect
+// ---- Handle email-confirm redirect
 (function handleEmailLink(){
   const p = new URLSearchParams(location.search);
   if (p.get('type') === 'signup') {
-    const el = signupMsg || signinMsg;
-    if (el) el.innerHTML = ok('Email confirmed! You can log in now.');
+    const target = signupMsg || signinMsg;
+    if (target) target.innerHTML = ok('Email confirmed! You can log in now.');
   }
 })();
 
-// Boot: wire Enter + auto-open dashboard if already logged in
+// ---- Boot: set Enter links; auto-open dashboard if already logged in
 (async function boot(){
   wireEnterLinks();
   const { data: { user } } = await supabase.auth.getUser();
