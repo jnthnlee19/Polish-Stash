@@ -9,7 +9,7 @@ async function loadJson(path) {
 async function loadData() {
   const [diva, extras] = await Promise.all([
     loadJson('./data/dnd-diva.json'),
-    loadJson('./data/extras.json')     // new file with Amazon/Kupa/etc
+    loadJson('./data/extras.json') // new file with Amazon/Kupa/etc
   ]);
   return [...diva, ...extras];
 }
@@ -142,14 +142,40 @@ function fmtStats(items) {
   return `Showing ${total} items · Owned: ${owned} · Not owned: ${notOwned}`;
 }
 
-// Direct product link (from JSON; fallback builder for Diva only)
+// ==================== Affiliate helpers (Amazon) ====================
+function ensureHttps(u) {
+  return /^https?:\/\//i.test(u) ? u : `https://${u}`;
+}
+function isAmazonHost(hostname = "") {
+  return /(^|\.)amazon\.(com|ca|co\.uk|de|fr|it|es|com\.mx|com\.au|co\.jp)$/i.test(hostname);
+}
+function withAffiliate(u, subtag) {
+  try {
+    const url = new URL(ensureHttps(u));
+    if (isAmazonHost(url.hostname)) {
+      if (!url.searchParams.has('tag')) {
+        url.searchParams.set('tag', 'polishstash-20'); // <-- your tracking ID
+      }
+      if (subtag && !url.searchParams.has('ascsubtag')) {
+        url.searchParams.set('ascsubtag', subtag);    // optional per-item tracker
+      }
+    }
+    return url.toString();
+  } catch {
+    return u;
+  }
+}
+
+// Direct product link (Diva fallback; Amazon gets affiliate applied)
 function buildProductUrl(item) {
   const slug = slugifyName(item.name || '');
   const code = pad3(item.code || '');
   return slug && code ? `https://www.dndgel.com/products/${slug}-diva-${code}` : '#';
 }
 function productLink(item) {
-  if (item.product_url) return item.product_url.trim();
+  if (item.product_url) {
+    return withAffiliate(item.product_url.trim(), idForItem(item));
+  }
   if (item.collection === 'diva') return buildProductUrl(item);
   return '#';
 }
@@ -222,7 +248,7 @@ function render(items) {
     // Buy link
     buy.href = productLink(item);
 
-    // Owned toggle — now works for EVERY item (uses stable id)
+    // Owned toggle — uses stable id for ALL items
     const id = idForItem(item);
     owned.checked = ownedSet.has(id);
     owned.addEventListener('change', async () => {
