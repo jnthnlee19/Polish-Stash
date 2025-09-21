@@ -6,19 +6,18 @@
   <title>Polish Stash — Account</title>
   <link rel="stylesheet" href="styles.css" />
   <style>
-    .page { max-width: 880px; margin: 24px auto; padding: 0 12px; }
-    .cardish { border:1px solid var(--line); border-radius:12px; padding:16px; }
-    .grid2 { display:grid; gap:12px; grid-template-columns: 1fr; }
-    @media (min-width: 720px){ .grid2 { grid-template-columns: 1fr 1fr; } }
-    .row { display:flex; gap:8px; align-items:center; flex-wrap:wrap; }
+    .page { max-width: 980px; margin: 24px auto; padding: 0 12px; }
+    .row { display:flex; align-items:center; gap:8px; flex-wrap:wrap; }
+    .muted { color:var(--ink-2); font-size:.9rem; }
+    .ok { color:#1a7f37; }
+    .err { color:#b42318; }
+    .cardish { border:1px solid var(--line); border-radius:12px; padding:16px; background:#fff; }
+    .grid2 { display:grid; gap:14px; grid-template-columns: 1fr; }
+    @media (min-width: 900px) { .grid2 { grid-template-columns: 1fr 1fr; } }
     input[type="email"], input[type="password"], input[type="text"] {
       border:1px solid var(--line); border-radius:10px; padding:8px 10px; width:100%;
     }
     button, a.btn { border:1px solid var(--line); border-radius:10px; background:#fff; padding:8px 12px; cursor:pointer; text-decoration:none; color:inherit; }
-    .muted { color:var(--ink-2); font-size:.9rem; }
-    .right { display:flex; justify-content:flex-end; gap:8px; }
-    .ok { color:#1a7f37; }
-    .err { color:#b42318; }
   </style>
 </head>
 <body>
@@ -26,39 +25,64 @@
     <div class="topbar">
       <img src="./assets/polish-stash-logo.png" alt="Polish Stash logo" class="topbar__logo" />
       <h2 class="topbar__name">Account</h2>
-      <!-- New: Enter button in header -->
+      <!-- Enter button in header -->
       <a class="btn" id="enter-top" href="./index.html">Enter</a>
     </div>
   </header>
 
   <main class="page">
-    <!-- Auth -->
-    <section id="auth-card" class="cardish">
-      <h3>Sign up / Log in</h3>
-      <p class="muted">Use email + password. New users will be created automatically.</p>
-      <div class="grid2">
-        <div>
-          <label>Email</label>
-          <input id="email" type="email" placeholder="you@domain.com" />
-        </div>
-        <div>
-          <label>Password</label>
-          <input id="password" type="password" placeholder="at least 6 characters" />
+    <!-- Two-column auth layout -->
+    <section class="grid2">
+      <!-- Sign In -->
+      <div class="cardish">
+        <h3>Already Registered? Sign in here</h3>
+        <p class="muted">Use the email and password you created.</p>
+        <div style="display:grid; gap:10px;">
+          <div>
+            <label>Email</label>
+            <input id="in-email" type="email" placeholder="you@domain.com" />
+          </div>
+          <div>
+            <label>Password</label>
+            <input id="in-password" type="password" placeholder="your password" />
+          </div>
+          <div class="row">
+            <button id="signin">Log in</button>
+            <span id="signin-msg" class="muted"></span>
+          </div>
         </div>
       </div>
-      <div class="row" style="margin-top:10px">
-        <button id="signup">Sign up</button>
-        <button id="signin">Log in</button>
-        <span id="auth-msg" class="muted"></span>
+
+      <!-- Create Account -->
+      <div class="cardish">
+        <h3>Create your account</h3>
+        <p class="muted">Enter your details to get started. We’ll email you a confirmation link.</p>
+        <div style="display:grid; gap:10px;">
+          <div>
+            <label>Email</label>
+            <input id="up-email" type="email" placeholder="you@domain.com" />
+          </div>
+          <div>
+            <label>Password</label>
+            <input id="up-password" type="password" placeholder="at least 6 characters" />
+          </div>
+          <div>
+            <label>Business Name</label>
+            <input id="up-bizname" type="text" placeholder="e.g., Killer Nails" />
+          </div>
+          <div class="row">
+            <button id="signup">Create Account</button>
+            <span id="signup-msg" class="muted"></span>
+          </div>
+        </div>
       </div>
     </section>
 
-    <!-- Dashboard (auto-sync; minimal UI) -->
+    <!-- Dashboard (shown after login) -->
     <section id="dash" class="cardish" style="display:none; margin-top:14px">
       <div class="row" style="justify-content:space-between">
         <h3>Welcome, <span id="who"></span></h3>
         <div class="row">
-          <!-- New: Enter button in dashboard -->
           <button id="enter">Enter</button>
           <button id="logout">Log out</button>
         </div>
@@ -70,14 +94,11 @@
 
       <h4>Business name</h4>
       <p class="muted">This shows under the logo on your catalog. Changes are saved automatically.</p>
-      <div class="grid2">
-        <div>
-          <label>Business Name</label>
+      <div class="row" style="gap:10px; align-items:flex-end; flex-wrap:wrap;">
+        <div style="flex:1 1 360px">
           <input id="bizname" type="text" placeholder="e.g., Killer Nails" />
         </div>
-        <div class="right">
-          <span id="biz-msg" class="muted"></span>
-        </div>
+        <span id="biz-msg" class="muted"></span>
       </div>
     </section>
   </main>
