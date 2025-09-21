@@ -9,7 +9,7 @@ async function loadJson(path) {
 async function loadData() {
   const [diva, extras] = await Promise.all([
     loadJson('./data/dnd-diva.json'),
-    loadJson('./data/extras.json')     // new file
+    loadJson('./data/extras.json')     // new file with Amazon/Kupa/etc
   ]);
   return [...diva, ...extras];
 }
@@ -58,7 +58,7 @@ const LS_OWNED = 'polish-stash-owned';
   const raw = JSON.parse(localStorage.getItem(LS_OWNED) || '[]');
   const migrated = Array.from(new Set(raw.map(c => {
     const s = String(c || '').trim();
-    return /^\d+$/.test(s) && s.length < 3 ? s.padStart(3, '0') : s;
+    return /^\d+$/.test(s) && s.length < 3 ? s.padStart(3, '0') : s; // only pad pure digits
   })));
   localStorage.setItem(LS_OWNED, JSON.stringify(migrated));
 })();
@@ -87,15 +87,40 @@ const state = {
 let catalog = [];
 let user = null;
 
-// ==================== Helpers ====================
+// ==================== Helpers / IDs ====================
 const normalize = (s) => (s || '').toString().toLowerCase();
 
+function slugifyName(name = '') {
+  return name.toString().trim().toLowerCase()
+    .replace(/&/g, 'and').replace(/[^a-z0-9]+/g, '-').replace(/-+/g, '-')
+    .replace(/^-|-$/g, '');
+}
+function pad3(code) {
+  const s = String(code || '').trim();
+  return /^\d+$/.test(s) ? s.padStart(3, '0') : s;
+}
+function asinFromUrl(url = '') {
+  const m = url.match(/(?:\/dp\/|\/gp\/product\/)([A-Z0-9]{10})/i);
+  return m ? m[1].toUpperCase() : '';
+}
+function idForItem(item) {
+  if (item.code) return pad3(item.code);
+  const url = item.product_url || '';
+  const col = (item.collection || 'misc').toLowerCase();
+  const asin = asinFromUrl(url);
+  if (asin) return `${col}:${asin}`;
+  const slug = slugifyName(item.name || '');
+  return `${col}:${slug || 'item'}`;
+}
+function isOwnedItem(item) {
+  return ownedSet.has(idForItem(item));
+}
+
 function matches(item) {
-  const hay     = `${item.code || ''} ${item.name || ''} ${item.collection || ''}`.toLowerCase();
+  const hay     = `${idForItem(item)} ${item.code || ''} ${item.name || ''} ${item.collection || ''}`.toLowerCase();
   const okQ     = hay.includes(state.q);
   const okCol   = state.collection === 'all' || item.collection === state.collection;
-  const isOwned = ownedSet.has(item.code);
-  const okShow  = state.show === 'all' || (state.show === 'owned' && isOwned);
+  const okShow  = state.show === 'all' || (state.show === 'owned' && isOwnedItem(item));
   return okQ && okCol && okShow;
 }
 
@@ -112,31 +137,21 @@ const collectionLabel = (key) => COLLECTION_LABELS[key] || (key ? key.toUpperCas
 
 function fmtStats(items) {
   const total    = items.length;
-  const owned    = items.filter(i => ownedSet.has(i.code)).length;
+  const owned    = items.filter(isOwnedItem).length;
   const notOwned = total - owned;
   return `Showing ${total} items · Owned: ${owned} · Not owned: ${notOwned}`;
 }
 
 // Direct product link (from JSON; fallback builder for Diva only)
-function productLink(item) {
-  if (item.product_url) return item.product_url.trim();
-  // keep the diva fallback just in case
-  if (item.collection === 'diva') return buildProductUrl(item);
-  return '#';
-}
-function slugifyName(name = '') {
-  return name.toString().trim().toLowerCase()
-    .replace(/&/g, 'and').replace(/[^a-z0-9]+/g, '-').replace(/-+/g, '-')
-    .replace(/-?diva$/, '').replace(/^-|-$/g, '');
-}
-function pad3(code) {
-  const s = String(code || '').trim();
-  return /^\d+$/.test(s) ? s.padStart(3, '0') : s;
-}
 function buildProductUrl(item) {
   const slug = slugifyName(item.name || '');
   const code = pad3(item.code || '');
   return slug && code ? `https://www.dndgel.com/products/${slug}-diva-${code}` : '#';
+}
+function productLink(item) {
+  if (item.product_url) return item.product_url.trim();
+  if (item.collection === 'diva') return buildProductUrl(item);
+  return '#';
 }
 
 // ==================== Product images (serverless) ====================
@@ -199,7 +214,7 @@ function render(items) {
     // Meta
     nameEl.textContent = item.name || '';
     const parts = [];
-    if (item.code) parts.push(`#${item.code}`);
+    if (item.code) parts.push(`#${pad3(item.code)}`);
     const label = collectionLabel(item.collection);
     if (label) parts.push(label);
     codeEl.textContent = parts.join(' · ');
@@ -207,17 +222,16 @@ function render(items) {
     // Buy link
     buy.href = productLink(item);
 
-    // Owned toggle (only meaningful for coded items; still works if you want to track tools as owned)
-    const isOwned = item.code && ownedSet.has(item.code);
-    owned.checked = !!isOwned;
+    // Owned toggle — now works for EVERY item (uses stable id)
+    const id = idForItem(item);
+    owned.checked = ownedSet.has(id);
     owned.addEventListener('change', async () => {
-      if (!item.code) return; // skip if no code
       if (owned.checked) {
-        ownedSet.add(item.code);
-        if (user) await upsertCloudCode(user.id, item.code);
+        ownedSet.add(id);
+        if (user) await upsertCloudCode(user.id, id);
       } else {
-        ownedSet.delete(item.code);
-        if (user) await deleteCloudCode(user.id, item.code);
+        ownedSet.delete(id);
+        if (user) await deleteCloudCode(user.id, id);
       }
       saveOwnedLocal();
       stats && (stats.textContent = fmtStats(items.filter(matches)));
@@ -276,7 +290,7 @@ function wireEvents() {
   catalog = await loadData();
   user = await currentUser();
 
-  // Cloud is the source of truth for coded items (diva, etc.)
+  // Cloud is the source of truth for all items (IDs may be codes or ASIN-based)
   if (user) {
     try {
       const cloud = await fetchCloudCodes(user.id);
