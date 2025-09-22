@@ -7,11 +7,12 @@ async function loadJson(path) {
   } catch { return []; }
 }
 async function loadData() {
-  const [diva, extras] = await Promise.all([
+  const [diva, canni, extras] = await Promise.all([
     loadJson('./data/dnd-diva.json'),
-    loadJson('./data/extras.json') // new file with Amazon/Kupa/etc
+    loadJson('./data/canni.json'),      // <-- NEW
+    loadJson('./data/extras.json')
   ]);
-  return [...diva, ...extras];
+  return [...diva, ...canni, ...extras];
 }
 
 // ==================== Supabase (for cloud sync) ====================
@@ -128,6 +129,7 @@ const COLLECTION_LABELS = {
   diva: 'Diva Colors',
   gelx: 'Gel X',
   kupa: 'Kupa',
+  canni: 'CANNI',        // <-- NEW
   dnd: 'DND Colors',
   dc: 'DC Colors',
   tools: 'Nail Tools',
