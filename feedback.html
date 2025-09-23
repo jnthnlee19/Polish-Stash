@@ -1,0 +1,108 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Feedback — Polish Stash</title>
+  <link rel="icon" href="/polish-stash-logo.png" />
+  <link rel="apple-touch-icon" href="/polish-stash-logo.png" />
+  <link rel="stylesheet" href="/styles.css" />
+  <style>
+    /* light form styling that matches your theme */
+    .wrap{max-width:760px;margin:24px auto;padding:0 16px}
+    .form-card{border:1px solid var(--line);border-radius:16px;padding:20px;background:#fff}
+    .form-card h1{margin:0 0 8px}
+    .form-card p.lead{margin:0 0 16px;color:var(--ink-2)}
+    .row{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+    label{font-weight:600;margin:12px 0 6px;display:block}
+    input[type="text"],input[type="email"],select,textarea{
+      width:100%;border:1px solid var(--line);border-radius:10px;padding:10px 12px;
+      font:16px/1.4 system-ui,-apple-system,Segoe UI,Roboto,Inter,Helvetica,Arial,sans-serif
+    }
+    textarea{min-height:140px;resize:vertical}
+    .actions{display:flex;gap:10px;align-items:center;margin-top:14px}
+    .btn{border:1px solid var(--line);background:#fff;border-radius:10px;padding:10px 14px;cursor:pointer}
+    .muted{color:var(--ink-2);font-size:.9rem}
+    .site-header{position:sticky;top:0;background:#fff;border-bottom:1px solid var(--line);z-index:10;padding:12px 16px;display:flex;gap:10px;align-items:center}
+    .site-header img{width:36px;height:36px}
+    .spacer{flex:1}
+  </style>
+</head>
+<body>
+  <header class="site-header">
+    <img src="/polish-stash-logo.png" alt="Polish Stash logo" />
+    <strong>Polish Stash</strong>
+    <div class="spacer"></div>
+    <a class="btn" href="/index.html">Back to Catalog</a>
+  </header>
+
+  <main class="wrap">
+    <form name="feedback" method="POST" action="/thanks.html" data-netlify="true" data-netlify-honeypot="bot-field" class="form-card">
+      <h1>Tell us what to add next ✨</h1>
+      <p class="lead">Suggest brands or products, report a bad link, or share any feedback.</p>
+
+      <!-- Netlify form plumbing -->
+      <input type="hidden" name="form-name" value="feedback" />
+      <p style="display:none">
+        <label>Don’t fill this out if you’re human:
+          <input name="bot-field" />
+        </label>
+      </p>
+
+      <!-- Helpful context we capture automatically -->
+      <input type="hidden" name="business_name" id="business_name" />
+      <input type="hidden" name="page" value="feedback" />
+
+      <div class="row">
+        <div>
+          <label for="name">Your name (optional)</label>
+          <input id="name" type="text" name="name" placeholder="Jane Doe" />
+        </div>
+        <div>
+          <label for="email">Email (optional)</label>
+          <input id="email" type="email" name="email" placeholder="you@example.com" />
+        </div>
+      </div>
+
+      <div class="row">
+        <div>
+          <label for="type">What is this about?</label>
+          <select id="type" name="type">
+            <option value="Brand request">Brand request</option>
+            <option value="Product request">Product request</option>
+            <option value="Bug or bad link">Bug or bad link</option>
+            <option value="General feedback">General feedback</option>
+          </select>
+        </div>
+        <div>
+          <label for="brand">Brand (optional)</label>
+          <input id="brand" type="text" name="brand" placeholder="e.g., CANNI, DND, MelodySusie" />
+        </div>
+      </div>
+
+      <label for="message">Message</label>
+      <textarea id="message" name="message" required placeholder="What should we add or fix? Include any links if you have them."></textarea>
+
+      <div class="actions">
+        <button type="submit" class="btn">Send</button>
+        <span class="muted">We read everything. Thank you! 💅</span>
+      </div>
+    </form>
+  </main>
+
+  <footer class="site-footer">
+    <p>Made with ❤️ in Austin · Free to use · Some links may be affiliate links</p>
+    <p style="margin-top:8px; color: var(--ink-2); font-size:.9rem;">
+      As an Amazon Associate, I earn from qualifying purchases.
+    </p>
+  </footer>
+
+  <script>
+    // Auto-fill Business Name from localStorage
+    (function(){
+      var bn = localStorage.getItem('business_name');
+      if (bn) document.getElementById('business_name').value = bn;
+    })();
+  </script>
+</body>
+</html>
