@@ -1,250 +1,93 @@
 <!doctype html>
 <html lang="en">
-<head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Polish Stash</title>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Polish Stash</title>
+    
+  <!-- iOS Home Screen icon -->
+  <link rel="apple-touch-icon" href="/assets/polish-stash-logo.png">
+
   <link rel="stylesheet" href="styles.css" />
-  <link rel="icon" href="polish-stash-logo.png" />
-  <style>
-    /* Light shell polish so things look nice out of the box */
-    :root { --line:#e5e7eb; }
-    body { margin:0; font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial; color:#111; background:#fff; }
-    header.topbar { position:sticky; top:0; z-index:10; background:#fff; border-bottom:1px solid var(--line); }
-    .wrap { max-width:1100px; margin:0 auto; padding:14px 16px; }
-    .row { display:flex; flex-wrap:wrap; align-items:center; gap:10px; }
-    .brand { display:flex; align-items:center; gap:10px; margin-right:auto; }
-    .brand img { width:36px; height:36px; border-radius:10px; object-fit:cover; }
-    .brand strong { font-size:1.05rem; white-space:nowrap; }
-    .controls { display:flex; flex-wrap:wrap; gap:8px; }
-    .btn { padding:9px 12px; border:1px solid var(--line); background:#fff; border-radius:10px; cursor:pointer; }
-    .btn:hover { background:#f7f7f7; }
-    .btn-primary { background:#111; color:#fff; border-color:#111; }
-    .btn-primary:hover { opacity:.92; }
-    .field { padding:9px 10px; border:1px solid var(--line); border-radius:10px; }
-    #stats { padding:10px 16px; color:#555; }
-    #grid { display:grid; gap:12px; grid-template-columns: repeat(auto-fill, minmax(230px, 1fr)); padding:0 16px 24px; }
-    .card { border:1px solid var(--line); border-radius:14px; overflow:hidden; background:#fff; }
-    .swatch { height:150px; background:linear-gradient(135deg,#f3f4f6,#e5e7eb); }
-    .card-body { padding:10px 12px; display:grid; gap:6px; }
-    .name { font-weight:600; line-height:1.25; }
-    .meta { color:#666; font-size:.9rem; }
-    .row-between { display:flex; align-items:center; justify-content:space-between; gap:8px; }
-    .buy { font-size:.9rem; color:#111; text-decoration:underline; }
-    .owned-wrap { display:flex; align-items:center; gap:6px; }
-    .owned { width:18px; height:18px; }
-    @media (max-width: 560px) {
-      .brand strong { display:none; }
-    }
-
-    /* ===== Clients Modal Polish (matches previous message) ===== */
-    dialog#clients-modal { border:none; padding:0; border-radius:16px; box-shadow:0 20px 60px rgba(0,0,0,.25); max-width:720px; width:92vw; }
-    .client-form { padding:18px; }
-    .client-header { display:flex; align-items:center; justify-content:space-between; margin-bottom:10px; border-bottom:1px solid var(--line); padding-bottom:8px; }
-    .client-header h3 { margin:0; font-size:1.15rem; }
-    .icon-btn { background:transparent; border:1px solid var(--line); width:32px; height:32px; border-radius:10px; cursor:pointer; }
-    .icon-btn:hover { background:#f5f5f5; }
-    .client-grid { display:grid; gap:12px; grid-template-columns:1fr 1fr; }
-    .client-field { display:flex; flex-direction:column; gap:6px; }
-    .client-field input { padding:10px; border:1px solid var(--line); border-radius:10px; }
-    .hand-field { margin:0; border:1px dashed var(--line); border-radius:12px; padding:10px; grid-column:1/-1; }
-    .hand-field legend { padding:0 6px; font-weight:600; color:#555; }
-
-    .segmented { display:inline-grid; grid-template-columns:repeat(3,1fr); border:1px solid var(--line); border-radius:12px; overflow:hidden; }
-    .segmented input { display:none; }
-    .segmented label { padding:8px 10px; text-align:center; cursor:pointer; background:#fafafa; user-select:none; }
-    .segmented input:checked + label { background:#fff; font-weight:600; box-shadow:inset 0 0 0 2px #11111110; }
-    .segmented label + input + label { border-left:1px solid var(--line); }
-
-    .client-actions { margin:14px 0 8px; display:flex; gap:8px; justify-content:flex-end; }
-    .btn-ghost { background:transparent; border:1px solid var(--line); }
-    .btn-ghost:hover { background:#f7f7f7; }
-
-    .client-list { margin-top:10px; }
-    .client-search { width:100%; padding:10px; border:1px solid var(--line); border-radius:10px; margin:6px 0 10px; }
-    .nice-table { width:100%; border-collapse:collapse; }
-    .nice-table thead th { font-size:.85rem; text-transform:uppercase; letter-spacing:.02em; color:#666; padding:8px; border-bottom:1px solid var(--line); text-align:left; }
-    .nice-table tbody td { padding:10px 8px; border-top:1px solid var(--line); vertical-align:top; }
-    .badge { display:inline-block; padding:4px 8px; border-radius:999px; font-size:.75rem; line-height:1; border:1px solid var(--line); }
-    .badge[data-t="GelX"] { background:#fff5f7; }
-    .badge[data-t="Press-ons"] { background:#f5fff7; }
-    .badge[data-t="Acrylic"] { background:#f5f8ff; }
-    .row-actions { display:flex; gap:6px; justify-content:flex-end; }
-    .row-actions .btn { padding:6px 8px; font-size:.8rem; }
-
-    /* ===== Size Pickers ===== */
-    .sizes-pickers { display:grid; gap:8px; grid-template-columns:repeat(5,1fr); }
-    .picker { position:relative; }
-    .picker-btn { width:100%; padding:10px 8px; border:1px solid var(--line); border-radius:10px; background:#fff; cursor:pointer; font-weight:600; letter-spacing:.02em; }
-    .picker-btn[data-has-value="1"] { font-weight:700; box-shadow:inset 0 0 0 2px #11111110; }
-    .picker-menu { display:none; position:absolute; z-index:40; left:0; right:0; top:calc(100% + 6px); background:#fff; border:1px solid var(--line); border-radius:12px; padding:6px; box-shadow:0 14px 34px rgba(0,0,0,.16); max-height:220px; overflow:auto; }
-    .picker.open .picker-menu { display:block; }
-    .picker-menu button { width:100%; padding:8px 10px; border:none; background:transparent; cursor:pointer; text-align:left; border-radius:8px; }
-    .picker-menu button:hover { background:#f6f6f6; }
-    .picker-menu .opt-clear { color:#b91c1c; }
-  </style>
 </head>
 <body>
+  <!-- the rest of your page -->
+    <link rel="icon" href="https://upload.wikimedia.org/wikipedia/commons/3/33/Nail_polish_bottle_icon.svg">
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+<header class="site-header">
+  <!-- TOP ROW: all inline, left → right -->
+  <div class="topbar">
+    <img src="./assets/polish-stash-logo.png" alt="Polish Stash logo" class="topbar__logo" />
 
-  <!-- ===== Top Bar ===== -->
-  <header class="topbar">
-    <div class="wrap">
-      <div class="row">
-        <div class="brand">
-          <img src="polish-stash-logo.png" alt="Polish Stash">
-          <strong id="custom-site-name">Your Business Name</strong>
+    <h2 id="custom-site-name" class="topbar__name">Your Business Name</h2>
+
+<select id="filter-collection" class="topbar__select">
+  <option value="all"selected>All</option>
+  <option value="diva">Diva Colors</option>
+  <option value="gelx">Gel X</option>
+<option value="dnd">DND Colors</option>
+    <option value="Young Nails">Young Nails</option>
+  <option value="kupa">Kupa</option>
+   <option value="canni">CANNI</option>
+  <option value="tools">Nail Tools</option>
+  <option value="essentials">Essentials</option>
+  <option value="Beginner Bundles">Beginner Bundles</option>
+</select>
+
+
+    <button id="show-all"   class="btn">Show All</button>
+    <button id="show-owned" class="btn">Show On Hand</button>
+      <!-- NEW: Save button -->
+  <button id="save-owned" class="btn">Save</button>
+  </div>
+
+  <!-- SEARCH ROW (below the inline bar) -->
+  <div class="searchbar">
+    <input id="search" type="search" placeholder="Search by #, name, shade…" />
+  </div>
+</header>
+
+
+
+
+
+
+    <main>
+      <section id="stats" class="stats"></section>
+      <section id="grid" class="grid" aria-live="polite"></section>
+    </main>
+
+<footer class="site-footer">
+  <p>Made with ❤️ in Austin · Free to use · Some links may be affiliate links ·
+    <a href="/feedback.html">Feedback</a>
+  </p>
+  <p style="margin-top:8px; color: var(--ink-2); font-size:.9rem;">
+    As an Amazon Associate, I earn from qualifying purchases.
+  </p>
+</footer>
+
+
+
+    <template id="card-tpl">
+      <article class="card">
+        <div class="swatch" aria-hidden="true"></div>
+        <div class="meta">
+          <h3 class="name"></h3>
+          <p class="code"></p>
         </div>
-
         <div class="controls">
-          <input id="search" class="field" placeholder="Search by name, code, or collection…" />
-          <select id="filter-collection" class="field">
-            <option value="all">All Collections</option>
-            <option value="diva">Diva Colors</option>
-            <option value="gelx">Gel X</option>
-            <option value="kupa">Kupa</option>
-            <option value="canni">CANNI</option>
-            <option value="dnd">DND Colors</option>
-            <option value="dc">DC Colors</option>
-            <option value="tools">Nail Tools</option>
-            <option value="essentials">Essentials</option>
-            <option value="Young Nails">Young Nails</option>
-            <option value="Beginner Bundles">Beginner Bundles</option>
-          </select>
+          <label class="heart">
+            <input type="checkbox" class="owned" />
+            <span title="Toggle owned">❤</span>
+          </label>
+       <a class="buy" href="#" target="_blank" rel="nofollow sponsored noopener">Buy</a>
 
-          <button id="show-all" class="btn">Show All</button>
-          <button id="show-owned" class="btn">Show On Hand</button>
-          <button id="save-owned" class="btn btn-primary">Save</button>
-          <button id="btn-clients" class="btn">Clients</button>
         </div>
-      </div>
-    </div>
-  </header>
+      </article>
+    </template>
 
-  <!-- ===== Stats ===== -->
-  <div id="stats" class="wrap">Loading…</div>
-
-  <!-- ===== Grid ===== -->
-  <main id="grid" class="wrap"></main>
-
-  <!-- ===== Card Template ===== -->
-  <template id="card-tpl">
-    <article class="card">
-      <div class="swatch"></div>
-      <div class="card-body">
-        <div class="name"></div>
-        <div class="meta code"></div>
-        <div class="row-between">
-          <a class="buy" href="#" target="_blank" rel="noopener">Buy</a>
-          <label class="owned-wrap"><input type="checkbox" class="owned" /> <span>On Hand</span></label>
-        </div>
-      </div>
-    </article>
-  </template>
-
-  <!-- ===== Clients Modal (with size pickers) ===== -->
-  <dialog id="clients-modal">
-    <form method="dialog" id="client-form" class="client-form">
-      <header class="client-header">
-        <h3>Client Sizes</h3>
-        <button value="cancel" class="icon-btn" title="Close" aria-label="Close">✕</button>
-      </header>
-
-      <div class="client-grid">
-        <label class="client-field">
-          <span>Customer Name</span>
-          <input required id="c-name" placeholder="e.g., Alex R." />
-        </label>
-
-        <label class="client-field">
-          <span>Tip Brand</span>
-          <input id="c-brand" placeholder="Apres, Kiara Sky, etc." />
-        </label>
-
-        <label class="client-field" style="grid-column:1/-1;">
-          <span>Tip Type</span>
-          <div class="segmented" id="c-type-wrap">
-            <input type="radio" name="c-type" id="type-gelx" value="GelX" checked />
-            <label for="type-gelx">GelX</label>
-            <input type="radio" name="c-type" id="type-press" value="Press-ons" />
-            <label for="type-press">Press-ons</label>
-            <input type="radio" name="c-type" id="type-acrylic" value="Acrylic" />
-            <label for="type-acrylic">Acrylic</label>
-          </div>
-        </label>
-
-        <!-- Left -->
-        <fieldset class="hand-field">
-          <legend>Left Hand (LP → LT)</legend>
-          <div class="sizes sizes-pickers" data-hand="L">
-            <div class="picker" data-key="LP" data-id="l5">
-              <button type="button" class="picker-btn">LP</button>
-              <div class="picker-menu"></div>
-            </div>
-            <div class="picker" data-key="LR" data-id="l4">
-              <button type="button" class="picker-btn">LR</button>
-              <div class="picker-menu"></div>
-            </div>
-            <div class="picker" data-key="LM" data-id="l3">
-              <button type="button" class="picker-btn">LM</button>
-              <div class="picker-menu"></div>
-            </div>
-            <div class="picker" data-key="LI" data-id="l2">
-              <button type="button" class="picker-btn">LI</button>
-              <div class="picker-menu"></div>
-            </div>
-            <div class="picker" data-key="LT" data-id="l1">
-              <button type="button" class="picker-btn">LT</button>
-              <div class="picker-menu"></div>
-            </div>
-          </div>
-        </fieldset>
-
-        <!-- Right -->
-        <fieldset class="hand-field">
-          <legend>Right Hand (RT → RP)</legend>
-          <div class="sizes sizes-pickers" data-hand="R">
-            <div class="picker" data-key="RT" data-id="r1">
-              <button type="button" class="picker-btn">RT</button>
-              <div class="picker-menu"></div>
-            </div>
-            <div class="picker" data-key="RI" data-id="r2">
-              <button type="button" class="picker-btn">RI</button>
-              <div class="picker-menu"></div>
-            </div>
-            <div class="picker" data-key="RM" data-id="r3">
-              <button type="button" class="picker-btn">RM</button>
-              <div class="picker-menu"></div>
-            </div>
-            <div class="picker" data-key="RR" data-id="r4">
-              <button type="button" class="picker-btn">RR</button>
-              <div class="picker-menu"></div>
-            </div>
-            <div class="picker" data-key="RP" data-id="r5">
-              <button type="button" class="picker-btn">RP</button>
-              <div class="picker-menu"></div>
-            </div>
-          </div>
-        </fieldset>
-      </div>
-
-      <div class="client-actions">
-        <button class="btn btn-ghost" value="cancel">Close</button>
-        <button id="save-client" class="btn">Save</button>
-      </div>
-
-      <div class="client-list">
-        <input id="client-search" class="client-search" placeholder="Search clients…" />
-        <table class="nice-table" id="clients-table">
-          <thead>
-            <tr><th>Name</th><th>Type</th><th>Brand</th><th>Sizes</th><th></th></tr>
-          </thead>
-          <tbody id="clients-tbody"></tbody>
-        </table>
-      </div>
-    </form>
-  </dialog>
-
-  <!-- ===== App ===== -->
-  <script type="module" src="app.js"></script>
-</body>
+    <script type="module" src="app.js"></script>
+  </body>
 </html>
