@@ -1,0 +1,447 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Clients — Polish Stash</title>
+  <link rel="apple-touch-icon" href="./assets/polish-stash-logo.png">
+  <link rel="icon" href="https://upload.wikimedia.org/wikipedia/commons/3/33/Nail_polish_bottle_icon.svg">
+  <link rel="stylesheet" href="styles.css" />
+  <style>
+    :root { --line:#e5e7eb; --control-h:38px; --accent:#ec4899; }
+    body { margin:0; font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial; color:#111; background:#fff; }
+
+    .topbar { display:flex; align-items:center; gap:12px; padding:12px 16px; border-bottom:1px solid var(--line); background:#fff; position:sticky; top:0; z-index:10; }
+    .topbar__logo { width:36px; height:36px; border-radius:10px; object-fit:cover; }
+    .topbar__name { margin:0; font-size:1.05rem; margin-right:auto; }
+
+    .btn { padding:9px 12px; border:1px solid var(--line); background:#fff; border-radius:10px; cursor:pointer; height:var(--control-h); display:inline-flex; align-items:center; justify-content:center; line-height:1; white-space:nowrap; }
+    .btn:hover { background:#f7f7f7; }
+    .btn-primary { background:#111; color:#fff; border-color:#111; }
+    .btn-primary:hover { opacity:.92; }
+    .field { padding:7px 10px; border:1px solid var(--line); border-radius:10px; width:100%; height:var(--control-h); box-sizing:border-box; line-height:1.2; }
+    input[type="date"].field { padding:0 10px; }
+
+    .wrap { max-width:1200px; margin:0 auto; padding:14px 16px; }
+
+    /* 2-row form */
+    .formgrid {
+      display:grid; gap:10px;
+      grid-template-columns: repeat(3, minmax(220px, 1fr));
+      grid-template-areas:
+        "name phone bday"
+        "type brand actions";
+      align-items:end; margin-bottom:12px;
+    }
+    .group { display:flex; flex-direction:column; gap:6px; }
+    .g-name{grid-area:name;} .g-phone{grid-area:phone;} .g-bday{grid-area:bday;}
+    .g-type{grid-area:type;} .g-brand{grid-area:brand;}
+    .g-actions{grid-area:actions; display:flex; flex-direction:row; gap:8px; justify-content:flex-end; align-items:center; align-self:end; flex-wrap:nowrap;}
+
+    @media (max-width:860px){
+      .formgrid{
+        grid-template-columns:1fr;
+        grid-template-areas:"name""phone""bday""type""brand""actions";
+      }
+      .g-actions{ justify-content:flex-start; flex-wrap:wrap; }
+    }
+
+    .segmented { display:inline-grid; grid-template-columns:repeat(3,1fr); border:1px solid var(--line); border-radius:12px; overflow:hidden; height:var(--control-h); }
+    .segmented input{display:none;}
+    .segmented label{ height:var(--control-h); padding:0 12px; display:flex; align-items:center; justify-content:center; cursor:pointer; background:#fafafa; user-select:none; white-space:nowrap; }
+    .segmented input:checked + label{ background:#fff; font-weight:600; box-shadow:inset 0 0 0 2px #11111110; }
+    .segmented label + input + label{ border-left:1px solid var(--line); }
+
+    .sizes-row{ display:none; border:1px dashed var(--line); border-radius:12px; padding:10px; margin-bottom:12px; }
+    .sizes-row.open{ display:block; }
+    .sizes-head{ display:flex; align-items:center; justify-content:space-between; margin-bottom:8px; }
+    .sizes-grid{ display:grid; gap:8px; grid-template-columns:repeat(5, minmax(90px, 1fr)); }
+    .picker{ position:relative; }
+    .picker-btn{ width:100%; padding:10px 8px; border:1px solid var(--line); border-radius:10px; background:#fff; cursor:pointer; font-weight:600; letter-spacing:.02em; height:var(--control-h); }
+    .picker-btn[data-has-value="1"]{ font-weight:700; box-shadow:inset 0 0 0 2px #11111110; }
+    .picker-menu{ display:none; position:absolute; z-index:999; left:0; right:0; top:calc(100% + 6px); background:#fff; border:1px solid var(--line); border-radius:12px; padding:6px; box-shadow:0 14px 34px rgba(0,0,0,.16); max-height:220px; overflow:auto; }
+    .picker.open .picker-menu{ display:block; }
+    .picker-menu button{ width:100%; padding:8px 10px; border:none; background:transparent; cursor:pointer; text-align:left; border-radius:8px; }
+    .picker-menu button:hover{ background:#f6f6f6; }
+    .picker-menu .opt-clear{ color:#b91c1c; }
+
+    .toolbar{ display:flex; gap:10px; align-items:center; flex-wrap:wrap; margin:6px 0 10px; }
+    .table-wrap{ overflow-x:auto; }
+    .nice-table{ width:100%; border-collapse:collapse; min-width:640px; }
+    .nice-table thead th{ font-size:.85rem; text-transform:uppercase; letter-spacing:.02em; color:#666; padding:8px; border-bottom:1px solid var(--line); text-align:left; }
+    .nice-table tbody td{ padding:12px 10px; border-top:1px solid var(--line); vertical-align:top; }
+
+    .client-cell{ display:grid; gap:4px; }
+    .client-line{ display:flex; flex-wrap:wrap; align-items:baseline; gap:10px; }
+    .client-name{ font-weight:700; color:var(--accent); }
+    .muted{ color:#666; font-size:.9rem; }
+    .brand{ font-weight:600; }
+    .badge{ display:inline-block; padding:4px 8px; border-radius:999px; font-size:.75rem; line-height:1; border:1px solid var(--line); }
+    .badge[data-t="GelX"]{ background:#fff5f7; }
+    .badge[data-t="Press-ons"]{ background:#f5fff7; }
+    .badge[data-t="Acrylic"]{ background:#f5f8ff; }
+
+    .sizes-cell{ display:grid; gap:4px; }
+    .sizes-rowline{ display:flex; gap:8px; align-items:baseline; }
+    .sizes-label{ font-weight:700; color:#666; min-width:1.5rem; }
+
+    .row-actions{ display:flex; gap:6px; justify-content:flex-end; }
+    .row-actions .btn{ padding:6px 8px; font-size:.8rem; }
+  </style>
+</head>
+<body>
+  <div class="topbar">
+    <img src="./assets/polish-stash-logo.png" alt="Polish Stash" class="topbar__logo" />
+    <h2 class="topbar__name">Clients</h2>
+    <a href="index.html" class="btn" title="Back to inventory">← Back</a>
+  </div>
+
+  <div class="wrap">
+    <!-- 2-row form grid -->
+    <div class="formgrid" id="formgrid">
+      <div class="group g-name">
+        <label for="c-name">Name</label>
+        <input id="c-name" class="field" placeholder="e.g., Alex R.">
+      </div>
+      <div class="group g-phone">
+        <label for="c-phone">Number</label>
+        <input id="c-phone" class="field" type="tel" inputmode="tel" placeholder="(555) 123-4567">
+      </div>
+      <div class="group g-bday">
+        <label for="c-bday">Birthday</label>
+        <input id="c-bday" class="field" type="date" />
+      </div>
+
+      <div class="group g-type">
+        <label>Tip Type</label>
+        <div class="segmented" id="c-type-wrap">
+          <input type="radio" name="c-type" id="type-gelx" value="GelX" checked />
+          <label for="type-gelx">GelX</label>
+          <input type="radio" name="c-type" id="type-press" value="Press-ons" />
+          <label for="type-press">Press-ons</label>
+          <input type="radio" name="c-type" id="type-acrylic" value="Acrylic" />
+          <label for="type-acrylic">Acrylic</label>
+        </div>
+      </div>
+      <div class="group g-brand">
+        <label for="c-brand">Tip Brand</label>
+        <input id="c-brand" class="field" placeholder="Apres, Kiara Sky, etc.">
+      </div>
+      <div class="group g-actions">
+        <button id="toggle-sizes" class="btn" type="button">Show Sizes</button>
+        <button id="clear-form" class="btn" type="button">Clear</button>
+        <button id="save-client" class="btn btn-primary" type="button">Save Client</button>
+      </div>
+    </div>
+
+    <!-- Collapsible Sizes -->
+    <div id="sizes-row" class="sizes-row" aria-hidden="true">
+      <div class="sizes-head">
+        <strong>Sizes</strong>
+        <span class="muted">Left (LP→LT) &nbsp;•&nbsp; Right (RT→RP)</span>
+      </div>
+
+      <div style="display:grid; gap:10px;">
+        <div>
+          <div style="font-weight:600; margin-bottom:6px;">Left</div>
+          <div class="sizes-grid" data-hand="L">
+            <div class="picker" data-key="LP"><button type="button" class="picker-btn">LP</button><div class="picker-menu"></div></div>
+            <div class="picker" data-key="LR"><button type="button" class="picker-btn">LR</button><div class="picker-menu"></div></div>
+            <div class="picker" data-key="LM"><button type="button" class="picker-btn">LM</button><div class="picker-menu"></div></div>
+            <div class="picker" data-key="LI"><button type="button" class="picker-btn">LI</button><div class="picker-menu"></div></div>
+            <div class="picker" data-key="LT"><button type="button" class="picker-btn">LT</button><div class="picker-menu"></div></div>
+          </div>
+        </div>
+        <div>
+          <div style="font-weight:600; margin-bottom:6px;">Right</div>
+          <div class="sizes-grid" data-hand="R">
+            <div class="picker" data-key="RT"><button type="button" class="picker-btn">RT</button><div class="picker-menu"></div></div>
+            <div class="picker" data-key="RI"><button type="button" class="picker-btn">RI</button><div class="picker-menu"></div></div>
+            <div class="picker" data-key="RM"><button type="button" class="picker-btn">RM</button><div class="picker-menu"></div></div>
+            <div class="picker" data-key="RR"><button type="button" class="picker-btn">RR</button><div class="picker-menu"></div></div>
+            <div class="picker" data-key="RP"><button type="button" class="picker-btn">RP</button><div class="picker-menu"></div></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Search below sizes -->
+    <div class="toolbar">
+      <input id="client-search" class="field" placeholder="Search clients…" style="flex:1 1 420px;">
+    </div>
+
+    <!-- List -->
+    <div class="table-wrap">
+      <table class="nice-table">
+        <thead>
+          <tr><th>Client</th><th>Sizes</th><th></th></tr>
+        </thead>
+        <tbody id="clients-tbody"></tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- Cloud logic + page logic -->
+  <script type="module">
+    /* ===== Supabase setup ===== */
+    import { createClient } from 'https://esm.sh/@supabase/supabase-js@2';
+
+    // same values you used in app.js
+    const SUPABASE_URL = 'https://kgghfsnawrddnvssxham.supabase.co';
+    const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImtnZ2hmc25hd3JkZG52c3N4aGFtIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTgzODkwMjgsImV4cCI6MjA3Mzk2NTAyOH0.RtTZhVPeoxhamYxczVf-crkG8_jIBBpIJlfz9rvjCIg';
+
+    const supabase = createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+    const currentUser = async () => (await supabase.auth.getUser()).data.user || null;
+
+    /* ===== Local store (fallback + cache) ===== */
+    const LS_CLIENTS = 'polish-stash-clients';
+    let clients = JSON.parse(localStorage.getItem(LS_CLIENTS) || '[]');
+    let user = null;
+    let editIndex = -1; // -1=new
+
+    const SIZE_OPTIONS = ['000','00','0','1','2','3','4','4.5','5','5.5','6','6.5','7','8','9','10'];
+    const $ = (id) => document.getElementById(id);
+    const clientsTbody = $('clients-tbody');
+    const clientSearch = $('client-search');
+
+    const saveClientsLocal = () => localStorage.setItem(LS_CLIENTS, JSON.stringify(clients));
+    const uuid = () => (crypto?.randomUUID?.() || ('id-' + Math.random().toString(36).slice(2)));
+
+    /* ===== Cloud helpers ===== */
+    const dbToClient = (r)=>({
+      id:r.id, name:r.name, phone:r.phone||'',
+      bday:r.bday || '', type:r.type||'', brand:r.brand||'',
+      l: Array.isArray(r.l) ? r.l : (r.l||[]),
+      r: Array.isArray(r.r) ? r.r : (r.r||[]),
+      ts: r.ts || 0
+    });
+    const clientToDb = (c, userId)=>({
+      id: c.id || uuid(),
+      user_id: userId,
+      name: c.name,
+      phone: c.phone || null,
+      bday: c.bday || null,
+      type: c.type || null,
+      brand: c.brand || null,
+      l: c.l || [],
+      r: c.r || [],
+      ts: c.ts || Date.now()
+    });
+
+    async function cloudFetchAll(userId){
+      const { data, error } = await supabase.from('clients').select('*').eq('user_id', userId).order('ts', { ascending: true });
+      if (error) throw error;
+      return (data||[]).map(dbToClient);
+    }
+    async function cloudUpsert(userId, c){
+      const row = clientToDb(c, userId);
+      const { error } = await supabase.from('clients').upsert(row);
+      if (error) throw error;
+      return row.id;
+    }
+    async function cloudDelete(userId, id){
+      const { error } = await supabase.from('clients').delete().eq('user_id', userId).eq('id', id);
+      if (error) throw error;
+    }
+    async function cloudInsertMany(userId, arr){
+      const rows = arr.map(c => clientToDb(c, userId));
+      const { error } = await supabase.from('clients').insert(rows);
+      if (error) throw error;
+    }
+
+    /* ===== Page UI (same as before) ===== */
+    const getTypeValue = () => (document.querySelector('input[name="c-type"]:checked')?.value || 'GelX');
+    $('c-phone').addEventListener('input', (e)=>{
+      const d = e.target.value.replace(/\D+/g,'').slice(0,10);
+      const a = [];
+      if (d.length > 0) a.push('(' + d.slice(0,3));
+      if (d.length >= 3) a[0] += ') ';
+      if (d.length > 3) a.push(d.slice(3,6));
+      if (d.length > 6) a.push('-' + d.slice(6,10));
+      e.target.value = a.join('');
+    });
+
+    function closeAllPickers(except=null){ document.querySelectorAll('.picker.open').forEach(p => { if (p !== except) p.classList.remove('open'); }); }
+    function setPickerValue(picker, value){
+      const btn = picker.querySelector('.picker-btn'); if (!btn) return;
+      if (value) { btn.textContent = picker.dataset.key + ': ' + value; btn.setAttribute('data-has-value','1'); picker.dataset.value = value; }
+      else { btn.textContent = picker.dataset.key; btn.removeAttribute('data-has-value'); delete picker.dataset.value; }
+    }
+    function buildPickerMenus(){
+      document.querySelectorAll('.picker').forEach(picker=>{
+        const menu = picker.querySelector('.picker-menu'); if (!menu || menu.childElementCount) return;
+        SIZE_OPTIONS.forEach(opt=>{
+          const b = document.createElement('button'); b.type='button'; b.textContent=opt;
+          b.addEventListener('click', ()=>{ setPickerValue(picker, opt); closeAllPickers(); });
+          menu.appendChild(b);
+        });
+        const c = document.createElement('button'); c.type='button'; c.className='opt-clear'; c.textContent='Clear';
+        c.addEventListener('click', ()=>{ setPickerValue(picker, ''); closeAllPickers(); });
+        menu.appendChild(c);
+      });
+    }
+    function initPickerButtons(){
+      document.querySelectorAll('.picker-btn').forEach(btn=>{
+        btn.addEventListener('click', (e)=>{
+          const picker = btn.closest('.picker'); const isOpen = picker.classList.contains('open');
+          closeAllPickers(); picker.classList.toggle('open', !isOpen); e.stopPropagation();
+        });
+      });
+      document.addEventListener('click', ()=>closeAllPickers());
+    }
+    function getHandValues(hand){
+      const order = hand === 'L' ? ['LP','LR','LM','LI','LT'] : ['RT','RI','RM','RR','RP'];
+      return order.map(key => document.querySelector(`.sizes-grid[data-hand="${hand}"] .picker[data-key="${key}"]`)?.dataset.value || '');
+    }
+    function setHandValues(hand, values){
+      const order = hand === 'L' ? ['LP','LR','LM','LI','LT'] : ['RT','RI','RM','RR','RP'];
+      order.forEach((key, i)=>{
+        const picker = document.querySelector(`.sizes-grid[data-hand="${hand}"] .picker[data-key="${key}"]`);
+        if (picker) setPickerValue(picker, values?.[i] || '');
+      });
+    }
+
+    const sizesRow = $('sizes-row');
+    $('toggle-sizes').addEventListener('click', ()=>{
+      const open = !sizesRow.classList.contains('open');
+      sizesRow.classList.toggle('open', open);
+      sizesRow.setAttribute('aria-hidden', String(!open));
+      $('toggle-sizes').textContent = open ? 'Hide Sizes' : 'Show Sizes';
+    });
+
+    function clearForm() {
+      $('c-name').value = '';
+      $('c-phone').value = '';
+      $('c-bday').value = '';
+      $('c-brand').value = '';
+      document.getElementById('type-gelx').checked = true;
+      setHandValues('L', ['', '', '', '', '']);
+      setHandValues('R', ['', '', '', '', '']);
+      editIndex = -1; $('c-name').focus();
+    }
+    function fmtBirthday(iso) {
+      if (!iso) return '';
+      const [y,m,d] = iso.split('-').map(Number);
+      if (!y || !m || !d) return iso;
+      return `${m}/${d}/${y}`;
+    }
+
+    function renderClients() {
+      const q = (clientSearch?.value || '').toLowerCase();
+      const filtered = !q ? clients : clients.filter(c =>
+        `${c.name} ${c.phone||''} ${c.bday||''} ${c.type} ${c.brand} ${(c.l||[]).join('-')} ${(c.r||[]).join('-')}`.toLowerCase().includes(q)
+      );
+
+      clientsTbody.innerHTML = filtered.map(c=>{
+        const idx = clients.indexOf(c);
+        const left = (c.l||[]).join('-');
+        const right = (c.r||[]).join('-');
+        return `
+          <tr>
+            <td>
+              <div class="client-cell">
+                <div class="client-line"><span class="client-name">${c.name||''}</span> <span class="muted">${c.phone||''}</span></div>
+                <div class="client-line"><span class="muted">${fmtBirthday(c.bday||'')}</span></div>
+                <div class="client-line"><span class="badge" data-t="${c.type}">${c.type||''}</span> <span class="brand">${c.brand||''}</span></div>
+              </div>
+            </td>
+            <td>
+              <div class="sizes-cell">
+                <div class="sizes-rowline"><span class="sizes-label">L</span><span>${left}</span></div>
+                <div class="sizes-rowline"><span class="sizes-label">R</span><span>${right}</span></div>
+              </div>
+            </td>
+            <td class="row-actions">
+              <button class="btn" data-edit="${idx}">Edit</button>
+              <button class="btn" data-del="${idx}">Delete</button>
+            </td>
+          </tr>
+        `;
+      }).join('');
+
+      clientsTbody.querySelectorAll('[data-del]').forEach(b=>{
+        b.addEventListener('click', async ()=>{
+          const i = Number(b.dataset.del); if (!Number.isFinite(i)) return;
+          const rec = clients[i]; if (!rec) return;
+          if (!confirm('Delete this client?')) return;
+          // cloud first (if logged in), then local
+          try { if (user) await cloudDelete(user.id, rec.id); } catch(e){ console.warn('cloud delete failed', e); alert('Cloud delete failed. Try again.'); return; }
+          clients.splice(i,1);
+          saveClientsLocal(); renderClients(); clearForm();
+        });
+      });
+      clientsTbody.querySelectorAll('[data-edit]').forEach(b=>{
+        b.addEventListener('click', ()=>{
+          editIndex = Number(b.dataset.edit);
+          const c = clients[editIndex]; if (!c) return;
+          $('c-name').value = c.name || '';
+          $('c-phone').value = c.phone || '';
+          $('c-bday').value = c.bday || '';
+          $('c-brand').value = c.brand || '';
+          document.getElementById('type-gelx').checked = c.type === 'GelX';
+          document.getElementById('type-press').checked = c.type === 'Press-ons';
+          document.getElementById('type-acrylic').checked = c.type === 'Acrylic';
+          setHandValues('L', c.l || []);
+          setHandValues('R', c.r || []);
+          window.scrollTo({ top: 0, behavior: 'smooth' });
+        });
+      });
+    }
+
+    $('save-client').addEventListener('click', async ()=>{
+      const name = $('c-name').value.trim();
+      if (!name) { $('c-name').focus(); return; }
+      const rec = {
+        id: clients[editIndex]?.id || uuid(),
+        name,
+        phone: $('c-phone').value.trim(),
+        bday: $('c-bday').value,
+        type: getTypeValue(),
+        brand: $('c-brand').value.trim(),
+        l: getHandValues('L'),
+        r: getHandValues('R'),
+        ts: clients[editIndex]?.ts || Date.now()
+      };
+
+      // Cloud if logged in
+      if (user) {
+        try { await cloudUpsert(user.id, rec); }
+        catch(e){ console.warn('cloud upsert failed', e); alert('Cloud save failed. Check your connection and try again.'); return; }
+      }
+
+      if (editIndex > -1) clients[editIndex] = rec; else clients.push(rec);
+      saveClientsLocal(); renderClients(); clearForm();
+    });
+
+    $('clear-form').addEventListener('click', clearForm);
+    clientSearch.addEventListener('input', renderClients);
+
+    // Initial boot + cloud sync
+    async function initialLoad(){
+      user = await currentUser();
+
+      if (user) {
+        try {
+          const cloud = await cloudFetchAll(user.id);
+          if (cloud.length === 0 && clients.length > 0) {
+            // first-time import from local to cloud
+            await cloudInsertMany(user.id, clients);
+            const refreshed = await cloudFetchAll(user.id);
+            clients = refreshed;
+          } else {
+            clients = cloud;
+          }
+          saveClientsLocal();
+        } catch (e) {
+          console.warn('cloud sync failed', e);
+        }
+      }
+      buildPickerMenus();
+      initPickerButtons();
+      renderClients();
+    }
+
+    initialLoad();
+  </script>
+</body>
+</html>
