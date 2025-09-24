@@ -7,9 +7,10 @@ async function loadJson(path) {
   } catch { return []; }
 }
 async function loadData() {
-  const [diva, canni, extras] = await Promise.all([
+  const [diva, canni, dnd, extras] = await Promise.all([
     loadJson('./data/dnd-diva.json'),
-    loadJson('./data/canni.json'),      // <-- NEW
+    loadJson('./data/canni.json'),
+    loadJson('./data/dnd.json'),       // <-- NEW
     loadJson('./data/extras.json')
   ]);
   return [...diva, ...canni, ...extras];
