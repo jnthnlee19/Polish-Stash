@@ -13,7 +13,7 @@ async function loadData() {
     loadJson('./data/dnd.json'),       // <-- NEW
     loadJson('./data/extras.json')
   ]);
-  return [...diva, ...canni, ...extras];
+  return [...diva, ...canni, ...dnd, ...extras];
 }
 
 // ==================== Supabase (for cloud sync) ====================
