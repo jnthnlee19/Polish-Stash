@@ -41,6 +41,8 @@
     <button id="show-owned" class="btn">Show On Hand</button>
       <!-- NEW: Save button -->
   <button id="save-owned" class="btn">Save</button>
+<button id="btn-clients" class="btn">Clients</button>
+
   </div>
 
   <!-- SEARCH ROW (below the inline bar) -->
@@ -89,5 +91,43 @@
     </template>
 
     <script type="module" src="app.js"></script>
+    <!-- Clients Modal -->
+<dialog id="clients-modal">
+  <form method="dialog" id="client-form" style="min-width:320px;max-width:560px">
+    <h3>Client Sizes</h3>
+    <label>Customer Name <input required id="c-name" /></label>
+    <label>Tip Type
+      <select id="c-type">
+        <option>GelX</option><option>Press-ons</option><option>Acrylic</option>
+      </select>
+    </label>
+    <label>Tip Brand <input id="c-brand" placeholder="Apres, Kiara Sky, etc." /></label>
+
+    <fieldset>
+      <legend>Left (LP→LT)</legend>
+      <input id="l5" placeholder="LP" size="2"/>
+      <input id="l4" placeholder="LR" size="2"/>
+      <input id="l3" placeholder="LM" size="2"/>
+      <input id="l2" placeholder="LI" size="2"/>
+      <input id="l1" placeholder="LT" size="2"/>
+    </fieldset>
+    <fieldset>
+      <legend>Right (RT→RP)</legend>
+      <input id="r1" placeholder="RT" size="2"/>
+      <input id="r2" placeholder="RI" size="2"/>
+      <input id="r3" placeholder="RM" size="2"/>
+      <input id="r4" placeholder="RR" size="2"/>
+      <input id="r5" placeholder="RP" size="2"/>
+    </fieldset>
+
+    <menu>
+      <button value="cancel" class="btn">Close</button>
+      <button id="save-client" class="btn">Save</button>
+    </menu>
+
+    <div id="clients-list" style="margin-top:12px"></div>
+  </form>
+</dialog>
+
   </body>
 </html>
