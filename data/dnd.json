@@ -19,7 +19,7 @@
   { "collection": "dnd", "code": "418", "name": "Butternut Squash", "product_url": "https://www.dndgel.com/products/butternut-squash-418" },
   { "collection": "dnd", "code": "419", "name": "Havin Cabbler", "product_url": "https://www.dndgel.com/products/havin-cabbler-419" },
   { "collection": "dnd", "code": "420", "name": "Bright Maroon", "product_url": "https://www.dndgel.com/products/bright-maroon-420" },
-  { "collection": "dnd", "code": "421", "name": "Rose Petal Pink", "product_url": "https://www.dndgel.com/products/rose-petal-pink-421" },
+  { "collection": "dnd", "code": "421", "name": "Rose Petal Pink", "product_url": "https://www.dndgel.com/products/rose-petal-421" },
   { "collection": "dnd", "code": "422", "name": "Portland Orange", "product_url": "https://www.dndgel.com/products/portland-orange-422" },
   { "collection": "dnd", "code": "423", "name": "Glitter For You", "product_url": "https://www.dndgel.com/products/glitter-for-you-423" },
   { "collection": "dnd", "code": "424", "name": "Lemon Juice", "product_url": "https://www.dndgel.com/products/lemon-juice-424" },
@@ -42,27 +42,27 @@
   { "collection": "dnd", "code": "441", "name": "Clear Pink", "product_url": "https://www.dndgel.com/products/clear-pink-441" },
   { "collection": "dnd", "code": "442", "name": "Silver Star", "product_url": "https://www.dndgel.com/products/silver-star-442" },
   { "collection": "dnd", "code": "443", "name": "Twinkle Little Star", "product_url": "https://www.dndgel.com/products/twinkle-little-star-443" },
-  { "collection": "dnd", "code": "444", "name": "Short N Sweet", "product_url": "https://www.dndgel.com/products/short-%22n%22-sweet-444" },
+  { "collection": "dnd", "code": "444", "name": "Short N Sweet", "product_url": "https://www.dndgel.com/products/short-n-sweet-444" },
   { "collection": "dnd", "code": "445", "name": "Melting Violet", "product_url": "https://www.dndgel.com/products/melting-violet-445" },
   { "collection": "dnd", "code": "446", "name": "Woodlake", "product_url": "https://www.dndgel.com/products/woodlake-446" },
   { "collection": "dnd", "code": "447", "name": "Black Licorice", "product_url": "https://www.dndgel.com/products/black-licorice-447" },
   { "collection": "dnd", "code": "448", "name": "Snow Flake", "product_url": "https://www.dndgel.com/products/snow-flake-448" },
   { "collection": "dnd", "code": "449", "name": "First Kiss", "product_url": "https://www.dndgel.com/products/first-kiss-449" },
   { "collection": "dnd", "code": "450", "name": "Sweet Purple", "product_url": "https://www.dndgel.com/products/sweet-purple-450" },
-  { "collection": "dnd", "code": "451", "name": "Rock N Rose", "product_url": "https://www.dndgel.com/products/rock-%22n%22-rose-451" },
+  { "collection": "dnd", "code": "451", "name": "Rock N Rose", "product_url": "https://www.dndgel.com/products/rock-n-rose-451" },
 { "collection": "dnd", "code": "452", "name": "Sweet Romance", "product_url": "https://www.dndgel.com/products/sweet-romance-452" },
 { "collection": "dnd", "code": "453", "name": "Plum Wine", "product_url": "https://www.dndgel.com/products/plum-wine-453" },
 { "collection": "dnd", "code": "454", "name": "Fiery Flamingo", "product_url": "https://www.dndgel.com/products/fiery-flamingo-454" },
 { "collection": "dnd", "code": "455", "name": "Plum Passion", "product_url": "https://www.dndgel.com/products/plum-passion-455" },
 { "collection": "dnd", "code": "456", "name": "Cherry Berry", "product_url": "https://www.dndgel.com/products/cherry-berry-456" },
-{ "collection": "dnd", "code": "457", "name": "Violet's Secret", "product_url": "https://www.dndgel.com/products/violet%27s-secret-457" },
+{ "collection": "dnd", "code": "457", "name": "Violet's Secret", "product_url": "https://www.dndgel.com/products/violets-secret-457" },
 { "collection": "dnd", "code": "458", "name": "Fresh Eggplant", "product_url": "https://www.dndgel.com/products/fresh-eggplant-458" },
 { "collection": "dnd", "code": "459", "name": "Muted Berry", "product_url": "https://www.dndgel.com/products/muted-berry-459" },
 { "collection": "dnd", "code": "460", "name": "Deep Mystery", "product_url": "https://www.dndgel.com/products/deep-mystery-460" },
 { "collection": "dnd", "code": "461", "name": "Pretty In Pink", "product_url": "https://www.dndgel.com/products/pretty-in-pink-461" },
-{ "collection": "dnd", "code": "462", "name": "Desert Spice", "product_url": "https://www.dndgel.com/products/desert-spice-462" },
+{ "collection": "dnd", "code": "462", "name": "Desert Spice", "product_url": "https://www.dndgel.com/products/dessert-spice-462" },
 { "collection": "dnd", "code": "463", "name": "Hot Jazz", "product_url": "https://www.dndgel.com/products/hot-jazz-463" },
-{ "collection": "dnd", "code": "464", "name": "Fairy  Wings", "product_url": "https://www.dndgel.com/products/fairy--wings-464" },
+{ "collection": "dnd", "code": "464", "name": "Fairy  Wings", "product_url": "https://www.dndgel.com/products/fairy-wings-464" },
 { "collection": "dnd", "code": "465", "name": "Royal Jewelry", "product_url": "https://www.dndgel.com/products/royal-jewelry-465" },
 { "collection": "dnd", "code": "466", "name": "Brandy Wine", "product_url": "https://www.dndgel.com/products/brandy-wine-466" },
 { "collection": "dnd", "code": "467", "name": "Legendary Diamond", "product_url": "https://www.dndgel.com/products/legendary-diamond-467" },
@@ -77,7 +77,7 @@
 { "collection": "dnd", "code": "476", "name": "Gold In Red", "product_url": "https://www.dndgel.com/products/gold-in-red-476" },
 { "collection": "dnd", "code": "477", "name": "Red Stone", "product_url": "https://www.dndgel.com/products/red-stone-477" },
 { "collection": "dnd", "code": "478", "name": "Spiced Berry", "product_url": "https://www.dndgel.com/products/spiced-berry-478" },
-{ "collection": "dnd", "code": "479", "name": "Queen of Grape", "product_url": "https://www.dndgel.com/products/queen-of-grape-479" },
+{ "collection": "dnd", "code": "479", "name": "Queen of Grape", "product_url": "https://www.dndgel.com/products/queen-of-grapes-479" },
 { "collection": "dnd", "code": "480", "name": "Magic Night", "product_url": "https://www.dndgel.com/products/magic-night-480" },
 { "collection": "dnd", "code": "481", "name": "Burst of Gold", "product_url": "https://www.dndgel.com/products/burst-of-gold-481" },
 { "collection": "dnd", "code": "482", "name": "Charming Cherry", "product_url": "https://www.dndgel.com/products/charming-cherry-482" },
@@ -254,7 +254,7 @@
     "collection": "dnd",
     "code": "568",
     "name": "Green Forest, AK",
-    "product_url": "https://www.dndgel.com/products/green-forest,-ak-568"
+    "product_url": "https://www.dndgel.com/products/green-forest-ak-568"
   },
   {
     "collection": "dnd",
@@ -626,7 +626,7 @@
     "collection": "dnd",
     "code": "631",
     "name": "Fuschia in Beauty",
-    "product_url": "https://www.dndgel.com/products/fuschia-in-beauty-631"
+    "product_url": "https://www.dndgel.com/products/fuschia-in-the-beauty-631"
   },
   {
     "collection": "dnd",
@@ -650,7 +650,7 @@
     "collection": "dnd",
     "code": "635",
     "name": "Burgundy Mist",
-    "product_url": "https://www.dndgel.com/products/burgundy-mist-635"
+    "product_url": "https://www.dndgel.com/products/burgandy-mist-635"
   },
   {
     "collection": "dnd",
@@ -746,7 +746,7 @@
     "collection": "dnd",
     "code": "651",
     "name": "Punch Marshmallow",
-    "product_url": "https://www.dndgel.com/products/punch-marshmallow-651"
+    "product_url": "https://www.dndgel.com/products/punch-marshmellow-651"
   },
   {
     "collection": "dnd",
@@ -920,7 +920,7 @@
     "collection": "dnd",
     "code": "680",
     "name": "Autumn Leaves",
-    "product_url": "https://www.dndgel.com/products/autumn-leaves-680"
+    "product_url": "https://www.dndgel.com/products/autumm-leave-680"
   },
   {
     "collection": "dnd",
@@ -932,7 +932,7 @@
     "collection": "dnd",
     "code": "682",
     "name": "Guardian Slimmer",
-    "product_url": "https://www.dndgel.com/products/guardian-slimmer-682"
+    "product_url": "https://www.dndgel.com/products/gaurdian-slimmer-682"
   },
   {
     "collection": "dnd",
@@ -1244,7 +1244,7 @@
     "collection": "dnd",
     "code": "735",
     "name": "Cosmopolitan",
-    "product_url": "https://www.dndgel.com/products/cosmopolitan--735"
+    "product_url": "https://www.dndgel.com/products/cosmopolitan-735"
   },
   {
     "collection": "dnd",
@@ -1484,7 +1484,7 @@
     "collection": "dnd",
     "code": "775",
     "name": "Boo'd Up",
-    "product_url": "https://www.dndgel.com/products/boo'd-up-775"
+    "product_url": "https://www.dndgel.com/products/bood-up-775"
   },
   {
     "collection": "dnd",
@@ -1508,7 +1508,7 @@
     "collection": "dnd",
     "code": "779",
     "name": "Snow Way!",
-    "product_url": "https://www.dndgel.com/products/snow-way!-779"
+    "product_url": "https://www.dndgel.com/products/snow-way-779"
   },
   {
     "collection": "dnd",
@@ -1526,7 +1526,7 @@
     "collection": "dnd",
     "code": "782",
     "name": "Feelin' Frosty",
-    "product_url": "https://www.dndgel.com/products/feelin'-frosty-782"
+    "product_url": "https://www.dndgel.com/products/feelin-frosty-782"
   },
   {
     "collection": "dnd",
@@ -1652,7 +1652,7 @@
     "collection": "dnd",
     "code": "804",
     "name": "Let's Tango",
-    "product_url": "https://www.dndgel.com/products/let's-tango-804"
+    "product_url": "https://www.dndgel.com/products/lets-tango-804"
   },
   {
     "collection": "dnd",
