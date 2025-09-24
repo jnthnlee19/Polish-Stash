@@ -315,6 +315,67 @@ function wireEvents() {
   }
 }
 
+// ==================== Client Sizes (local-only) ====================
+// Add a "Clients" button in the header: <button id="btn-clients" class="btn">Clients</button>
+// Add a modal at end of body with ids used below: clients-modal, client-form, clients-list, save-client
+const LS_CLIENTS = 'polish-stash-clients';
+let clients = JSON.parse(localStorage.getItem(LS_CLIENTS) || '[]');
+
+function saveClientsLocal(){ localStorage.setItem(LS_CLIENTS, JSON.stringify(clients)); }
+
+const clientsBtn   = document.getElementById('btn-clients');
+const clientsModal = document.getElementById('clients-modal');
+const clientsList  = document.getElementById('clients-list');
+
+function renderClients() {
+  if (!clientsList) return;
+  if (!clients.length) { clientsList.innerHTML = '<p class="muted">No clients yet.</p>'; return; }
+  clientsList.innerHTML = `
+    <input id="client-search" placeholder="Search clients…" style="width:100%;margin:8px 0;padding:8px;border:1px solid var(--line);border-radius:10px">
+    <table style="width:100%;border-collapse:collapse">
+      <thead><tr><th align="left">Name</th><th align="left">Type</th><th align="left">Brand</th><th align="left">Sizes</th><th></th></tr></thead>
+      <tbody>
+        ${clients.map((c,i)=>`
+          <tr style="border-top:1px solid var(--line)">
+            <td>${c.name}</td><td>${c.type||''}</td><td>${c.brand||''}</td>
+            <td>L:${(c.l||[]).join('-')} · R:${(c.r||[]).join('-')}</td>
+            <td><button class="btn" data-del="${i}">Delete</button></td>
+          </tr>`).join('')}
+      </tbody>
+    </table>`;
+  clientsList.querySelectorAll('[data-del]').forEach(b=>{
+    b.addEventListener('click', ()=>{
+      clients.splice(Number(b.dataset.del),1);
+      saveClientsLocal(); renderClients();
+    });
+  });
+  const s = document.getElementById('client-search');
+  if (s) s.addEventListener('input', e=>{
+    const q = e.target.value.toLowerCase();
+    const rows = [...clientsList.querySelectorAll('tbody tr')];
+    rows.forEach(tr=> tr.style.display = tr.textContent.toLowerCase().includes(q) ? '' : 'none');
+  });
+}
+
+if (clientsBtn && clientsModal) {
+  clientsBtn.addEventListener('click', ()=>{ renderClients(); clientsModal.showModal(); });
+}
+
+const saveClientBtn = document.getElementById('save-client');
+if (saveClientBtn) {
+  saveClientBtn.addEventListener('click', (e)=>{
+    e.preventDefault();
+    const g = id => (document.getElementById(id)?.value || '').trim();
+    const left  = [g('l5'),g('l4'),g('l3'),g('l2'),g('l1')];
+    const right = [g('r1'),g('r2'),g('r3'),g('r4'),g('r5')];
+    const rec = { name: g('c-name'), type: g('c-type'), brand: g('c-brand'), l:left, r:right, ts: Date.now() };
+    if (!rec.name) return;
+    clients.push(rec);
+    saveClientsLocal();
+    renderClients();
+  });
+}
+
 // ==================== Boot ====================
 (async function main(){
   setBusinessName();
