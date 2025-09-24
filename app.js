@@ -130,11 +130,13 @@ const COLLECTION_LABELS = {
   diva: 'Diva Colors',
   gelx: 'Gel X',
   kupa: 'Kupa',
-  canni: 'CANNI',        // <-- NEW
+  canni: 'CANNI',
   dnd: 'DND Colors',
   dc: 'DC Colors',
   tools: 'Nail Tools',
-  essentials: 'Essentials'
+  essentials: 'Essentials',
+  "Young Nails": "Young Nails",
+  "Beginner Bundles": "Beginner Bundles"
 };
 const collectionLabel = (key) => COLLECTION_LABELS[key] || (key ? key.toUpperCase() : '');
 
