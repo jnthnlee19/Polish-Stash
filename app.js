@@ -8,10 +8,15 @@ async function loadJson(path) {
 }
 async function loadData() {
   const [diva, canni, dnd, extras] = await Promise.all([
-    loadJson('./dnd-diva.json'),
-    loadJson('./canni.json'),
-    loadJson('./dnd.json'),       // <-- NEW
-    loadJson('./extras.json')
+- loadJson('./data/dnd-diva.json'),
+- loadJson('./data/canni.json'),
+- loadJson('./data/dnd.json'),
+- loadJson('./data/extras.json')
++ loadJson('./dnd-diva.json'),
++ loadJson('./canni.json'),
++ loadJson('./dnd.json'),
++ loadJson('./extras.json')
+
   ]);
   return [...diva, ...canni, ...dnd, ...extras];
 }
