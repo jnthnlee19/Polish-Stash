@@ -1,11 +1,21 @@
-// ==================== Data loader ====================
-async function loadJson(path) {
+// ==================== Data loader (robust paths) ====================
+async function loadJson(relPath) {
+  // Resolve relative to THIS file (app.js), not the page URL
+  // e.g. if app.js is /Polish-Stash/app.js, ./dnd.json => /Polish-Stash/dnd.json
   try {
-    const res = await fetch(path, { cache: 'no-store' });
-    if (!res.ok) return [];
+    const url = new URL(relPath, import.meta.url);
+    const res = await fetch(url, { cache: 'no-store' });
+    if (!res.ok) {
+      console.warn('JSON fetch failed:', url.toString(), res.status);
+      return [];
+    }
     return await res.json();
-  } catch { return []; }
+  } catch (e) {
+    console.warn('JSON fetch error:', relPath, e);
+    return [];
+  }
 }
+
 async function loadData() {
   const [diva, canni, dnd, extras] = await Promise.all([
     loadJson('./dnd-diva.json'),
@@ -13,7 +23,12 @@ async function loadData() {
     loadJson('./dnd.json'),
     loadJson('./extras.json')
   ]);
-  return [...diva, ...canni, ...dnd, ...extras];
+  const all = [...diva, ...canni, ...dnd, ...extras];
+  // helpful debug in case nothing loads
+  console.log('Loaded items:', {
+    diva: diva.length, canni: canni.length, dnd: dnd.length, extras: extras.length, total: all.length
+  });
+  return all;
 }
 
 
@@ -24,7 +39,6 @@ import { createClient } from 'https://esm.sh/@supabase/supabase-js@2';
 const SUPABASE_URL = 'https://kgghfsnawrddnvssxham.supabase.co';
 const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImtnZ2hmc25hd3JkZG52c3N4aGFtIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTgzODkwMjgsImV4cCI6MjA3Mzk2NTAyOH0.RtTZhVPeoxhamYxczVf-crkG8_jIBBpIJlfz9rvjCIg';
 
-
 const supabase = createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
 async function currentUser() {
@@ -33,11 +47,13 @@ async function currentUser() {
     return user || null;
   } catch { return null; }
 }
+
 async function fetchCloudCodes(userId) {
   const { data, error } = await supabase.from('inventory').select('code').eq('user_id', userId);
   if (error) { console.warn('cloud fetch error', error); return []; }
   return Array.from(new Set((data || []).map(r => String(r.code))));
 }
+
 // Replace cloud set with current set (delete all, then insert)
 async function replaceCloudCodes(userId, codesIterable) {
   const del = await supabase.from('inventory').delete().eq('user_id', userId);
@@ -47,6 +63,7 @@ async function replaceCloudCodes(userId, codesIterable) {
   const ins = await supabase.from('inventory').insert(rows);
   if (ins.error) throw new Error(ins.error.message || 'Insert failed');
 }
+
 // Per-item helpers (when toggling)
 async function upsertCloudCode(userId, code) {
   try { await supabase.from('inventory').upsert({ user_id: userId, code: String(code) }); } catch(e){ console.warn('cloud upsert error', e); }
@@ -54,6 +71,7 @@ async function upsertCloudCode(userId, code) {
 async function deleteCloudCode(userId, code) {
   try { await supabase.from('inventory').delete().eq('user_id', userId).eq('code', String(code)); } catch(e){ console.warn('cloud delete error', e); }
 }
+
 
 // ==================== Local Storage (owned) ====================
 const LS_OWNED = 'polish-stash-owned';
@@ -70,6 +88,7 @@ function saveOwnedLocal() {
   localStorage.setItem(LS_OWNED, JSON.stringify([...ownedSet]));
 }
 
+
 // ==================== DOM ====================
 const grid             = document.getElementById('grid');
 const stats            = document.getElementById('stats');
@@ -80,15 +99,17 @@ const showOwnedBtn     = document.getElementById('show-owned');
 const saveOwnedBtn     = document.getElementById('save-owned');
 const tpl              = document.getElementById('card-tpl');
 
+
 // ==================== UI State ====================
 const state = {
   q: '',
-  collection: (filterCollection && filterCollection.value) || 'diva',
+  collection: (filterCollection && filterCollection.value) || 'all',
   show: 'all', // 'all' | 'owned'
 };
 
 let catalog = [];
 let user = null;
+
 
 // ==================== Helpers / IDs ====================
 const normalize = (s) => (s || '').toString().toLowerCase();
@@ -138,9 +159,8 @@ const COLLECTION_LABELS = {
   essentials: 'Essentials',
   "Young Nails": "Young Nails",
   "Beginner Bundles": "Beginner Bundles",
-  "Una Gella": "Una Gella"
+  "Una Gella": "Una Gella"   // matches your <option value="Una Gella">
 };
-
 const collectionLabel = (key) => COLLECTION_LABELS[key] || (key ? key.toUpperCase() : '');
 
 function fmtStats(items) {
@@ -149,6 +169,7 @@ function fmtStats(items) {
   const notOwned = total - owned;
   return `Showing ${total} items · Owned: ${owned} · Not owned: ${notOwned}`;
 }
+
 
 // ==================== Affiliate helpers (Amazon) ====================
 function ensureHttps(u) {
@@ -188,6 +209,7 @@ function productLink(item) {
   return '#';
 }
 
+
 // ==================== Product images (serverless) ====================
 const imgCache = new Map();
 async function fetchProductImage(productUrl) {
@@ -213,9 +235,20 @@ function setSwatchImage(swatch, url) {
   swatch.style.backgroundPosition = 'center';
 }
 
+
 // ==================== Render ====================
 function render(items) {
   if (!grid || !tpl) return;
+
+  // Helpful message if nothing matches/loaded
+  if (!items.length) {
+    grid.innerHTML = `
+      <div class="muted" style="padding:24px;text-align:center">
+        No items to display. If you just updated file paths, try a hard refresh.
+      </div>`;
+    stats && (stats.textContent = 'Showing 0 items');
+    return;
+  }
 
   grid.innerHTML = '';
   const frag = document.createDocumentFragment();
@@ -278,6 +311,7 @@ function render(items) {
   stats && (stats.textContent = fmtStats(items.filter(matches)));
 }
 
+
 // ==================== Business Name injection ====================
 function setBusinessName() {
   const target = document.getElementById('custom-site-name');
@@ -289,6 +323,7 @@ function setBusinessName() {
   target.textContent = name;
   if (fromUrl) localStorage.setItem('business_name', name);
 }
+
 
 // ==================== Events ====================
 function wireEvents() {
@@ -317,6 +352,7 @@ function wireEvents() {
     });
   }
 }
+
 
 // ==================== Client Sizes (local-only) ====================
 // Add a "Clients" button in the header: <button id="btn-clients" class="btn">Clients</button>
@@ -378,6 +414,7 @@ if (saveClientBtn) {
     renderClients();
   });
 }
+
 
 // ==================== Boot ====================
 (async function main(){
