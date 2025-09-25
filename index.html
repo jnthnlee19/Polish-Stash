@@ -4,77 +4,66 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>Polish Stash</title>
-    
-  <!-- iOS Home Screen icon -->
-  <link rel="apple-touch-icon" href="/assets/polish-stash-logo.png">
 
-  <link rel="stylesheet" href="styles.css" />
-</head>
-<body>
-  <!-- the rest of your page -->
+    <!-- Icons -->
     <link rel="icon" href="https://upload.wikimedia.org/wikipedia/commons/3/33/Nail_polish_bottle_icon.svg">
+    <link rel="apple-touch-icon" href="./polish-stash-logo.png">
+
+    <!-- Styles -->
     <link rel="stylesheet" href="styles.css" />
   </head>
   <body>
-<header class="site-header">
-  <!-- TOP ROW: all inline, left → right -->
-  <div class="topbar">
-    <img src="./assets/polish-stash-logo.png" alt="Polish Stash logo" class="topbar__logo" />
+    <header class="site-header">
+      <!-- TOP ROW: all inline, left → right -->
+      <div class="topbar">
+        <img src="./polish-stash-logo.png" alt="Polish Stash logo" class="topbar__logo" />
 
-    <h2 id="custom-site-name" class="topbar__name">Your Business Name</h2>
+        <h2 id="custom-site-name" class="topbar__name">Your Business Name</h2>
 
-<select id="filter-collection" class="topbar__select">
-  <option value="all"selected>All</option>
-  <option value="diva">Diva Colors</option>
-  <option value="gelx">Gel X</option>
-<option value="dnd">DND Colors</option>
-     <option value="Una Gella">Una Gella</option>
-    <option value="Young Nails">Young Nails</option>
-  <option value="kupa">Kupa</option>
-   <option value="canni">CANNI</option>
-  <option value="tools">Nail Tools</option>
-  <option value="essentials">Essentials</option>
-  <option value="Beginner Bundles">Beginner Bundles</option>
-</select>
+        <select id="filter-collection" class="topbar__select">
+          <option value="all" selected>All</option>
+          <option value="diva">Diva Colors</option>
+          <option value="gelx">Gel X</option>
+          <option value="dnd">DND Colors</option>
+          <option value="Una Gella">Una Gella</option>
+          <option value="Young Nails">Young Nails</option>
+          <option value="kupa">Kupa</option>
+          <option value="canni">CANNI</option>
+          <option value="tools">Nail Tools</option>
+          <option value="essentials">Essentials</option>
+          <option value="Beginner Bundles">Beginner Bundles</option>
+        </select>
 
+        <button id="show-all"   class="btn">Show All</button>
+        <button id="show-owned" class="btn">Show On Hand</button>
+        <button id="save-owned" class="btn">Save</button>
 
-    <button id="show-all"   class="btn">Show All</button>
-    <button id="show-owned" class="btn">Show On Hand</button>
-      <!-- NEW: Save button -->
-  <button id="save-owned" class="btn">Save</button>
-<!-- Clients button (matches styling) -->
-<button id="open-clients" class="btn" type="button"
-        onclick="window.location.href='./clients.html'">
-  Clients
-</button>
-</div>
+        <!-- Clients button (styled like others) -->
+        <button id="open-clients" class="btn" type="button" onclick="window.location.href='./clients.html'">
+          Clients
+        </button>
+      </div>
 
-  <!-- SEARCH ROW (below the inline bar) -->
-  <div class="searchbar">
-    <input id="search" type="search" placeholder="Search by #, name, shade…" />
-  </div>
-</header>
-
-
-
-
-
+      <!-- SEARCH ROW (below the inline bar) -->
+      <div class="searchbar">
+        <input id="search" type="search" placeholder="Search by #, name, shade…" />
+      </div>
+    </header>
 
     <main>
       <section id="stats" class="stats"></section>
       <section id="grid" class="grid" aria-live="polite"></section>
     </main>
 
-<footer class="site-footer">
-  <p>Made with ❤️ in Austin · Free to use · Some links may be affiliate links ·
-    <a href="/feedback.html">Feedback</a>
-  </p>
-  <p style="margin-top:8px; color: var(--ink-2); font-size:.9rem;">
-    As an Amazon Associate, I earn from qualifying purchases.
-  </p>
-</footer>
-
-
+    <footer class="site-footer">
+      <p>
+        Made with ❤️ in Austin · Free to use · Some links may be affiliate links ·
+        <a href="./feedback.html">Feedback</a>
+      </p>
+      <p style="margin-top:8px; color: var(--ink-2); font-size:.9rem;">
+        As an Amazon Associate, I earn from qualifying purchases.
+      </p>
+    </footer>
 
     <template id="card-tpl">
       <article class="card">
@@ -88,8 +77,7 @@
             <input type="checkbox" class="owned" />
             <span title="Toggle owned">❤</span>
           </label>
-       <a class="buy" href="#" target="_blank" rel="nofollow sponsored noopener">Buy</a>
-
+          <a class="buy" href="#" target="_blank" rel="nofollow sponsored noopener">Buy</a>
         </div>
       </article>
     </template>
