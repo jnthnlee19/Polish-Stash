@@ -8,18 +8,14 @@ async function loadJson(path) {
 }
 async function loadData() {
   const [diva, canni, dnd, extras] = await Promise.all([
-- loadJson('./data/dnd-diva.json'),
-- loadJson('./data/canni.json'),
-- loadJson('./data/dnd.json'),
-- loadJson('./data/extras.json')
-+ loadJson('./dnd-diva.json'),
-+ loadJson('./canni.json'),
-+ loadJson('./dnd.json'),
-+ loadJson('./extras.json')
-
+    loadJson('./dnd-diva.json'),
+    loadJson('./canni.json'),
+    loadJson('./dnd.json'),
+    loadJson('./extras.json')
   ]);
   return [...diva, ...canni, ...dnd, ...extras];
 }
+
 
 // ==================== Supabase (for cloud sync) ====================
 import { createClient } from 'https://esm.sh/@supabase/supabase-js@2';
@@ -142,8 +138,9 @@ const COLLECTION_LABELS = {
   essentials: 'Essentials',
   "Young Nails": "Young Nails",
   "Beginner Bundles": "Beginner Bundles",
-  "UNA GELLA": "UNA GELLA"
+  "Una Gella": "Una Gella"
 };
+
 const collectionLabel = (key) => COLLECTION_LABELS[key] || (key ? key.toUpperCase() : '');
 
 function fmtStats(items) {
