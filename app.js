@@ -1,7 +1,6 @@
 // ==================== Data loader (robust paths) ====================
 async function loadJson(relPath) {
   // Resolve relative to THIS file (app.js), not the page URL
-  // e.g. if app.js is /Polish-Stash/app.js, ./dnd.json => /Polish-Stash/dnd.json
   try {
     const url = new URL(relPath, import.meta.url);
     const res = await fetch(url, { cache: 'no-store' });
@@ -18,13 +17,12 @@ async function loadJson(relPath) {
 
 async function loadData() {
   const [diva, canni, dnd, extras] = await Promise.all([
-    loadJson('./dnd-diva.json'),
-    loadJson('./canni.json'),
-    loadJson('./dnd.json'),
-    loadJson('./extras.json')
+    loadJson('./data/dnd-diva.json'),
+    loadJson('./data/canni.json'),
+    loadJson('./data/dnd.json'),
+    loadJson('./data/extras.json')
   ]);
   const all = [...diva, ...canni, ...dnd, ...extras];
-  // helpful debug in case nothing loads
   console.log('Loaded items:', {
     diva: diva.length, canni: canni.length, dnd: dnd.length, extras: extras.length, total: all.length
   });
@@ -240,7 +238,6 @@ function setSwatchImage(swatch, url) {
 function render(items) {
   if (!grid || !tpl) return;
 
-  // Helpful message if nothing matches/loaded
   if (!items.length) {
     grid.innerHTML = `
       <div class="muted" style="padding:24px;text-align:center">
