@@ -157,7 +157,8 @@ const COLLECTION_LABELS = {
   essentials: 'Essentials',
   "Young Nails": "Young Nails",
   "Beginner Bundles": "Beginner Bundles",
-  "Una Gella": "Una Gella"   // matches your <option value="Una Gella">
+  "Una Gella": "Una Gella",
+"Chaun Legend": "Chaun Legend" 
 };
 const collectionLabel = (key) => COLLECTION_LABELS[key] || (key ? key.toUpperCase() : '');
 
